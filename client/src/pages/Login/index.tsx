@@ -1,9 +1,10 @@
 import React, { FC, useCallback, useContext, useState } from 'react'
 import { History } from 'history'
-import { Form, Button, Spinner } from 'react-bootstrap'
+import { Form } from 'react-bootstrap'
 import app from '../../base'
 import { AuthContext } from '../../Auth'
 import { Redirect } from 'react-router'
+import Button from '../../components/Button'
 
 const { Group, Label, Control, Text } = Form
 
@@ -23,7 +24,7 @@ const Login: FC<Props> = ({ history }) => {
         .signInWithEmailAndPassword(email.value, password.value)
         .then(() => {
           setIsLoading(false)
-          history.push('/')
+          history.push('/upload')
         })
         .catch(alert)
     },
@@ -49,14 +50,8 @@ const Login: FC<Props> = ({ history }) => {
           <Label>Password</Label>
           <Control name="password" type="password" placeholder="Password" />
         </Group>
-        <Button variant="primary" type="submit">
-          {isLoading ? (
-            <Spinner animation="border" role="status">
-              <span className="sr-only">Loading...</span>
-            </Spinner>
-          ) : (
-            'Log in'
-          )}
+        <Button variant="primary" type="submit" isLoading={isLoading}>
+          Submit
         </Button>
       </Form>
     </>
