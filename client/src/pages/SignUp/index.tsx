@@ -1,7 +1,8 @@
-import React, { FC, useCallback } from 'react'
+import React, { FC, useCallback, useState } from 'react'
 import { History } from 'history'
-import { Form, Button } from 'react-bootstrap'
+import { Form } from 'react-bootstrap'
 import app from '../../base'
+import Button from '../../components/Button'
 
 const { Group, Label, Control, Text } = Form
 
@@ -10,6 +11,8 @@ interface Props {
 }
 
 const SignUp: FC<Props> = ({ history }) => {
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+
   const handleSignUp = useCallback(
     async event => {
       event.preventDefault()
@@ -17,7 +20,10 @@ const SignUp: FC<Props> = ({ history }) => {
       app
         .auth()
         .createUserWithEmailAndPassword(email.value, password.value)
-        .then(() => history.push('/'))
+        .then(() => {
+          setIsLoading(false)
+          history.push('/upload')
+        })
         .catch(alert)
     },
     [history]
@@ -37,7 +43,7 @@ const SignUp: FC<Props> = ({ history }) => {
           <Label>Password</Label>
           <Control name="password" type="password" placeholder="Password" />
         </Group>
-        <Button variant="primary" type="submit">
+        <Button variant="primary" type="submit" isLoading={isLoading}>
           Submit
         </Button>
       </Form>
