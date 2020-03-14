@@ -3,13 +3,16 @@
   "version": "1.0.0",
   "scripts": {
     "client": "cd client && npm start",
-    "server": "cd server && node server.js",
+    "server": "node server.js",
     "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\""
   },
   "dependencies": {
+    "csv-parser": "^2.3.2",
     "express": "^4.16.2"
   },
   "devDependencies": {
-    "concurrently": "^3.5.0"
+    "concurrently": "^3.5.0",
+    "eslint": "^6.8.0",
+    "prettier": "^1.19.1"
   }
 }

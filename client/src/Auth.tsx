@@ -1,25 +1,24 @@
-import React, { useEffect, useState, ReactChildren, ReactElement } from 'react'
-import app from './base.js'
+import React, { useEffect, useState } from 'react'
+import { User } from 'firebase'
+import app from './base'
 
-interface Props {
-  children: ReactElement
-}
+export const AuthContext = React.createContext<{ currentUser: User | null }>({
+  currentUser: null,
+})
 
-export const AuthContext = React.createContext({ currentUser: null })
-
-export const AuthProvider = ({ children }: Props) => {
-  const [currentUser, setCurrentUser] = useState(null)
+export const AuthProvider = ({ children }: any) => {
+  const [currentUser, setCurrentUser] = useState<User | null>(null)
 
   useEffect(() => {
-    //Everytime our authentication changes on firebase we update the current user
-    app.auth().onAuthStateChanged(setCurrentUser as any)
+    app.auth().onAuthStateChanged(setCurrentUser)
   }, [])
 
   return (
-    <AuthContext.Provider value={{ currentUser }}>
+    <AuthContext.Provider
+      value={{
+        currentUser,
+      }}>
       {children}
     </AuthContext.Provider>
   )
 }
-
-export default AuthProvider
