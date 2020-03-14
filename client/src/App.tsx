@@ -1,13 +1,12 @@
 import React, { Component } from 'react'
-import logo from './logo.svg'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
+
 import './App.css'
 import { sayHello } from './utils/api'
-import { Button } from 'react-bootstrap'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
 import Home from './pages/Home'
 import Login from './pages/Login'
 import SignUp from './pages/SignUp'
-import AuthProvider from './Auth'
+import { AuthProvider } from './Auth'
 import PrivateRoute from './PrivateRoute'
 
 class App extends Component {
@@ -24,7 +23,7 @@ class App extends Component {
           <div>
             <PrivateRoute exact path="/" component={Home} />
             <Route exact path="/login" component={Login} />
-            <Route exact path="/singup" component={SignUp} />
+            <Route exact path="/signup" component={SignUp} />
           </div>
         </Router>
       </AuthProvider>
