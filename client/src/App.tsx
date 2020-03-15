@@ -7,7 +7,7 @@ import Home from './pages/Home'
 import Login from './pages/Login'
 import SignUp from './pages/SignUp'
 import Upload from './pages/Upload'
-import './App.css'
+import './style.css'
 
 class App extends Component {
   render() {
