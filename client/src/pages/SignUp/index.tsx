@@ -3,6 +3,7 @@ import { History } from 'history'
 import { Form } from 'react-bootstrap'
 import app from '../../base'
 import Button from '../../components/Button'
+import Container from '../../components/Container'
 
 const { Group, Label, Control, Text } = Form
 
@@ -29,7 +30,7 @@ const SignUp: FC<Props> = ({ history }) => {
     [history]
   )
   return (
-    <>
+    <Container page="signup" history={history}>
       <h1>SignUp</h1>
       <Form onSubmit={handleSignUp}>
         <Group controlId="email">
@@ -47,7 +48,7 @@ const SignUp: FC<Props> = ({ history }) => {
           Submit
         </Button>
       </Form>
-    </>
+    </Container>
   )
 }
 

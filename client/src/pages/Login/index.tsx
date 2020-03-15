@@ -5,6 +5,7 @@ import app from '../../base'
 import { AuthContext } from '../../Auth'
 import { Redirect } from 'react-router'
 import Button from '../../components/Button'
+import Container from '../../components/Container'
 
 const { Group, Label, Control, Text } = Form
 
@@ -33,10 +34,10 @@ const Login: FC<Props> = ({ history }) => {
 
   const { currentUser } = useContext(AuthContext)
 
-  if (currentUser) return <Redirect to="/" />
+  if (currentUser) return <Redirect to="/upload" />
 
   return (
-    <>
+    <Container page="login" history={history}>
       <h1>Log in</h1>
       <Form onSubmit={handleLogin}>
         <Group controlId="email">
@@ -54,7 +55,7 @@ const Login: FC<Props> = ({ history }) => {
           Submit
         </Button>
       </Form>
-    </>
+    </Container>
   )
 }
 
