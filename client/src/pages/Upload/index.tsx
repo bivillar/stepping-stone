@@ -1,22 +1,25 @@
 import React, { FC } from 'react'
 import { Button } from 'react-bootstrap'
 import { sayHello } from '../../utils/api'
-import app from '../../base'
 
-interface Props {}
+import { History } from 'history'
+import Container from '../../components/Container'
 
-const Upload: FC<Props> = () => {
+interface Props {
+  history: History
+}
+
+const Upload: FC<Props> = ({ history }) => {
   const handleButtonClick = () => {
     sayHello()
       .then(console.log)
       .catch(console.log)
   }
   return (
-    <>
+    <Container page="upload" history={history}>
       <h1>Upload</h1>
-      <Button onClick={() => app.auth().signOut()}>Sign out</Button>
       <Button onClick={handleButtonClick}>Upload</Button>
-    </>
+    </Container>
   )
 }
 
