@@ -1,8 +1,8 @@
-import React, { FC } from 'react'
+import React, { FC, useState } from 'react'
 import { Button } from 'react-bootstrap'
-import { sayHello } from '../../utils/api'
-
 import { History } from 'history'
+
+import { sayHello, saveCSV } from '../../utils/api'
 import Container from '../../components/Container'
 
 interface Props {
@@ -10,15 +10,26 @@ interface Props {
 }
 
 const Upload: FC<Props> = ({ history }) => {
-  const handleButtonClick = () => {
-    sayHello()
+  const [file, setFile] = useState<any>(null)
+
+  const handleUpload = () => {
+    const formData = new FormData()
+    formData.append('file', file)
+
+    saveCSV(formData)
       .then(console.log)
       .catch(console.log)
   }
+
+  const onChangeHandler = (event: any) => {
+    setFile(event?.target?.files?.[0])
+  }
+
   return (
     <Container page="upload" history={history}>
       <h1>Upload</h1>
-      <Button onClick={handleButtonClick}>Upload</Button>
+      <Button onClick={handleUpload}>Upload</Button>
+      <input type="file" name="file" onChange={onChangeHandler} />
     </Container>
   )
 }
