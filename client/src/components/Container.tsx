@@ -1,8 +1,9 @@
 import React, { FC, useContext, ReactNode } from 'react'
-import { Navbar as BootstrapNavbar, Nav, NavDropdown } from 'react-bootstrap'
+import { Navbar as BootstrapNavbar, Nav } from 'react-bootstrap'
 import { AuthContext } from '../Auth'
 import app from '../base'
 import { History } from 'history'
+import '../style.css'
 
 interface Props {
   page: string
@@ -18,9 +19,9 @@ const Container: FC<Props> = ({ page, history, children }) => {
   }
 
   const classNames = {
-    home: page.toLowerCase() === 'home' ? 'b' : '',
-    upload: page.toLowerCase() === 'upload' ? 'b' : '',
-    login: page.toLowerCase() === 'login' || page === 'signup' ? 'b' : '',
+    home: page.toLowerCase() === 'home' ? 'focus' : '',
+    upload: page.toLowerCase() === 'upload' ? 'focus' : '',
+    login: page.toLowerCase() === 'login' ? 'focus' : '',
   }
 
   return (
@@ -43,11 +44,7 @@ const Container: FC<Props> = ({ page, history, children }) => {
           </Nav>
           <Nav>
             {currentUser ? (
-              <Nav.Link
-                className={classNames.login}
-                onClick={() => app.auth().signOut()}>
-                Sign out
-              </Nav.Link>
+              <Nav.Link onClick={() => app.auth().signOut()}>Sign out</Nav.Link>
             ) : (
               <Nav.Link
                 className={classNames.login}
