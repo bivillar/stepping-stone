@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react'
-import { Button } from 'react-bootstrap'
+import { Button, ProgressBar } from 'react-bootstrap'
 import { History } from 'history'
 
 import { sayHello, saveCSV } from '../../utils/api'
@@ -10,26 +10,45 @@ interface Props {
 }
 
 const Upload: FC<Props> = ({ history }) => {
-  const [file, setFile] = useState<any>(null)
+  const [file, setFile] = useState<File | null>(null)
+  const [progress, setProgress] = useState<number>(0)
 
-  const handleUpload = () => {
+  const handleUpload = (event: any) => {
+    event.preventDefault()
+    if (!file) return
     const formData = new FormData()
     formData.append('file', file)
 
-    saveCSV(formData)
+    saveCSV(formData, setProgress)
       .then(console.log)
       .catch(console.log)
   }
 
-  const onChangeHandler = (event: any) => {
+  const handleFileChange = (event: any) => {
     setFile(event?.target?.files?.[0])
+    console.log(event?.target?.files?.[0].name)
   }
 
   return (
     <Container page="upload" history={history}>
-      <h1>Upload</h1>
-      <Button onClick={handleUpload}>Upload</Button>
-      <input type="file" name="file" onChange={onChangeHandler} />
+      <h1>Adicione um arquivo do tipo .csv para atualizar os dados</h1>
+      <div className="relative w-50 mb4">
+        <input
+          type="file"
+          className="custom-file-input"
+          id="customFile"
+          onChange={handleFileChange}
+        />
+        <label className="custom-file-label" htmlFor="customFile">
+          {file && file.name}
+        </label>
+        <div className="mb4 mt4">
+          <ProgressBar now={progress} striped />
+        </div>
+        <Button disabled={!file} block onClick={handleUpload}>
+          Upload
+        </Button>
+      </div>
     </Container>
   )
 }
