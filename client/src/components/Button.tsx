@@ -13,7 +13,7 @@ const Button: FC<Props> = ({ isLoading = false, children, ...rest }) => {
   return (
     <BootstrapButton {...rest}>
       {isLoading ? (
-        <Spinner animation="border" role="status">
+        <Spinner animation="border" role="status" size="sm">
           <span className="sr-only">Loading...</span>
         </Spinner>
       ) : (
