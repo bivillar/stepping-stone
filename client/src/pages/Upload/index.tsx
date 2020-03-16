@@ -30,9 +30,9 @@ const Upload: FC<Props> = ({ history }) => {
   }
 
   return (
-    <Container page="upload" history={history}>
+    <Container page="upload" history={history} className="pl6 pr6">
       <h1>Adicione um arquivo do tipo .csv para atualizar os dados</h1>
-      <div className="relative w-50 mb4">
+      <div className="relative mb4">
         <input
           type="file"
           className="custom-file-input"

@@ -38,15 +38,12 @@ const Login: FC<Props> = ({ history }) => {
   if (currentUser) return <Redirect to="/upload" />
 
   return (
-    <Container page="login" history={history}>
+    <Container page="login" history={history} className="pl6 pr6">
       <h1>Log in</h1>
       <Form onSubmit={handleLogin}>
         <Group controlId="email">
           <Label>Email address</Label>
           <Control name="email" type="email" placeholder="Enter email" />
-          <Text className="text-muted">
-            We'll never share your email with anyone else.
-          </Text>
         </Group>
         <Group controlId="password">
           <Label>Password</Label>
@@ -55,6 +52,9 @@ const Login: FC<Props> = ({ history }) => {
         <Button variant="primary" type="submit" isLoading={isLoading}>
           Submit
         </Button>
+        <label onClick={() => history.push('/signup')} className="ml4 link">
+          I don't have an account
+        </label>
       </Form>
     </Container>
   )
