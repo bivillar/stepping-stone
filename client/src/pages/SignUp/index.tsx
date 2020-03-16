@@ -31,15 +31,12 @@ const SignUp: FC<Props> = ({ history }) => {
     [history]
   )
   return (
-    <Container page="signup" history={history}>
+    <Container page="signup" history={history} className="pl6 pr6">
       <h1>SignUp</h1>
       <Form onSubmit={handleSignUp}>
         <Group controlId="email">
           <Label>Email address</Label>
           <Control name="email" type="email" placeholder="Enter email" />
-          <Text className="text-muted">
-            We'll never share your email with anyone else.
-          </Text>
         </Group>
         <Group controlId="password">
           <Label>Password</Label>
@@ -48,6 +45,9 @@ const SignUp: FC<Props> = ({ history }) => {
         <Button variant="primary" type="submit" isLoading={isLoading}>
           Submit
         </Button>
+        <label onClick={() => history.push('/login')} className="ml4 link">
+          I have an account
+        </label>
       </Form>
     </Container>
   )

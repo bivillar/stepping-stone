@@ -8,9 +8,10 @@ interface Props {
   page: string
   history: History
   children?: ReactNode
+  className?: string
 }
 
-const Container: FC<Props> = ({ page, history, children }) => {
+const Container: FC<Props> = ({ page, history, children, className }) => {
   const { currentUser } = useContext(AuthContext)
 
   const goTo = (location: string) => {
@@ -59,7 +60,7 @@ const Container: FC<Props> = ({ page, history, children }) => {
           </Nav>
         </BootstrapNavbar.Collapse>
       </BootstrapNavbar>
-      <div className="container">{children}</div>
+      <div className={`container ${className ?? ''}`}>{children}</div>
     </>
   )
 }
