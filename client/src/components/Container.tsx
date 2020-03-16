@@ -3,7 +3,6 @@ import { Navbar as BootstrapNavbar, Nav } from 'react-bootstrap'
 import { AuthContext } from '../Auth'
 import app from '../base'
 import { History } from 'history'
-import '../style.css'
 
 interface Props {
   page: string
@@ -26,9 +25,14 @@ const Container: FC<Props> = ({ page, history, children }) => {
 
   return (
     <>
-      <BootstrapNavbar collapseOnSelect expand="lg" bg="light" variant="dark">
+      <BootstrapNavbar collapseOnSelect expand="lg" bg="" variant="dark">
         <BootstrapNavbar.Brand onClick={() => goTo('/')}>
-          Stepping Stone
+          <img
+            src="icon.png"
+            alt="Smiley face"
+            style={{ maxHeight: '30px', paddingRight: '10px' }}
+          />{' '}
+          stepping stone
         </BootstrapNavbar.Brand>
         <BootstrapNavbar.Toggle aria-controls="responsive-navbar-nav" />
         <BootstrapNavbar.Collapse id="responsive-navbar-nav">

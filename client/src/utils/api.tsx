@@ -8,13 +8,16 @@ export const sayHello = async () => {
   return body
 }
 
-export const saveCSV = async (formData: FormData) => {
+export const saveCSV = async (
+  formData: FormData,
+  setProgress: (val: number) => void
+) => {
   return axios.post('/api/upload', formData, {
     headers: {
       'Content-Type': 'multipart/form-data',
     },
     onUploadProgress: (progressEvent: ProgressEvent) => {
-      console.log(progressEvent.loaded, progressEvent.total)
+      setProgress((progressEvent.loaded / progressEvent.total) * 100)
     },
   })
 }
