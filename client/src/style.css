@@ -3,10 +3,10 @@ body {
   font-family: Andika !important;
   -webkit-font-smoothing: antialiased !important;
   -moz-osx-font-smoothing: grayscale !important;
-  background: radial-gradient(
-    circle,
-    rgba(173, 28, 96, 1) 0%,
-    rgba(142, 6, 52, 1) 100%
+  background: linear-gradient(
+    330deg,
+    rgba(255, 194, 114, 1) 0%,
+    rgba(255, 110, 110, 1) 100%
   ) !important;
   height: 100vh;
   color: white !important;

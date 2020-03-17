@@ -32,7 +32,7 @@ const Container: FC<Props> = ({ page, history, children, className }) => {
             src="icon.png"
             alt="Smiley face"
             style={{ maxHeight: '30px', paddingRight: '10px' }}
-          />{' '}
+          />
           stepping stone
         </BootstrapNavbar.Brand>
         <BootstrapNavbar.Toggle aria-controls="responsive-navbar-nav" />
