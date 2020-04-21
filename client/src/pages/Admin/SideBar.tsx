@@ -5,7 +5,9 @@ const SideBar: FC<Props> = ({ isOpen, open }) => {
 
   return (
     <div onClick={open} className={`adminSidebar ${className}`}>
-      OIE
+      {/* <div className="adminMenu">Hello</div> */}
+      <span className="shape"></span>
+      <span className="shape"></span>
     </div>
   )
 }

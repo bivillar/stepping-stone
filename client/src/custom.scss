@@ -140,3 +140,68 @@ code {
     margin-left: 20%;
   }
 }
+
+.adminMenu {
+  color: white;
+  width: 100%;
+  height: 10%;
+  padding-top: 10%;
+}
+
+.adminMenu::after {
+  content: '';
+  background: $SteppingStone1;
+  opacity: 0.2;
+  width: 100%;
+  height: 10%;
+  padding-top: 10%;
+  left: 0;
+  position: absolute;
+  z-index: -1;
+}
+
+.shape {
+  position: absolute;
+  top: 60%;
+  left: -50%;
+  width: 200%;
+  height: 50%;
+  background: linear-gradient($SteppingStone1 20%, $SteppingStone3);
+  z-index: -1;
+  opacity: 0;
+  // transform: scale(0.4) translateY(-80%) translateX(80%);
+  margin-left: 0;
+  margin-top: 0;
+  transition: 400ms ease;
+
+  &:nth-child(2) {
+    background: linear-gradient($SteppingStone3 20%, $SteppingStone1);
+    transform: scale(0.4) translateY(-80%);
+    margin-top: 0;
+  }
+
+  .adminSidebar--open & {
+    animation: float 15s infinite alternate;
+    margin-left: -100px;
+    margin-top: -20px;
+    opacity: 0.2;
+    transform: scale(1) translateY(0) rotate(20deg);
+
+    &:nth-child(2) {
+      animation: float 10s infinite alternate;
+      transform: scale(1) translateY(100px) translateX(170px) rotate(-20deg);
+    }
+  }
+}
+
+@keyframes float {
+  // 0% {
+  //   top: 60%;
+  // }
+  50% {
+    top: 90%;
+  }
+  // 100% {
+  //   top: 60%;
+  // }
+}
