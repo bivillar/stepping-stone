@@ -6,7 +6,7 @@ import { AuthProvider } from './Auth'
 import Home from './pages/Home'
 import Login from './pages/Login'
 import SignUp from './pages/SignUp'
-import Upload from './pages/Upload'
+import Admin from './pages/Admin'
 import './style.css'
 
 class App extends Component {
@@ -18,7 +18,7 @@ class App extends Component {
             <Route exact path="/" component={Home} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/signup" component={SignUp} />
-            <PrivateRoute exact path="/upload" component={Upload} />
+            <PrivateRoute exact path="/admin" component={Admin} />
           </div>
         </Router>
       </AuthProvider>
