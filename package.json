@@ -2,13 +2,14 @@
   "name": "stepping-stone",
   "version": "1.0.0",
   "scripts": {
-    "client": "cd client && npm start",
-    "server": "node server.js",
+    "client": "cd client && yarn && npm start",
+    "server": "yarn && node server.js",
     "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\""
   },
   "dependencies": {
     "csv-parser": "^2.3.2",
-    "express": "^4.16.2"
+    "express": "^4.16.2",
+    "express-fileupload": "^1.1.6"
   },
   "devDependencies": {
     "concurrently": "^3.5.0",

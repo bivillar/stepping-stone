@@ -1,0 +1,38 @@
+body {
+  margin: 0 !important;
+  font-family: Andika !important;
+  -webkit-font-smoothing: antialiased !important;
+  -moz-osx-font-smoothing: grayscale !important;
+  background: linear-gradient(
+    330deg,
+    rgba(255, 194, 114, 1) 0%,
+    rgba(255, 110, 110, 1) 100%
+  ) !important;
+
+  color: white !important;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace !important;
+}
+
+.fillPage {
+  height: 100vh;
+}
+
+.App {
+  text-align: center !important;
+}
+
+.focus {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.link {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.link:hover {
+  text-decoration: underline !important;
+}
