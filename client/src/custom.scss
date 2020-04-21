@@ -1,3 +1,12 @@
+$SteppingStone1: #8c2a44;
+$SteppingStone2: #73263a;
+$SteppingStone3: #a6916a;
+$SteppingStone4: #8c6f4a;
+$SteppingStone5: #262626;
+
+$SteppingStoneBG1: #73263a;
+$SteppingStoneBG2: #a6916a;
+
 // Override default variables before the import
 $body-bg: rgb(255, 255, 255);
 $blue: #007bff;
@@ -13,8 +22,8 @@ $cyan: #17a2b8;
 $white: #fff;
 $gray: #6c757d;
 $gray-dark: #343a40;
-$primary: rgba(255, 110, 110, 1);
-$secondary: rgba(255, 194, 114, 1);
+$primary: #73263a;
+$secondary: #a6916a;
 $success: #28a745;
 $info: #17a2b8;
 $warning: #ffc107;
@@ -31,6 +40,8 @@ $font-family-sans-serif: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
   'Segoe UI Symbol';
 $font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas,
   'Liberation Mono', 'Courier New', monospace;
+// Import Bootstrap and its default variables
+@import '~bootstrap/scss/bootstrap.scss';
 
 .progress {
   display: flex;
@@ -41,5 +52,91 @@ $font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas,
   border-radius: 0.25rem;
 }
 
-// Import Bootstrap and its default variables
-@import '~bootstrap/scss/bootstrap.scss';
+body {
+  margin: 0 !important;
+  font-family: Andika !important;
+  -webkit-font-smoothing: antialiased !important;
+  -moz-osx-font-smoothing: grayscale !important;
+  background: linear-gradient(
+    330deg,
+    $SteppingStoneBG1 0%,
+    $SteppingStoneBG2 100%
+  ) !important;
+
+  color: white !important;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace !important;
+}
+
+.fillPage {
+  height: 100vh;
+}
+
+.App {
+  text-align: center !important;
+}
+
+.focus {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.link {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.link:hover {
+  text-decoration: underline !important;
+}
+
+.admin {
+  display: flex;
+  background: #fafafc;
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  color: black;
+}
+
+.adminSidebar {
+  background-image: linear-gradient(
+    330deg,
+    $SteppingStoneBG1 0%,
+    $SteppingStoneBG2 100%
+  ) !important;
+  background-size: 200%;
+  background-position: 0 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 20%;
+  height: 100%;
+  transform: translateX(-70%);
+  transition: 300ms ease-in-out;
+  z-index: 1;
+  overflow: hidden;
+  cursor: pointer;
+
+  &--open {
+    background-size: 100%;
+    background-position: 0 0;
+    transform: translateX(0);
+  }
+}
+
+.adminContent {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  transition: 300ms ease-in-out;
+  z-index: 2;
+  margin-left: 6%;
+
+  &--open {
+    margin-left: 20%;
+  }
+}
