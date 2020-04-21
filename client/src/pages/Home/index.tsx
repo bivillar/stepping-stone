@@ -1,15 +1,19 @@
 import React, { FC } from 'react'
-import { Button } from 'react-bootstrap'
-import app from '../../base'
+import { History } from 'history'
 
-interface Props {}
+import Container from '../../components/Container'
+import Image from '../../static/images/stepping-stone.png'
+import LandingPage from '../../components/LandingPage'
 
-const Home: FC<Props> = () => {
+interface Props {
+  history: History
+}
+
+const Home: FC<Props> = ({ history }) => {
   return (
-    <>
-      <h1>HOME</h1>
-      <Button onClick={() => app.auth().signOut()}>Sign out</Button>
-    </>
+    <Container page="home" history={history} fillPage>
+      {/* <LandingPage /> */}
+    </Container>
   )
 }
 

@@ -1,9 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import './index.css'
+import './style.css'
 import App from './App'
 import * as serviceWorker from './serviceWorker'
-import 'bootstrap/dist/css/bootstrap.min.css'
+import './custom.scss'
+import 'tachyons/css/tachyons.min.css'
 
 ReactDOM.render(<App />, document.getElementById('root'))
 
