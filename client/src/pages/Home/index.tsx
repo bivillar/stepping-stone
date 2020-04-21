@@ -2,6 +2,8 @@ import React, { FC } from 'react'
 import { History } from 'history'
 
 import Container from '../../components/Container'
+import Image from '../../static/images/stepping-stone.png'
+import LandingPage from '../../components/LandingPage'
 
 interface Props {
   history: History
@@ -9,9 +11,8 @@ interface Props {
 
 const Home: FC<Props> = ({ history }) => {
   return (
-    <Container page="home" history={history}>
-      <h1>HOME</h1>
-      <img src="oi.png" width="500" />
+    <Container page="home" history={history} fillPage>
+      {/* <LandingPage /> */}
     </Container>
   )
 }
