@@ -1,9 +1,12 @@
 import React, { FC, useCallback, useContext, useState } from 'react'
 import { History } from 'history'
-import { Form, Button, Spinner } from 'react-bootstrap'
-import app from '../../base'
-import { AuthContext } from '../../Auth'
 import { Redirect } from 'react-router'
+import { Form } from 'react-bootstrap'
+
+import Firebase from '../../base'
+import { AuthContext } from '../../Auth'
+import Button from '../../components/Button'
+import Container from '../../components/Container'
 
 const { Group, Label, Control, Text } = Form
 
@@ -18,12 +21,10 @@ const Login: FC<Props> = ({ history }) => {
       setIsLoading(true)
       event.preventDefault()
       const { email, password } = event.target.elements
-      app
-        .auth()
-        .signInWithEmailAndPassword(email.value, password.value)
-        .then(() => {
+      Firebase.login(email.value, password.value)
+        ?.then(() => {
           setIsLoading(false)
-          history.push('/')
+          history.push('/admin')
         })
         .catch(alert)
     },
@@ -32,34 +33,28 @@ const Login: FC<Props> = ({ history }) => {
 
   const { currentUser } = useContext(AuthContext)
 
-  if (currentUser) return <Redirect to="/" />
+  if (currentUser) return <Redirect to="/admin" />
 
   return (
-    <>
+    <Container page="login" history={history} className="pl6 pr6">
       <h1>Log in</h1>
       <Form onSubmit={handleLogin}>
         <Group controlId="email">
           <Label>Email address</Label>
           <Control name="email" type="email" placeholder="Enter email" />
-          <Text className="text-muted">
-            We'll never share your email with anyone else.
-          </Text>
         </Group>
         <Group controlId="password">
           <Label>Password</Label>
           <Control name="password" type="password" placeholder="Password" />
         </Group>
-        <Button variant="primary" type="submit">
-          {isLoading ? (
-            <Spinner animation="border" role="status">
-              <span className="sr-only">Loading...</span>
-            </Spinner>
-          ) : (
-            'Log in'
-          )}
+        <Button variant="primary" type="submit" isLoading={isLoading}>
+          Submit
         </Button>
+        <label onClick={() => history.push('/signup')} className="ml4 link">
+          I don't have an account
+        </label>
       </Form>
-    </>
+    </Container>
   )
 }
 
