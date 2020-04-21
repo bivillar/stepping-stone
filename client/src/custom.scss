@@ -93,7 +93,7 @@ code {
 
 .admin {
   display: flex;
-  background: #fafafc;
+  background: #dbdbdb;
   width: 100%;
   height: 100vh;
   position: relative;
@@ -141,6 +141,10 @@ code {
   }
 }
 
+.adminBox {
+  background-color: #f0f0f0;
+}
+
 .adminMenu {
   color: white;
   width: 100%;
@@ -162,46 +166,40 @@ code {
 
 .shape {
   position: absolute;
-  top: 60%;
+  top: 90%;
   left: -50%;
-  width: 200%;
+  width: 180%;
   height: 50%;
   background: linear-gradient($SteppingStone1 20%, $SteppingStone3);
   z-index: -1;
   opacity: 0;
-  // transform: scale(0.4) translateY(-80%) translateX(80%);
+  transform: rotate(20deg);
   margin-left: 0;
   margin-top: 0;
-  transition: 400ms ease;
+  transition: 1s ease;
 
   &:nth-child(2) {
     background: linear-gradient($SteppingStone3 20%, $SteppingStone1);
-    transform: scale(0.4) translateY(-80%);
+    transform: rotate(20deg);
     margin-top: 0;
   }
 
   .adminSidebar--open & {
-    animation: float 15s infinite alternate;
+    animation: float 15s infinite ease-in-out;
     margin-left: -100px;
     margin-top: -20px;
     opacity: 0.2;
     transform: scale(1) translateY(0) rotate(20deg);
 
     &:nth-child(2) {
-      animation: float 10s infinite alternate;
+      animation: float 10s infinite reverse ease-in-out;
       transform: scale(1) translateY(100px) translateX(170px) rotate(-20deg);
     }
   }
 }
 
 @keyframes float {
-  // 0% {
-  //   top: 60%;
-  // }
   50% {
-    top: 90%;
+    top: 60%;
   }
-  // 100% {
-  //   top: 60%;
-  // }
 }

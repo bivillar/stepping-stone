@@ -33,10 +33,10 @@ const Login: FC<Props> = ({ history }) => {
 
   const { currentUser } = useContext(AuthContext)
 
-  if (currentUser) return <Redirect to="/admin" />
+  if (currentUser) return <Redirect to="/admin/upload" />
 
   return (
-    <Container page="login" history={history} className="pl6 pr6">
+    <>
       <h1>Log in</h1>
       <Form onSubmit={handleLogin}>
         <Group controlId="email">
@@ -54,7 +54,7 @@ const Login: FC<Props> = ({ history }) => {
           I don't have an account
         </label>
       </Form>
-    </Container>
+    </>
   )
 }
 
