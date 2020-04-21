@@ -23,7 +23,7 @@ const SignUp: FC<Props> = ({ history }) => {
         .register(name.value, email.value, password.value)
         .then(() => {
           setIsLoading(false)
-          history.push('/admin')
+          history.push('/admin/upload')
         })
         .catch(alert)
     },
@@ -48,7 +48,9 @@ const SignUp: FC<Props> = ({ history }) => {
         <Button variant="primary" type="submit" isLoading={isLoading}>
           Submit
         </Button>
-        <label onClick={() => history.push('/login')} className="ml4 link">
+        <label
+          onClick={() => history.push('/admin/login')}
+          className="ml4 link">
           I have an account
         </label>
       </Form>
