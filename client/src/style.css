@@ -8,15 +8,17 @@ body {
     rgba(255, 194, 114, 1) 0%,
     rgba(255, 110, 110, 1) 100%
   ) !important;
-  height: 100vh;
+
   color: white !important;
-  padding-left: 10%;
-  padding-right: 10%;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace !important;
+}
+
+.fillPage {
+  height: 100vh;
 }
 
 .App {

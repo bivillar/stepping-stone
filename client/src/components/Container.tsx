@@ -1,7 +1,7 @@
 import React, { FC, useContext, ReactNode } from 'react'
 import { Navbar as BootstrapNavbar, Nav } from 'react-bootstrap'
 import { AuthContext } from '../Auth'
-import app from '../base'
+import firebase from '../base'
 import { History } from 'history'
 
 interface Props {
@@ -9,9 +9,18 @@ interface Props {
   history: History
   children?: ReactNode
   className?: string
+  container?: boolean
+  fillPage?: boolean
 }
 
-const Container: FC<Props> = ({ page, history, children, className }) => {
+const Container: FC<Props> = ({
+  container = false,
+  page,
+  history,
+  children,
+  className,
+  fillPage,
+}) => {
   const { currentUser } = useContext(AuthContext)
 
   const goTo = (location: string) => {
@@ -25,12 +34,11 @@ const Container: FC<Props> = ({ page, history, children, className }) => {
   }
 
   return (
-    <>
+    <div className={fillPage ? 'fillPage' : ''}>
       <BootstrapNavbar collapseOnSelect expand="lg" bg="" variant="dark">
         <BootstrapNavbar.Brand onClick={() => goTo('/')}>
           <img
             src="icon.png"
-            alt="Smiley face"
             style={{ maxHeight: '30px', paddingRight: '10px' }}
           />
           stepping stone
@@ -43,13 +51,13 @@ const Container: FC<Props> = ({ page, history, children, className }) => {
             </Nav.Link>
             <Nav.Link
               className={classNames.upload}
-              onClick={() => goTo('/upload')}>
+              onClick={() => goTo('/admin')}>
               Upload
             </Nav.Link>
           </Nav>
           <Nav>
             {currentUser ? (
-              <Nav.Link onClick={() => app.auth().signOut()}>Sign out</Nav.Link>
+              <Nav.Link onClick={() => firebase.logout()}>Sign out</Nav.Link>
             ) : (
               <Nav.Link
                 className={classNames.login}
@@ -60,8 +68,12 @@ const Container: FC<Props> = ({ page, history, children, className }) => {
           </Nav>
         </BootstrapNavbar.Collapse>
       </BootstrapNavbar>
-      <div className={`container ${className ?? ''}`}>{children}</div>
-    </>
+      <div
+        className={`${container ? 'container' : ''} ${className ??
+          ''} fillPage `}>
+        {children}
+      </div>
+    </div>
   )
 }
 

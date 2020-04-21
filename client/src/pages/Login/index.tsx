@@ -3,7 +3,7 @@ import { History } from 'history'
 import { Redirect } from 'react-router'
 import { Form } from 'react-bootstrap'
 
-import app from '../../base'
+import Firebase from '../../base'
 import { AuthContext } from '../../Auth'
 import Button from '../../components/Button'
 import Container from '../../components/Container'
@@ -21,12 +21,10 @@ const Login: FC<Props> = ({ history }) => {
       setIsLoading(true)
       event.preventDefault()
       const { email, password } = event.target.elements
-      app
-        .auth()
-        .signInWithEmailAndPassword(email.value, password.value)
-        .then(() => {
+      Firebase.login(email.value, password.value)
+        ?.then(() => {
           setIsLoading(false)
-          history.push('/upload')
+          history.push('/admin')
         })
         .catch(alert)
     },
@@ -35,7 +33,7 @@ const Login: FC<Props> = ({ history }) => {
 
   const { currentUser } = useContext(AuthContext)
 
-  if (currentUser) return <Redirect to="/upload" />
+  if (currentUser) return <Redirect to="/admin" />
 
   return (
     <Container page="login" history={history} className="pl6 pr6">

@@ -2,7 +2,7 @@ import React, { FC, useCallback, useState } from 'react'
 import { History } from 'history'
 import { Form } from 'react-bootstrap'
 
-import app from '../../base'
+import firebase from '../../base'
 import Button from '../../components/Button'
 import Container from '../../components/Container'
 
@@ -18,13 +18,12 @@ const SignUp: FC<Props> = ({ history }) => {
   const handleSignUp = useCallback(
     async event => {
       event.preventDefault()
-      const { email, password } = event.target.elements
-      app
-        .auth()
-        .createUserWithEmailAndPassword(email.value, password.value)
+      const { email, password, name } = event.target.elements
+      firebase
+        .register(name.value, email.value, password.value)
         .then(() => {
           setIsLoading(false)
-          history.push('/upload')
+          history.push('/admin')
         })
         .catch(alert)
     },
@@ -34,6 +33,10 @@ const SignUp: FC<Props> = ({ history }) => {
     <Container page="signup" history={history} className="pl6 pr6">
       <h1>SignUp</h1>
       <Form onSubmit={handleSignUp}>
+        <Group controlId="name">
+          <Label>Name</Label>
+          <Control name="name" type="name" placeholder="Enter Name" />
+        </Group>
         <Group controlId="email">
           <Label>Email address</Label>
           <Control name="email" type="email" placeholder="Enter email" />

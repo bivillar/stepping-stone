@@ -1,9 +1,9 @@
-import React, { FC, useState } from 'react'
+import React, { FC, useState, useEffect, useContext } from 'react'
 import { Button, ProgressBar } from 'react-bootstrap'
 import { History } from 'history'
 
-import { sayHello, saveCSV } from '../../utils/api'
-import Container from '../../components/Container'
+import { saveCSV } from '../../utils/api'
+import Firebase from '../../base'
 
 interface Props {
   history: History
@@ -30,7 +30,7 @@ const Upload: FC<Props> = ({ history }) => {
   }
 
   return (
-    <Container page="upload" history={history} className="pl6 pr6">
+    <>
       <h1>Adicione um arquivo do tipo .csv para atualizar os dados</h1>
       <div className="relative mb4">
         <input
@@ -48,8 +48,11 @@ const Upload: FC<Props> = ({ history }) => {
         <Button disabled={!file} block onClick={handleUpload}>
           Upload
         </Button>
+        <div>
+          <Button onClick={() => Firebase.getAllUsers()}>CLICA AQUII</Button>
+        </div>
       </div>
-    </Container>
+    </>
   )
 }
 
