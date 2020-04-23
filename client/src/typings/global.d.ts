@@ -6,5 +6,6 @@ declare global {
     email: string
     resourcers: ResourcesEnum[]
     isAdmin: boolean
+    name: string
   }
 }
