@@ -50,7 +50,9 @@ const Login: FC<Props> = ({ history }) => {
         <Button variant="primary" type="submit" isLoading={isLoading}>
           Submit
         </Button>
-        <label onClick={() => history.push('/signup')} className="ml4 link">
+        <label
+          onClick={() => history.push('/admin/signup')}
+          className="ml4 link">
           I don't have an account
         </label>
       </Form>
