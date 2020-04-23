@@ -1,16 +1,18 @@
 import React, { FC, useState, useContext } from 'react'
 import { Route, Switch } from 'react-router-dom'
 import { History } from 'history'
+import { Button } from 'react-bootstrap'
 
 import { AdminPagesEnum } from '../../constants'
 import { AuthContext } from '../../Auth'
 import Container from '../../components/Container'
+import Firebase from '../../base'
+import PrivateRoute from '../../PrivateRoute'
+import SignUp from '../SignUp'
+import Login from '../Login'
 import Upload from './Upload'
 import UserList from './UserList'
 import SideBar from './SideBar'
-import Login from '../Login'
-import SignUp from '../SignUp'
-import PrivateRoute from '../../PrivateRoute'
 
 const Admin: FC<Props> = ({ history, children }) => {
   const { currentUser } = useContext(AuthContext)
@@ -26,6 +28,12 @@ const Admin: FC<Props> = ({ history, children }) => {
         open={() => setIsOpen(!isOpen)}
       />
       <div className={`adminContent ${isOpen ? 'adminContent--open' : ''}`}>
+        <div className="h-10 w-100">
+          <div>
+            {currentUser?.name}
+            <Button onClick={() => Firebase.logout()}>SING OUT</Button>
+          </div>
+        </div>
         <Switch>
           {/* <Route path="/admin/" component={Upload} /> */}
           <Route path="/admin/login" component={Login} />
