@@ -9,7 +9,7 @@ const MenuItem: FC<{ icon: any; label: string; isOpen: boolean }> = ({
   label,
   isOpen,
 }) => (
-  <div className="flex items-center pl10">
+  <div className="flex items-center pl10 z-2">
     <span className={isOpen ? '' : 'moveRight'}>{icon}</span>
     <span className={`label ${isOpen ? 'fadeIn' : 'fadeOut'}`}>{label}</span>
   </div>
@@ -18,17 +18,30 @@ const MenuItem: FC<{ icon: any; label: string; isOpen: boolean }> = ({
 const SideBar: FC<Props> = ({ isOpen, open, history }) => {
   const className = isOpen ? 'adminSidebar--open' : ''
 
+  const goto = (url: string) => {
+    history.push(url)
+  }
+
+  const handleMenuClick = (event: any) => {
+    if (['adminSideBar', 'adminMenu'].includes(event.target.id)) {
+      open()
+    }
+  }
+
   return (
-    <div onClick={open} className={`adminSidebar ${className}`}>
-      <ul className="adminMenu">
-        <li onClick={() => history.push('/admin/list')}>
+    <div
+      id="adminSideBar"
+      onClick={handleMenuClick}
+      className={`adminSidebar ${className}`}>
+      <ul className="adminMenu" id="adminMenu">
+        <li id="item" onClick={() => goto('/admin/list')}>
           <MenuItem
             icon={<PeopleIcon />}
             label="Gerenciar Usuários"
             isOpen={isOpen}
           />
         </li>
-        <li onClick={() => history.push('/admin/upload')}>
+        <li id="item" onClick={() => goto('/admin/upload')}>
           <MenuItem
             icon={<UploadIcon />}
             label="Fazer Upload de novos dados"
