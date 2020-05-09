@@ -1,5 +1,6 @@
 import React, { FC } from 'react'
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts'
+import useVisible from '../hooks/useVisible'
 
 const data = [
   { name: 1991, value: 5 },
@@ -33,32 +34,40 @@ const data = [
   { name: 2019, value: 3 },
 ]
 
-const GradYear: FC = () => (
-  <AreaChart
-    width={600}
-    height={300}
-    data={data}
-    margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-    <defs>
-      <linearGradient id="gradient" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="5%" stopColor="#5204bf" stopOpacity={0.8} />
-        <stop offset="95%" stopColor="#4158d9" stopOpacity={0} />
-      </linearGradient>
-    </defs>
+const GradYear: FC = () => {
+  const [isVisible, setRef] = useVisible()
 
-    <XAxis dataKey="name" stroke="#4158d9" />
-    <YAxis stroke="#4158d9" />
-    <Tooltip />
+  return (
+    <div ref={setRef as any}>
+      {isVisible && (
+        <AreaChart
+          width={600}
+          height={300}
+          data={data}
+          margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+          <defs>
+            <linearGradient id="gradient" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="5%" stopColor="#5204bf" stopOpacity={0.8} />
+              <stop offset="95%" stopColor="#4158d9" stopOpacity={0} />
+            </linearGradient>
+          </defs>
 
-    <Area
-      type="monotone"
-      dataKey="value"
-      stroke="#131a42"
-      fillOpacity={1}
-      fill="url(#gradient)"
-      activeDot={{ r: 8 }}
-    />
-  </AreaChart>
-)
+          <XAxis dataKey="name" stroke="#4158d9" />
+          <YAxis stroke="#4158d9" />
+          <Tooltip />
+
+          <Area
+            type="monotone"
+            dataKey="value"
+            stroke="#131a42"
+            fillOpacity={1}
+            fill="url(#gradient)"
+            activeDot={{ r: 8 }}
+          />
+        </AreaChart>
+      )}
+    </div>
+  )
+}
 
 export default GradYear
