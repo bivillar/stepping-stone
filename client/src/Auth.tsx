@@ -18,7 +18,6 @@ export const AuthProvider = ({ children }: any) => {
       const user = await Firebase.getCurrentUser()
       if (!user) return
       const cUser = ({ ...firebaseUser, ...user } as unknown) as CurrentUser
-      console.log(cUser)
       setCurrentUser(cUser)
     })
   }, [])
