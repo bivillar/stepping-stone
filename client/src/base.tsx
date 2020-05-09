@@ -30,6 +30,9 @@ class Firebase {
   }
 
   async register(name: string, email: string, password: string) {
+    const permissions = await this.getUserPermissions(email)
+    if (!permissions) throw new Error('Sem autorização')
+
     await this.auth.createUserWithEmailAndPassword(email, password)
     return this.auth.currentUser?.updateProfile({
       displayName: name,
@@ -88,6 +91,14 @@ class Firebase {
     return this.auth.currentUser && this.auth.currentUser.displayName
   }
 
+  async getUserPermissions(email: string) {
+    const user = await this.db
+      .collection('users')
+      .doc(email)
+      .get()
+    return user.get('resources')
+  }
+
   async getCurrentUserPermissions() {
     const currentUserEmail = this.auth.currentUser?.email!
     if (!currentUserEmail) return null
@@ -120,11 +131,13 @@ class Firebase {
           console.log(user)
           const isAdmin = user.get('isAdmin')
           const resourcers = user.get('resources')
+          const name = user.get('name')
 
           users.push({
             email: user.id,
             isAdmin,
             resourcers,
+            name,
           })
         })
       })

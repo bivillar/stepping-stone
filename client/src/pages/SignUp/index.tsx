@@ -2,7 +2,7 @@ import React, { FC, useCallback, useState } from 'react'
 import { History } from 'history'
 import { Form } from 'react-bootstrap'
 
-import firebase from '../../base'
+import Firebase from '../../base'
 import Button from '../../components/Button'
 import Container from '../../components/Container'
 
@@ -19,11 +19,10 @@ const SignUp: FC<Props> = ({ history }) => {
     async event => {
       event.preventDefault()
       const { email, password, name } = event.target.elements
-      firebase
-        .register(name.value, email.value, password.value)
+      Firebase.register(name.value, email.value, password.value)
         .then(() => {
           setIsLoading(false)
-          history.push('/admin')
+          history.push('/admin/upload')
         })
         .catch(alert)
     },
@@ -48,7 +47,9 @@ const SignUp: FC<Props> = ({ history }) => {
         <Button variant="primary" type="submit" isLoading={isLoading}>
           Submit
         </Button>
-        <label onClick={() => history.push('/login')} className="ml4 link">
+        <label
+          onClick={() => history.push('/admin/login')}
+          className="ml4 link">
           I have an account
         </label>
       </Form>

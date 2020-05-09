@@ -61,7 +61,7 @@ const Container: FC<Props> = ({
             ) : (
               <Nav.Link
                 className={classNames.login}
-                onClick={() => goTo('/login')}>
+                onClick={() => goTo('/admin/login')}>
                 Sign in
               </Nav.Link>
             )}
