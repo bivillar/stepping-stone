@@ -1,3 +1,12 @@
+$SteppingStone1: #8c2a44;
+$SteppingStone2: #73263a;
+$SteppingStone3: #a6916a;
+$SteppingStone4: #8c6f4a;
+$SteppingStone5: #262626;
+
+$SteppingStoneBG1: #73263a;
+$SteppingStoneBG2: #a6916a;
+
 // Override default variables before the import
 $body-bg: rgb(255, 255, 255);
 $blue: #007bff;
@@ -13,8 +22,8 @@ $cyan: #17a2b8;
 $white: #fff;
 $gray: #6c757d;
 $gray-dark: #343a40;
-$primary: rgba(255, 110, 110, 1);
-$secondary: rgba(255, 194, 114, 1);
+$primary: #73263a;
+$secondary: #a6916a;
 $success: #28a745;
 $info: #17a2b8;
 $warning: #ffc107;
@@ -31,6 +40,8 @@ $font-family-sans-serif: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
   'Segoe UI Symbol';
 $font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas,
   'Liberation Mono', 'Courier New', monospace;
+// Import Bootstrap and its default variables
+@import '~bootstrap/scss/bootstrap.scss';
 
 .progress {
   display: flex;
@@ -41,5 +52,194 @@ $font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas,
   border-radius: 0.25rem;
 }
 
-// Import Bootstrap and its default variables
-@import '~bootstrap/scss/bootstrap.scss';
+body {
+  margin: 0 !important;
+  font-family: Andika !important;
+  -webkit-font-smoothing: antialiased !important;
+  -moz-osx-font-smoothing: grayscale !important;
+  background: linear-gradient(
+    330deg,
+    $SteppingStoneBG1 0%,
+    $SteppingStoneBG2 100%
+  ) !important;
+
+  color: white !important;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace !important;
+}
+
+.fillPage {
+  height: 100vh;
+}
+
+.App {
+  text-align: center !important;
+}
+
+.focus {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.link {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.link:hover {
+  text-decoration: underline !important;
+}
+
+ul {
+  list-style: none;
+}
+
+.admin {
+  display: flex;
+  background: #dbdbdb;
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  color: black;
+}
+
+.adminSidebar {
+  background-image: linear-gradient(
+    330deg,
+    $SteppingStoneBG1 0%,
+    $SteppingStoneBG2 100%
+  ) !important;
+  background-size: 200%;
+  background-position: 0 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 20%;
+  height: 100%;
+  transform: translateX(-70%);
+  transition: 300ms ease-in-out;
+  z-index: 1;
+  overflow: hidden;
+  cursor: pointer;
+
+  &--open {
+    background-size: 100%;
+    background-position: 0 0;
+    transform: translateX(0);
+  }
+}
+
+.adminContent {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  transition: 300ms ease-in-out;
+  z-index: 2;
+  margin-left: 6%;
+
+  &--open {
+    margin-left: 20%;
+  }
+}
+
+.adminBox {
+  background-color: #f0f0f0;
+}
+
+.adminMenu {
+  color: white;
+  width: 100%;
+  height: 10%;
+  margin-top: 10%;
+  padding: 0;
+  li {
+    padding: 10px;
+  }
+
+  .label {
+    padding-left: 10px;
+    visibility: hidden;
+    opacity: 0;
+  }
+}
+
+.pl10 {
+  padding-left: 10px;
+}
+.adminMenu::after {
+  content: '';
+  background: $SteppingStone1;
+  opacity: 0.2;
+  width: 100%;
+  height: 50%;
+  margin-top: 10%;
+  left: 0;
+  top: 0;
+  position: absolute;
+  z-index: -1;
+  padding-left: 10px;
+}
+
+.moveRight {
+  position: absolute;
+  margin-left: 60%;
+  display: flex;
+  justify-content: center;
+  width: 30%;
+  padding-left: 10px;
+}
+
+.fadeOut {
+  visibility: hidden !important;
+  opacity: 0 !important;
+  transition: visibility 0s linear 300ms, opacity 300ms;
+}
+
+.fadeIn {
+  visibility: visible !important;
+  opacity: 1 !important;
+  transition: visibility 0s linear 0s, opacity 300ms;
+}
+
+.shape {
+  position: absolute;
+  top: 90%;
+  left: -50%;
+  width: 180%;
+  height: 50%;
+  background: linear-gradient($SteppingStone1 20%, $SteppingStone3);
+  z-index: -1;
+  opacity: 0;
+  transform: rotate(20deg);
+  margin-left: 0;
+  margin-top: 0;
+  transition: 1s ease;
+
+  &:nth-child(2) {
+    background: linear-gradient($SteppingStone3 20%, $SteppingStone1);
+    transform: rotate(20deg);
+    margin-top: 0;
+  }
+
+  .adminSidebar--open & {
+    animation: float 15s infinite ease-in-out;
+    margin-left: -100px;
+    margin-top: -20px;
+    opacity: 0.2;
+    transform: scale(1) translateY(0) rotate(20deg);
+
+    &:nth-child(2) {
+      animation: float 10s infinite reverse ease-in-out;
+      transform: scale(1) translateY(100px) translateX(170px) rotate(-20deg);
+    }
+  }
+}
+
+@keyframes float {
+  50% {
+    top: 60%;
+  }
+}
