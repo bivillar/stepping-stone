@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 
 function useVisible(options: IntersectionObserverInit = { rootMargin: '0px' }) {
   const [isVisible, setVisible] = useState(false)
-  const [ref, setRef] = useState(null)
+  const [ref, setRef] = useState<Element | null>(null)
 
   useEffect(() => {
     const observer = new IntersectionObserver(([entry]) => {
@@ -10,10 +10,10 @@ function useVisible(options: IntersectionObserverInit = { rootMargin: '0px' }) {
     }, options)
 
     if (ref) {
-      observer.observe(ref!)
+      observer.observe(ref)
     }
     return () => {
-      if (ref) observer.unobserve(ref!)
+      if (ref) observer.unobserve(ref)
     }
   }, [ref, options])
 
