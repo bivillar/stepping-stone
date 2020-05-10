@@ -7,6 +7,7 @@ import Firebase from '../../../base'
 import { AuthContext } from '../../../Auth'
 import Button from '../../../components/Button'
 import Logo from '../../../components/Logo'
+import { AdminPagesEnum } from '../../../constants'
 
 const { Group, Label, Control } = Form
 
@@ -24,7 +25,7 @@ const Login: FC<Props> = ({ history }) => {
       Firebase.login(email.value, password.value)
         ?.then(() => {
           setIsLoading(false)
-          history.push('/admin/upload')
+          history.push(AdminPagesEnum.Upload)
         })
         .catch(alert)
     },
@@ -56,7 +57,7 @@ const Login: FC<Props> = ({ history }) => {
               Submit
             </Button>
             <label
-              onClick={() => history.push('/admin/signup')}
+              onClick={() => history.push(AdminPagesEnum.SignUp)}
               className="ml4 link">
               I don't have an account
             </label>

@@ -4,6 +4,8 @@ export enum ResourcesEnum {
 }
 
 export enum AdminPagesEnum {
-  Upload = 'upload',
-  ManageUsers = 'manageusers',
+  Login = '/admin/login',
+  SignUp = '/admin/signup',
+  Upload = '/admin/upload',
+  List = '/admin/list',
 }

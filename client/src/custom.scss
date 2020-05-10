@@ -22,7 +22,7 @@ $white: #fff;
 $gray: #6c757d;
 $gray-dark: #343a40;
 $primary: $SteppingStone3;
-$secondary: $SteppingStone1;
+$secondary: $SteppingStone4;
 $success: #28a745;
 $info: #17a2b8;
 $warning: #ffc107;
@@ -41,6 +41,12 @@ $font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas,
   'Liberation Mono', 'Courier New', monospace;
 
 @import '~bootstrap/scss/bootstrap.scss';
+.c-success {
+  color: $green;
+}
+.c-danger {
+  color: $red;
+}
 
 .preload * {
   -webkit-transition: none !important;
@@ -200,7 +206,7 @@ ul {
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05), 0 2px 2px rgba(0, 0, 0, 0.05),
     0 4px 4px rgba(0, 0, 0, 0.05), 0 6px 8px rgba(0, 0, 0, 0.05),
     0 8px 16px rgba(0, 0, 0, 0.05);
-  padding: 2% 10%;
+  padding: 5% 10%;
   width: 100%;
   border-radius: 10px;
 }
@@ -297,6 +303,18 @@ ul {
 .pl10 {
   padding-left: 10px;
 }
+
+.adminList {
+  ul {
+    padding: 0px !important;
+    margin: 0px !important;
+  }
+  li {
+    padding: 0px !important;
+    margin: 0px !important;
+  }
+}
+
 .adminMenu::after {
   content: '';
   background: $SteppingStone5;

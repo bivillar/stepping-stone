@@ -10,13 +10,15 @@ import Upload from './Upload'
 import UserList from './UserList'
 import SideBar from './SideBar'
 import TopBar from './TopBar'
+import { AdminPagesEnum } from '../../constants'
 
 const Admin: FC<Props> = ({ history }) => {
   const { currentUser } = useContext(AuthContext)
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const [loaded, setLoaded] = useState<boolean>(false)
 
-  if (history.location.pathname === '/admin') history.push('/admin/upload')
+  if (history.location.pathname === '/admin')
+    history.push(AdminPagesEnum.Upload)
 
   useEffect(() => {
     setTimeout(() => {
@@ -44,16 +46,16 @@ const Admin: FC<Props> = ({ history }) => {
         }>
         {currentUser && <TopBar history={history} />}
         <Switch>
-          <Route path="/admin/login" component={Login} />
-          <Route path="/admin/signup" component={SignUp} />
+          <Route path={AdminPagesEnum.Login} component={Login} />
+          <Route path={AdminPagesEnum.SignUp} component={SignUp} />
           <PrivateRoute
             currentUser={currentUser}
-            path="/admin/upload"
+            path={AdminPagesEnum.Upload}
             component={Upload}
           />
           <PrivateRoute
             currentUser={currentUser}
-            path="/admin/list"
+            path={AdminPagesEnum.List}
             component={UserList}
           />
         </Switch>

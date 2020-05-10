@@ -2,6 +2,7 @@ import React, { FC, useState, useDebugValue, useEffect } from 'react'
 import { History } from 'history'
 
 import { PeopleIcon, UploadIcon } from './Icons'
+import { AdminPagesEnum } from '../../constants'
 
 const MenuItem: FC<{ icon: any; label: string; isOpen: boolean }> = ({
   icon,
@@ -16,11 +17,11 @@ const MenuItem: FC<{ icon: any; label: string; isOpen: boolean }> = ({
 
 const SideBar: FC<Props> = ({ isOpen, open, history }) => {
   const className = isOpen ? 'adminSidebar--open' : ''
-  const [url, setUrl] = useState<string | null>(null)
+  const [url, setUrl] = useState<AdminPagesEnum | null>(null)
 
-  useEffect(() => setUrl(window.location.pathname), [])
+  useEffect(() => setUrl(window.location.pathname as AdminPagesEnum), [])
 
-  const goto = (url: string) => {
+  const goto = (url: AdminPagesEnum) => {
     console.log(url)
     setUrl(url)
     history.push(url)
@@ -40,8 +41,8 @@ const SideBar: FC<Props> = ({ isOpen, open, history }) => {
       <ul className="adminMenu" id="adminMenu">
         <li
           id="item"
-          className={url === '/admin/list' ? 'selected' : ''}
-          onClick={() => goto('/admin/list')}>
+          className={url === AdminPagesEnum.List ? 'selected' : ''}
+          onClick={() => goto(AdminPagesEnum.List)}>
           <MenuItem
             icon={<PeopleIcon />}
             label="Gerenciar Usuários"
@@ -50,8 +51,8 @@ const SideBar: FC<Props> = ({ isOpen, open, history }) => {
         </li>
         <li
           id="item"
-          className={url === '/admin/upload' ? 'selected' : ''}
-          onClick={() => goto('/admin/upload')}>
+          className={url === AdminPagesEnum.Upload ? 'selected' : ''}
+          onClick={() => goto(AdminPagesEnum.Upload)}>
           <MenuItem
             icon={<UploadIcon />}
             label="Fazer Upload de novos dados"

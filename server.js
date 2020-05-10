@@ -26,7 +26,6 @@ app.post('/api/upload', (req, res) => {
     return res.status(400).json({ msg: 'No file uploaded' })
   }
 
-  console.log('TO AQUI')
   const file = req.files.file
 
   file.mv(`${__dirname}/client/public/uploads/${file.name}`, err => {
