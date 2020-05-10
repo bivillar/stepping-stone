@@ -12,6 +12,7 @@ interface Props {
 const Upload: FC<Props> = ({ history }) => {
   const [file, setFile] = useState<File | null>(null)
   const [progress, setProgress] = useState<number>(0)
+  const [error, setError] = useState<boolean>(false)
 
   const handleUpload = (event: any) => {
     event.preventDefault()
@@ -20,8 +21,10 @@ const Upload: FC<Props> = ({ history }) => {
     formData.append('file', file)
 
     saveCSV(formData, setProgress)
-      .then(console.log)
-      .catch(console.log)
+      .then(result => {
+        if (result.status == 200) setProgress(100)
+      })
+      .catch(() => setError(true))
   }
 
   const handleFileChange = (event: any) => {
@@ -30,7 +33,7 @@ const Upload: FC<Props> = ({ history }) => {
   }
 
   return (
-    <>
+    <div className="adminContainer">
       <h1>Adicione um arquivo do tipo .csv para atualizar os dados</h1>
       <div className="relative mb4">
         <input
@@ -48,11 +51,8 @@ const Upload: FC<Props> = ({ history }) => {
         <Button disabled={!file} block onClick={handleUpload}>
           Upload
         </Button>
-        <div>
-          <Button onClick={() => Firebase.getAllUsers()}>CLICA AQUII</Button>
-        </div>
       </div>
-    </>
+    </div>
   )
 }
 
