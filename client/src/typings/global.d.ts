@@ -6,7 +6,7 @@ declare global {
     email: string
     isAdmin: boolean
     name: string
-    upload: boolean
-    manageUsers: boolean
+    canUpload: boolean
+    canManageUsers: boolean
   }
 }

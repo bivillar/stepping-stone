@@ -1,19 +1,24 @@
-import React, { FC, useState } from 'react'
+import React, { FC, useState, useContext } from 'react'
 import { Button, ProgressBar } from 'react-bootstrap'
 import { History } from 'history'
 import { Alert } from 'react-bootstrap'
 
 import { saveCSV } from '../../utils/api'
+import { AuthContext } from '../../Auth'
 
-interface Props {
-  history: History
-}
-
-const Upload: FC<Props> = ({ history }) => {
+const Upload: FC = () => {
   const [file, setFile] = useState<File | null>(null)
   const [progress, setProgress] = useState<number>(0)
   const [error, setError] = useState<boolean>(false)
   const [loaded, setLoaded] = useState<boolean>(false)
+
+  const { currentUser } = useContext(AuthContext)
+  if (!currentUser?.canUpload)
+    return (
+      <div className="adminContainer">
+        <h1>Para ter acesso, você precisa pedir à um dos admins.</h1>
+      </div>
+    )
 
   const handleUpload = (event: any) => {
     event.preventDefault()
