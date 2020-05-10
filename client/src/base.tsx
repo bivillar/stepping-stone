@@ -26,7 +26,7 @@ class Firebase {
   }
 
   logout() {
-    return this.auth.signOut()
+    this.auth.signOut().then(() => window.location.reload())
   }
 
   async register(name: string, email: string, password: string) {
