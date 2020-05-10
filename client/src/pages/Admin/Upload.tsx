@@ -1,9 +1,9 @@
-import React, { FC, useState, useEffect, useContext } from 'react'
+import React, { FC, useState } from 'react'
 import { Button, ProgressBar } from 'react-bootstrap'
 import { History } from 'history'
+import { Alert } from 'react-bootstrap'
 
 import { saveCSV } from '../../utils/api'
-import Firebase from '../../base'
 
 interface Props {
   history: History
@@ -13,6 +13,7 @@ const Upload: FC<Props> = ({ history }) => {
   const [file, setFile] = useState<File | null>(null)
   const [progress, setProgress] = useState<number>(0)
   const [error, setError] = useState<boolean>(false)
+  const [loaded, setLoaded] = useState<boolean>(false)
 
   const handleUpload = (event: any) => {
     event.preventDefault()
@@ -22,7 +23,9 @@ const Upload: FC<Props> = ({ history }) => {
 
     saveCSV(formData, setProgress)
       .then(result => {
-        if (result.status == 200) setProgress(100)
+        if (result.status === 200) {
+          setLoaded(true)
+        }
       })
       .catch(() => setError(true))
   }
@@ -51,6 +54,16 @@ const Upload: FC<Props> = ({ history }) => {
         <Button disabled={!file} block onClick={handleUpload}>
           Upload
         </Button>
+        {error && (
+          <div className="mt4 tc">
+            <Alert variant="danger">Ocorreu um erro ao tentar salvar.</Alert>
+          </div>
+        )}
+        {loaded && (
+          <div className="mt4 tc">
+            <Alert variant="success">Arquivo salvo com sucesso!</Alert>
+          </div>
+        )}
       </div>
     </div>
   )

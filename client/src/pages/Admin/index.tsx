@@ -2,9 +2,6 @@ import React, { FC, useState, useContext, useEffect } from 'react'
 import { Route, Switch } from 'react-router-dom'
 import { History } from 'history'
 
-import { Button } from 'react-bootstrap'
-
-import { AdminPagesEnum } from '../../constants'
 import { AuthContext } from '../../Auth'
 import PrivateRoute from '../../PrivateRoute'
 import SignUp from './SignUp'
@@ -14,13 +11,12 @@ import UserList from './UserList'
 import SideBar from './SideBar'
 import TopBar from './TopBar'
 
-const Admin: FC<Props> = ({ history, children }) => {
+const Admin: FC<Props> = ({ history }) => {
   const { currentUser } = useContext(AuthContext)
   const [isOpen, setIsOpen] = useState<boolean>(false)
-  const [page, setPage] = useState<AdminPagesEnum>(AdminPagesEnum.Upload)
   const [loaded, setLoaded] = useState<boolean>(false)
 
-  if (history.location.pathname == '/admin') history.push('/admin/upload')
+  if (history.location.pathname === '/admin') history.push('/admin/upload')
 
   useEffect(() => {
     setTimeout(() => {
@@ -36,7 +32,6 @@ const Admin: FC<Props> = ({ history, children }) => {
       {currentUser && (
         <SideBar
           history={history}
-          setPage={setPage}
           isOpen={isOpen}
           open={() => setIsOpen(!isOpen)}
         />
