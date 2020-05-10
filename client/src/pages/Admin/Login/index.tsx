@@ -6,10 +6,9 @@ import { Form } from 'react-bootstrap'
 import Firebase from '../../../base'
 import { AuthContext } from '../../../Auth'
 import Button from '../../../components/Button'
-import Container from '../../../components/Container'
 import Logo from '../../../components/Logo'
 
-const { Group, Label, Control, Text } = Form
+const { Group, Label, Control } = Form
 
 interface Props {
   history: History

@@ -8,7 +8,6 @@ import Logo from '../../components/Logo'
 
 const TopBar: FC<Props> = ({ history }) => {
   const { currentUser } = useContext(AuthContext)
-  if (!currentUser) return <></>
 
   const logOut = async () => {
     await Firebase.logout()

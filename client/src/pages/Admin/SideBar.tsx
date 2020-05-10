@@ -1,7 +1,6 @@
-import React, { FC, useState, useEffect, ReactElement } from 'react'
+import React, { FC } from 'react'
 import { History } from 'history'
 
-import { AdminPagesEnum } from '../../constants'
 import { PeopleIcon, UploadIcon } from './Icons'
 
 const MenuItem: FC<{ icon: any; label: string; isOpen: boolean }> = ({
@@ -60,7 +59,6 @@ const SideBar: FC<Props> = ({ isOpen, open, history }) => {
 
 interface Props {
   isOpen: boolean
-  setPage: (page: AdminPagesEnum) => void
   open: () => void
   history: History
 }
