@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 
-const Logo: FC<{ fontSize: number }> = ({ fontSize }) => (
-  <div style={{ fontSize }} className="logo">
+const Logo: FC = () => (
+  <div className="logo">
     <div>STEPPING</div>
     <div>STONE</div>
   </div>
