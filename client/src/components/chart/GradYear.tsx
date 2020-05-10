@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts'
+import { AreaChart, Area, XAxis, YAxis, Tooltip } from 'recharts'
 import useVisible from '../../utils/hooks/useVisible'
 
 const data = [
