@@ -22,7 +22,6 @@ const SideBar: FC<Props> = ({ isOpen, open, history }) => {
   useEffect(() => setUrl(window.location.pathname as AdminPagesEnum), [])
 
   const goto = (url: AdminPagesEnum) => {
-    console.log(url)
     setUrl(url)
     history.push(url)
   }

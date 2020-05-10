@@ -44,40 +44,39 @@ class Firebase {
   }
 
   addUser(
-    name: boolean,
-    upload: boolean,
-    manageUsers: boolean,
+    name: string,
+    canUpload: boolean,
+    canManageUsers: boolean,
     userEmail: string
   ) {
     if (!this.auth.currentUser) {
-      return alert('Not authorized')
+      return new Promise((_, reject) => reject('Not authorized'))
     }
-    const isAdmin = upload && manageUsers
+    const isAdmin = canUpload && canManageUsers
 
     return this.db
       .collection('users')
       .doc(userEmail)
       .set({
         isAdmin,
-        upload,
-        manageUsers,
+        canUpload,
+        canManageUsers,
         name,
       })
-      .then(result => console.log(result))
   }
 
-  updateUser(resources: string[], userEmail: string) {
+  updateUser(userEmail: string, canUpload: boolean, canManageUsers: boolean) {
     if (!this.auth.currentUser) {
-      return alert('Not authorized')
+      return new Promise((_, reject) => reject('Not authorized'))
     }
 
     return this.db
       .collection('users')
       .doc(userEmail)
       .update({
-        resources,
+        canUpload,
+        canManageUsers,
       })
-      .then(result => console.log(result))
   }
 
   updateCurrentUser(user: User) {
@@ -89,7 +88,6 @@ class Firebase {
       .collection('users')
       .doc(this.auth.currentUser?.email!)
       .update(user)
-      .then(result => console.log(result))
   }
 
   isInitialized() {
@@ -105,9 +103,9 @@ class Firebase {
       .collection('users')
       .doc(email)
       .get()
-    const manageUsers = user.get('manageUsers')
-    const upload = user.get('upload')
-    return { manageUsers, upload }
+    const canManageUsers = user.get('canManageUsers')
+    const canUpload = user.get('canUpload')
+    return { canManageUsers, canUpload }
   }
 
   async getCurrentUserPermissions() {
@@ -117,9 +115,9 @@ class Firebase {
       .collection('users')
       .doc(this.auth.currentUser?.email!)
       .get()
-    const manageUsers = user.get('manageUsers')
-    const upload = user.get('upload')
-    return { manageUsers, upload }
+    const canManageUsers = user.get('canManageUsers')
+    const canUpload = user.get('canUpload')
+    return { canManageUsers, canUpload }
   }
 
   async getCurrentUser() {
@@ -130,10 +128,10 @@ class Firebase {
       .doc(this.auth.currentUser?.email!)
       .get()
     const isAdmin = user.get('isAdmin')
-    const manageUsers = user.get('manageUsers')
-    const upload = user.get('upload')
+    const canManageUsers = user.get('canManageUsers')
+    const canUpload = user.get('canUpload')
     const name = user.get('name') || this.auth.currentUser?.displayName
-    return { isAdmin, manageUsers, upload, name }
+    return { isAdmin, canManageUsers, canUpload, name }
   }
 
   async getAllUsers() {
@@ -143,17 +141,16 @@ class Firebase {
       .get()
       .then(snapshot => {
         snapshot.forEach(user => {
-          console.log(user)
           const isAdmin = user.get('isAdmin')
           const name = user.get('name')
-          const manageUsers = user.get('manageUsers')
-          const upload = user.get('upload')
+          const canManageUsers = user.get('canManageUsers')
+          const canUpload = user.get('canUpload')
 
           users.push({
             email: user.id,
             isAdmin,
-            upload,
-            manageUsers,
+            canUpload,
+            canManageUsers,
             name,
           })
         })
