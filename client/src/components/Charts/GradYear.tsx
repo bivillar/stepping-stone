@@ -48,18 +48,18 @@ const GradYear: FC = () => {
           <defs>
             <linearGradient id="gradient" x1="0" y1="0" x2="0" y2="1">
               <stop offset="5%" stopColor="#5204bf" stopOpacity={0.8} />
-              <stop offset="95%" stopColor="#4158d9" stopOpacity={0} />
+              <stop offset="95%" stopColor="#5204bf" stopOpacity={0.1} />
             </linearGradient>
           </defs>
 
-          <XAxis dataKey="name" stroke="#4158d9" />
-          <YAxis stroke="#4158d9" />
+          <XAxis dataKey="name" stroke="#5204bf" />
+          <YAxis stroke="#5204bf" name="Mulheres" />
           <Tooltip />
 
           <Area
             type="monotone"
             dataKey="value"
-            stroke="#131a42"
+            stroke="#5204bf"
             fillOpacity={1}
             fill="url(#gradient)"
             activeDot={{ r: 8 }}
