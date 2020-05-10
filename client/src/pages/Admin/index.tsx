@@ -1,4 +1,4 @@
-import React, { FC, useState, useContext } from 'react'
+import React, { FC, useState, useContext, useEffect } from 'react'
 import { Route, Switch } from 'react-router-dom'
 import { History } from 'history'
 
@@ -18,9 +18,21 @@ const Admin: FC<Props> = ({ history, children }) => {
   const { currentUser } = useContext(AuthContext)
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const [page, setPage] = useState<AdminPagesEnum>(AdminPagesEnum.Upload)
+  const [loaded, setLoaded] = useState<boolean>(false)
+
+  if (history.location.pathname == '/admin') history.push('/admin/upload')
+
+  useEffect(() => {
+    setTimeout(() => {
+      if (currentUser) setLoaded(true)
+    }, 200)
+  }, [currentUser])
 
   return (
-    <div className={currentUser ? 'admin' : 'adminLogin'}>
+    <div
+      className={`${loaded ? '' : 'preload'} ${
+        currentUser ? 'admin' : 'adminLogin '
+      }`}>
       {currentUser && (
         <SideBar
           history={history}
@@ -37,7 +49,6 @@ const Admin: FC<Props> = ({ history, children }) => {
         }>
         {currentUser && <TopBar history={history} />}
         <Switch>
-          {/* <Route path="/admin/" component={Upload} /> */}
           <Route path="/admin/login" component={Login} />
           <Route path="/admin/signup" component={SignUp} />
           <PrivateRoute
