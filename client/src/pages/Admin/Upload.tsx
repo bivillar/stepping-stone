@@ -31,8 +31,14 @@ const Upload: FC<Props> = ({ history }) => {
   }
 
   const handleFileChange = (event: any) => {
-    setFile(event?.target?.files?.[0])
-    console.log(event?.target?.files?.[0].name)
+    setProgress(0)
+    setLoaded(false)
+    setError(false)
+    const file = event?.target?.files?.[0]
+    if (file) {
+      setFile(file)
+      console.log(file.name)
+    } else setFile(null)
   }
 
   return (
