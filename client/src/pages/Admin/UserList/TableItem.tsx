@@ -1,16 +1,25 @@
 import React, { FC, useState } from 'react'
-import { Uncheck, Check, Edit } from '../Icons'
 import { Button } from 'react-bootstrap'
 import InputGroup from 'react-bootstrap/InputGroup'
 
+import { Uncheck, Check, Edit } from '../Icons'
+import Firebase from '../../../base'
+
 const TableItem: FC<Props> = ({
-  user: { email, name, upload: userUpload, manageUsers: userManageUser },
+  user: {
+    email,
+    name,
+    canUpload: usercanUpload,
+    canManageUsers: userManageUser,
+  },
   setEditing,
   disabled,
 }) => {
   const [edit, setEdit] = useState<boolean>(false)
-  const [upload, setUpload] = useState<boolean>(userUpload)
-  const [manageUsers, setManageUsers] = useState<boolean>(userManageUser)
+  const [canUpload, setcanUpload] = useState<boolean>(usercanUpload || false)
+  const [canManageUsers, setcanManageUsers] = useState<boolean>(
+    userManageUser || false
+  )
 
   const mark = (value: boolean) =>
     value ? (
@@ -28,8 +37,11 @@ const TableItem: FC<Props> = ({
     setEditing(true)
   }
   const handleSave = () => {
-    setEdit(false)
-    setEditing(false)
+    debugger
+    Firebase.updateUser(email, canUpload, canManageUsers).then(() => {
+      setEdit(false)
+      setEditing(false)
+    })
   }
 
   return (
@@ -39,21 +51,24 @@ const TableItem: FC<Props> = ({
       <td className="tc">
         {edit ? (
           <InputGroup.Checkbox
-            checked={upload}
-            onChange={() => setUpload(!upload)}
+            checked={canUpload}
+            onChange={() => setcanUpload(!canUpload)}
           />
         ) : (
-          mark(upload)
+          mark(canUpload)
         )}
       </td>
       <td className="tc">
         {edit ? (
           <InputGroup.Checkbox
-            checked={manageUsers}
-            onChange={() => setManageUsers(!manageUsers)}
+            checked={canManageUsers}
+            onChange={() => {
+              if (!canManageUsers) setcanUpload(true)
+              setcanManageUsers(!canManageUsers)
+            }}
           />
         ) : (
-          mark(manageUsers)
+          mark(canManageUsers)
         )}
       </td>
 

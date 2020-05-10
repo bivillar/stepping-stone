@@ -21,7 +21,6 @@ const TopBar: FC<Props> = ({ history }) => {
         <Logo />
       </div>
       <div className="flex justify-end">
-        {currentUser?.name}
         <Button onClick={logOut}>SING OUT</Button>
       </div>
     </div>
