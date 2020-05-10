@@ -42,6 +42,14 @@ $font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas,
 
 @import '~bootstrap/scss/bootstrap.scss';
 
+.preload * {
+  -webkit-transition: none !important;
+  -moz-transition: none !important;
+  -ms-transition: none !important;
+  -o-transition: none !important;
+  transition: none !important;
+}
+
 .logo {
   font-weight: 900;
   line-height: 0.8;

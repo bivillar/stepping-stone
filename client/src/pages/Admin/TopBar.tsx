@@ -13,7 +13,6 @@ const TopBar: FC<Props> = ({ history }) => {
   const logOut = async () => {
     await Firebase.logout()
     history.push('/admin/login')
-    console.log('OI')
   }
 
   return (
