@@ -1,13 +1,12 @@
-$SteppingStone1: #8c2a44;
-$SteppingStone2: #73263a;
-$SteppingStone3: #a6916a;
-$SteppingStone4: #8c6f4a;
-$SteppingStone5: #262626;
+$SteppingStone1: #f21651;
+$SteppingStone2: #f22797;
+$SteppingStone3: #5204bf;
+$SteppingStone4: #4158d9;
+$SteppingStone5: #0d0d0d;
 
-$SteppingStoneBG1: #73263a;
-$SteppingStoneBG2: #a6916a;
+$SteppingStoneBG1: #5204bf;
+$SteppingStoneBG2: #0d0d0d;
 
-// Override default variables before the import
 $body-bg: rgb(255, 255, 255);
 $blue: #007bff;
 $indigo: #6610f2;
@@ -40,8 +39,77 @@ $font-family-sans-serif: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
   'Segoe UI Symbol';
 $font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas,
   'Liberation Mono', 'Courier New', monospace;
-// Import Bootstrap and its default variables
+
 @import '~bootstrap/scss/bootstrap.scss';
+
+.logo {
+  font-weight: 900;
+  line-height: 0.8;
+  text-transform: uppercase;
+  background: linear-gradient(
+    to right,
+    $SteppingStone3 0%,
+    $SteppingStone4 100%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.title {
+  padding: 20% 10%;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+
+  .subtitle {
+    font-weight: 900;
+    color: $SteppingStone4;
+    width: 100%;
+    opacity: 40%;
+    font-weight: 900;
+    padding-top: 6%;
+    background: linear-gradient(
+      to right,
+      $SteppingStone2 0%,
+      $SteppingStone1 100%
+    );
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
+
+.logoDiv {
+  position: absolute;
+  padding-top: 20%;
+  padding-left: 10%;
+  font-size: 80px;
+  -webkit-transition: font-size 0.5s ease;
+  -moz-transition: font-size 0.5s ease;
+  -o-transition: font-size 0.5s ease;
+  transition: font-size 0.5s ease;
+}
+
+.fixed {
+  position: fixed;
+  padding-top: 3%;
+  font-size: 40px;
+}
+
+.fade-in-section {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 1200ms ease-out, transform 600ms ease-out,
+    visibility 1200ms ease-out;
+  will-change: opacity, transform, visibility;
+}
+.fade-in-section.is-visible {
+  opacity: 1;
+  transform: none;
+  visibility: visible;
+}
 
 .progress {
   display: flex;
@@ -54,15 +122,10 @@ $font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas,
 
 body {
   margin: 0 !important;
-  font-family: Andika !important;
+  font-family: 'Poppins', sans-serif !important;
   -webkit-font-smoothing: antialiased !important;
   -moz-osx-font-smoothing: grayscale !important;
-  background: linear-gradient(
-    330deg,
-    $SteppingStoneBG1 0%,
-    $SteppingStoneBG2 100%
-  ) !important;
-
+  background: $SteppingStoneBG2;
   color: white !important;
 }
 
@@ -97,7 +160,7 @@ ul {
 
 .admin {
   display: flex;
-  background: #dbdbdb;
+  background: $SteppingStone5;
   width: 100%;
   height: 100vh;
   position: relative;
