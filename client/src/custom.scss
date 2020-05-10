@@ -261,6 +261,20 @@ ul {
     background-position: 0 0;
     transform: translateX(0);
   }
+
+  li {
+    color: white;
+    opacity: 0.5;
+  }
+
+  li:hover {
+    color: white;
+    opacity: 1;
+  }
+
+  .selected {
+    opacity: 1;
+  }
 }
 
 .adminMenu {
