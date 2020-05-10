@@ -10,17 +10,19 @@ const UserList: FC<Props> = ({}) => {
   console.log(users)
 
   return (
-    <ul className="">
-      {users?.map(({ email, resourcers, isAdmin }) => (
-        <div key={email}>
-          <li className="">
-            {email}
-            {resourcers?.map(resource => resource)}
-            {isAdmin ? 'ADMIN' : 'NOT ADMIN'}
-          </li>
-        </div>
-      ))}
-    </ul>
+    <div className="adminContainer">
+      <ul className="">
+        {users?.map(({ email, resourcers, isAdmin }) => (
+          <div key={email}>
+            <li className="">
+              {email}
+              {resourcers?.map(resource => resource)}
+              {isAdmin ? 'ADMIN' : 'NOT ADMIN'}
+            </li>
+          </div>
+        ))}
+      </ul>
+    </div>
   )
 }
 
