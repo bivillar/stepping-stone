@@ -3,6 +3,7 @@ import { Navbar as BootstrapNavbar, Nav } from 'react-bootstrap'
 import { AuthContext } from '../Auth'
 import firebase from '../base'
 import { History } from 'history'
+import { AdminPagesEnum } from '../constants'
 
 interface Props {
   page: string
@@ -61,7 +62,7 @@ const Container: FC<Props> = ({
             ) : (
               <Nav.Link
                 className={classNames.login}
-                onClick={() => goTo('/admin/login')}>
+                onClick={() => goTo(AdminPagesEnum.Login)}>
                 Sign in
               </Nav.Link>
             )}
