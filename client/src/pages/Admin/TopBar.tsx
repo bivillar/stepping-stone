@@ -5,13 +5,14 @@ import { History } from 'history'
 import { AuthContext } from '../../Auth'
 import Firebase from '../../base'
 import Logo from '../../components/Logo'
+import { AdminPagesEnum } from '../../constants'
 
 const TopBar: FC<Props> = ({ history }) => {
   const { currentUser } = useContext(AuthContext)
 
   const logOut = async () => {
     await Firebase.logout()
-    history.push('/admin/login')
+    history.push(AdminPagesEnum.Login)
   }
 
   return (
