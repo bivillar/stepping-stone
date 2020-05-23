@@ -21,8 +21,8 @@ $cyan: #17a2b8;
 $white: #fff;
 $gray: #6c757d;
 $gray-dark: #343a40;
-$primary: #73263a;
-$secondary: #a6916a;
+$primary: $SteppingStone3;
+$secondary: $SteppingStone4;
 $success: #28a745;
 $info: #17a2b8;
 $warning: #ffc107;
@@ -41,6 +41,20 @@ $font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas,
   'Liberation Mono', 'Courier New', monospace;
 
 @import '~bootstrap/scss/bootstrap.scss';
+.c-success {
+  color: $green;
+}
+.c-danger {
+  color: $red;
+}
+
+.preload * {
+  -webkit-transition: none !important;
+  -moz-transition: none !important;
+  -ms-transition: none !important;
+  -o-transition: none !important;
+  transition: none !important;
+}
 
 .logo {
   font-weight: 900;
@@ -90,6 +104,10 @@ $font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas,
   -moz-transition: font-size 0.5s ease;
   -o-transition: font-size 0.5s ease;
   transition: font-size 0.5s ease;
+
+  &--admin {
+    padding: 0% !important;
+  }
 }
 
 .fixed {
@@ -116,7 +134,6 @@ $font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas,
   height: 1rem;
   overflow: hidden;
   font-size: 0.75rem;
-  background-color: rgba(174, 17, 74, 0.5);
   border-radius: 0.25rem;
 }
 
@@ -143,11 +160,11 @@ code {
 }
 
 .focus {
-  color: rgba(255, 255, 255, 0.8) !important;
+  color: $SteppingStone3 !important;
 }
 
 .link {
-  color: rgba(255, 255, 255, 0.7);
+  color: $SteppingStone4;
 }
 
 .link:hover {
@@ -158,6 +175,8 @@ ul {
   list-style: none;
 }
 
+// Admin
+
 .admin {
   display: flex;
   background: $SteppingStone5;
@@ -167,7 +186,64 @@ ul {
   color: black;
 }
 
+.adminContent {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  transition: 300ms ease-in-out;
+  z-index: 2;
+  margin-left: 6%;
+  padding: 3% 10%;
+  &--open {
+    margin-left: 20%;
+  }
+}
+
+.adminContainer {
+  background-color: white;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05), 0 2px 2px rgba(0, 0, 0, 0.05),
+    0 4px 4px rgba(0, 0, 0, 0.05), 0 6px 8px rgba(0, 0, 0, 0.05),
+    0 8px 16px rgba(0, 0, 0, 0.05);
+  padding: 5% 10%;
+  width: 100%;
+  border-radius: 10px;
+}
+
+.adminLogin {
+  background: $SteppingStoneBG2;
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  color: black;
+}
+
+.loginContent {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  padding-top: 20%;
+}
+
+.loginContainer {
+  background-color: white;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05), 0 2px 2px rgba(0, 0, 0, 0.05),
+    0 4px 4px rgba(0, 0, 0, 0.05), 0 6px 8px rgba(0, 0, 0, 0.05),
+    0 8px 16px rgba(0, 0, 0, 0.05);
+  padding: 2% 5%;
+  width: 50%;
+  border-radius: 10px;
+}
+
+.adminTopBar {
+  width: 100%;
+  height: 30%;
+}
+
 .adminSidebar {
+  opacity: 70%;
   background-image: linear-gradient(
     330deg,
     $SteppingStoneBG1 0%,
@@ -191,25 +267,20 @@ ul {
     background-position: 0 0;
     transform: translateX(0);
   }
-}
 
-.adminContent {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: relative;
-  transition: 300ms ease-in-out;
-  z-index: 2;
-  margin-left: 6%;
-
-  &--open {
-    margin-left: 20%;
+  li {
+    color: white;
+    opacity: 0.5;
   }
-}
 
-.adminBox {
-  background-color: #f0f0f0;
+  li:hover {
+    color: white;
+    opacity: 1;
+  }
+
+  .selected {
+    opacity: 1;
+  }
 }
 
 .adminMenu {
@@ -232,9 +303,21 @@ ul {
 .pl10 {
   padding-left: 10px;
 }
+
+.adminList {
+  ul {
+    padding: 0px !important;
+    margin: 0px !important;
+  }
+  li {
+    padding: 0px !important;
+    margin: 0px !important;
+  }
+}
+
 .adminMenu::after {
   content: '';
-  background: $SteppingStone1;
+  background: $SteppingStone5;
   opacity: 0.2;
   width: 100%;
   height: 50%;
@@ -273,7 +356,7 @@ ul {
   left: -50%;
   width: 180%;
   height: 50%;
-  background: linear-gradient($SteppingStone1 20%, $SteppingStone3);
+  background: linear-gradient($SteppingStone5 20%, $SteppingStone3);
   z-index: -1;
   opacity: 0;
   transform: rotate(20deg);
@@ -282,7 +365,7 @@ ul {
   transition: 1s ease;
 
   &:nth-child(2) {
-    background: linear-gradient($SteppingStone3 20%, $SteppingStone1);
+    background: linear-gradient($SteppingStone3 20%, $SteppingStone5);
     transform: rotate(20deg);
     margin-top: 0;
   }

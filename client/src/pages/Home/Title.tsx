@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 
-import GradYear from '../../components/charts/GradYear'
-import useVisible from '../../components/hooks/useVisible'
+import GradYear from '../../components/chart/GradYear'
+import useVisible from '../../utils/hooks/useVisible'
 
 const Title: FC = () => {
   const [isVisible, setRef] = useVisible()
