@@ -52,7 +52,7 @@ class Firebase {
     if (!this.auth.currentUser) {
       return new Promise((_, reject) => reject('Not authorized'))
     }
-    const isAdmin = canUpload && canManageUsers
+    const isAdmin = canUpload || canManageUsers
 
     return this.db
       .collection('users')
@@ -70,12 +70,14 @@ class Firebase {
       return new Promise((_, reject) => reject('Not authorized'))
     }
 
+    const isAdmin = canUpload || canManageUsers
     return this.db
       .collection('users')
       .doc(userEmail)
       .update({
         canUpload,
         canManageUsers,
+        isAdmin,
       })
   }
 
