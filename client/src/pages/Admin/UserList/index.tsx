@@ -82,7 +82,7 @@ const UserList: FC<Props> = () => {
                 key={user.email}
                 user={user}
                 setEditing={setEditing}
-                disabled={isEditing}
+                disabled={isEditing || currentUser.email == user.email}
               />
             ))
           )}

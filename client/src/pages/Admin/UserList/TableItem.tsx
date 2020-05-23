@@ -37,7 +37,6 @@ const TableItem: FC<Props> = ({
     setEditing(true)
   }
   const handleSave = () => {
-    debugger
     Firebase.updateUser(email, canUpload, canManageUsers).then(() => {
       setEdit(false)
       setEditing(false)
