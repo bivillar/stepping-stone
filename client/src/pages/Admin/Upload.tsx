@@ -1,17 +1,24 @@
-import React, { FC, useState, useEffect, useContext } from 'react'
+import React, { FC, useState, useContext } from 'react'
 import { Button, ProgressBar } from 'react-bootstrap'
 import { History } from 'history'
+import { Alert } from 'react-bootstrap'
 
 import { saveCSV } from '../../utils/api'
-import Firebase from '../../base'
+import { AuthContext } from '../../Auth'
 
-interface Props {
-  history: History
-}
-
-const Upload: FC<Props> = ({ history }) => {
+const Upload: FC = () => {
   const [file, setFile] = useState<File | null>(null)
   const [progress, setProgress] = useState<number>(0)
+  const [error, setError] = useState<boolean>(false)
+  const [loaded, setLoaded] = useState<boolean>(false)
+
+  const { currentUser } = useContext(AuthContext)
+  if (!currentUser?.canUpload)
+    return (
+      <div className="adminContainer">
+        <h1>Para ter acesso, você precisa pedir à um dos admins.</h1>
+      </div>
+    )
 
   const handleUpload = (event: any) => {
     event.preventDefault()
@@ -20,17 +27,27 @@ const Upload: FC<Props> = ({ history }) => {
     formData.append('file', file)
 
     saveCSV(formData, setProgress)
-      .then(console.log)
-      .catch(console.log)
+      .then(result => {
+        if (result.status === 200) {
+          setLoaded(true)
+        }
+      })
+      .catch(() => setError(true))
   }
 
   const handleFileChange = (event: any) => {
-    setFile(event?.target?.files?.[0])
-    console.log(event?.target?.files?.[0].name)
+    setProgress(0)
+    setLoaded(false)
+    setError(false)
+    const file = event?.target?.files?.[0]
+    if (file) {
+      setFile(file)
+      console.log(file.name)
+    } else setFile(null)
   }
 
   return (
-    <>
+    <div className="adminContainer">
       <h1>Adicione um arquivo do tipo .csv para atualizar os dados</h1>
       <div className="relative mb4">
         <input
@@ -48,11 +65,18 @@ const Upload: FC<Props> = ({ history }) => {
         <Button disabled={!file} block onClick={handleUpload}>
           Upload
         </Button>
-        <div>
-          <Button onClick={() => Firebase.getAllUsers()}>CLICA AQUII</Button>
-        </div>
+        {error && (
+          <div className="mt4 tc">
+            <Alert variant="danger">Ocorreu um erro ao tentar salvar.</Alert>
+          </div>
+        )}
+        {loaded && (
+          <div className="mt4 tc">
+            <Alert variant="success">Arquivo salvo com sucesso!</Alert>
+          </div>
+        )}
       </div>
-    </>
+    </div>
   )
 }
 

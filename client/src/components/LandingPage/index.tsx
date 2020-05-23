@@ -1,7 +1,5 @@
 import React, { FC } from 'react'
-import { History } from 'history'
 
-import Image from '../../static/images/stepping-stone.png'
 import styles from './landingPage.module.css'
 
 interface Props {}

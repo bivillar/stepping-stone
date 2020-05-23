@@ -26,7 +26,7 @@ class Firebase {
   }
 
   logout() {
-    return this.auth.signOut()
+    this.auth.signOut().then(() => window.location.reload())
   }
 
   async register(name: string, email: string, password: string) {
@@ -39,35 +39,49 @@ class Firebase {
     })
   }
 
-  addUser(resources: string[], userEmail: string) {
+  deleteAccount() {
+    return this.auth.currentUser?.delete()
+  }
+
+  addUser(
+    name: string,
+    canUpload: boolean,
+    canManageUsers: boolean,
+    userEmail: string
+  ) {
     if (!this.auth.currentUser) {
-      return alert('Not authorized')
+      return new Promise((_, reject) => reject('Not authorized'))
     }
+    const isAdmin = canUpload || canManageUsers
 
     return this.db
       .collection('users')
       .doc(userEmail)
       .set({
-        resources,
+        isAdmin,
+        canUpload,
+        canManageUsers,
+        name,
       })
-      .then(result => console.log(result))
   }
 
-  updateUser(resources: string[], userEmail: string) {
+  updateUser(userEmail: string, canUpload: boolean, canManageUsers: boolean) {
     if (!this.auth.currentUser) {
-      return alert('Not authorized')
+      return new Promise((_, reject) => reject('Not authorized'))
     }
 
+    const isAdmin = canUpload || canManageUsers
     return this.db
       .collection('users')
       .doc(userEmail)
       .update({
-        resources,
+        canUpload,
+        canManageUsers,
+        isAdmin,
       })
-      .then(result => console.log(result))
   }
 
-  updateCurrentUser(resources: string[]) {
+  updateCurrentUser(user: User) {
     if (!this.auth.currentUser) {
       return alert('Not authorized')
     }
@@ -75,20 +89,15 @@ class Firebase {
     return this.db
       .collection('users')
       .doc(this.auth.currentUser?.email!)
-      .update({
-        resources,
-      })
-      .then(result => console.log(result))
+      .update(user)
   }
 
   isInitialized() {
-    return new Promise(resolve => {
-      this.auth.onAuthStateChanged(resolve)
-    })
+    return new Promise(this.auth.onAuthStateChanged)
   }
 
   getCurrentUsername() {
-    return this.auth.currentUser && this.auth.currentUser.displayName
+    return this.auth.currentUser?.displayName
   }
 
   async getUserPermissions(email: string) {
@@ -96,7 +105,9 @@ class Firebase {
       .collection('users')
       .doc(email)
       .get()
-    return user.get('resources')
+    const canManageUsers = user.get('canManageUsers')
+    const canUpload = user.get('canUpload')
+    return { canManageUsers, canUpload }
   }
 
   async getCurrentUserPermissions() {
@@ -106,7 +117,9 @@ class Firebase {
       .collection('users')
       .doc(this.auth.currentUser?.email!)
       .get()
-    return user.get('resources')
+    const canManageUsers = user.get('canManageUsers')
+    const canUpload = user.get('canUpload')
+    return { canManageUsers, canUpload }
   }
 
   async getCurrentUser() {
@@ -117,8 +130,10 @@ class Firebase {
       .doc(this.auth.currentUser?.email!)
       .get()
     const isAdmin = user.get('isAdmin')
-    const resources = user.get('resources')
-    return { isAdmin, resources }
+    const canManageUsers = user.get('canManageUsers')
+    const canUpload = user.get('canUpload')
+    const name = user.get('name') || this.auth.currentUser?.displayName
+    return { isAdmin, canManageUsers, canUpload, name }
   }
 
   async getAllUsers() {
@@ -128,15 +143,16 @@ class Firebase {
       .get()
       .then(snapshot => {
         snapshot.forEach(user => {
-          console.log(user)
           const isAdmin = user.get('isAdmin')
-          const resourcers = user.get('resources')
           const name = user.get('name')
+          const canManageUsers = user.get('canManageUsers')
+          const canUpload = user.get('canUpload')
 
           users.push({
             email: user.id,
             isAdmin,
-            resourcers,
+            canUpload,
+            canManageUsers,
             name,
           })
         })

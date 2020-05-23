@@ -1,8 +1,8 @@
-import React, { FC, useState, useEffect, ReactElement } from 'react'
+import React, { FC, useState, useDebugValue, useEffect } from 'react'
 import { History } from 'history'
 
-import { AdminPagesEnum } from '../../constants'
 import { PeopleIcon, UploadIcon } from './Icons'
+import { AdminPagesEnum } from '../../constants'
 
 const MenuItem: FC<{ icon: any; label: string; isOpen: boolean }> = ({
   icon,
@@ -17,8 +17,12 @@ const MenuItem: FC<{ icon: any; label: string; isOpen: boolean }> = ({
 
 const SideBar: FC<Props> = ({ isOpen, open, history }) => {
   const className = isOpen ? 'adminSidebar--open' : ''
+  const [url, setUrl] = useState<AdminPagesEnum | null>(null)
 
-  const goto = (url: string) => {
+  useEffect(() => setUrl(window.location.pathname as AdminPagesEnum), [])
+
+  const goto = (url: AdminPagesEnum) => {
+    setUrl(url)
     history.push(url)
   }
 
@@ -34,14 +38,20 @@ const SideBar: FC<Props> = ({ isOpen, open, history }) => {
       onClick={handleMenuClick}
       className={`adminSidebar ${className}`}>
       <ul className="adminMenu" id="adminMenu">
-        <li id="item" onClick={() => goto('/admin/list')}>
+        <li
+          id="item"
+          className={url === AdminPagesEnum.List ? 'selected' : ''}
+          onClick={() => goto(AdminPagesEnum.List)}>
           <MenuItem
             icon={<PeopleIcon />}
             label="Gerenciar Usuários"
             isOpen={isOpen}
           />
         </li>
-        <li id="item" onClick={() => goto('/admin/upload')}>
+        <li
+          id="item"
+          className={url === AdminPagesEnum.Upload ? 'selected' : ''}
+          onClick={() => goto(AdminPagesEnum.Upload)}>
           <MenuItem
             icon={<UploadIcon />}
             label="Fazer Upload de novos dados"
@@ -60,7 +70,6 @@ const SideBar: FC<Props> = ({ isOpen, open, history }) => {
 
 interface Props {
   isOpen: boolean
-  setPage: (page: AdminPagesEnum) => void
   open: () => void
   history: History
 }

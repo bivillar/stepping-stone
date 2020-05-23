@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 function useVisible(options: IntersectionObserverInit = { rootMargin: '0px' }) {
   const [isVisible, setVisible] = useState(false)
