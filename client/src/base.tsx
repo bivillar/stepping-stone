@@ -129,11 +129,10 @@ class Firebase {
       .collection('users')
       .doc(this.auth.currentUser?.email!)
       .get()
-    const isAdmin = user.get('isAdmin')
-    const canManageUsers = user.get('canManageUsers')
-    const canUpload = user.get('canUpload')
-    const name = user.get('name') || this.auth.currentUser?.displayName
-    return { isAdmin, canManageUsers, canUpload, name }
+    return {
+      name: user.get('name') || this.auth.currentUser?.displayName,
+      ...(user.data() as User),
+    }
   }
 
   async getAllUsers() {
@@ -143,21 +142,34 @@ class Firebase {
       .get()
       .then(snapshot => {
         snapshot.forEach(user => {
-          const isAdmin = user.get('isAdmin')
-          const name = user.get('name')
-          const canManageUsers = user.get('canManageUsers')
-          const canUpload = user.get('canUpload')
-
           users.push({
             email: user.id,
-            isAdmin,
-            canUpload,
-            canManageUsers,
-            name,
+            ...(user.data() as User),
           })
         })
       })
     return users
+  }
+
+  getData() {
+    return this.db
+      .collection('data')
+      .get()
+      .then(snapshot => {
+        const inField: InFieldFormEntry[] = []
+        const notInField: NotInFieldFormEntry[] = []
+        const aswers: any = {}
+        snapshot.forEach(answer => {
+          if (answer.get('filter').toLowerCase() == 'sim') {
+            if (answer.get('stillInField').toLowerCase() == 'sim') {
+              inField.push(answer.data() as InFieldFormEntry)
+            } else {
+              notInField.push(answer.data() as NotInFieldFormEntry)
+            }
+          }
+        })
+        return { inField, notInField, aswers }
+      })
   }
 }
 
