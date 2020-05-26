@@ -70,6 +70,15 @@ $font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas,
   -webkit-text-fill-color: transparent;
 }
 
+.homeContainer {
+  padding: 15% 10%;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
 .title {
   padding: 20% 10%;
   height: 100vh;

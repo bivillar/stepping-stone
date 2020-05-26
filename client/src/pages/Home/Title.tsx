@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 
-import GradYear from '../../components/chart/GradYear'
+import GradYear from '../../components/chart/GradYearAreaChart'
 import useVisible from '../../utils/hooks/useVisible'
 
 const Title: FC = () => {
