@@ -21,7 +21,7 @@ const Home: FC<Props> = ({ history }) => {
     inField: InFieldFormEntry[]
     notInField: NotInFieldFormEntry[]
   } | null>(null)
-  const [ref, setRef] = useState<Element | null>(null)
+  const [ref, setRef] = useState<any>(null)
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -31,10 +31,13 @@ const Home: FC<Props> = ({ history }) => {
   }, [])
 
   useEffect(() => {
-    new ScrollSnap(ref, {
-      snapDestinationY: '10%',
-      time: true,
-    })
+    if (ref) {
+      const element = ref.current
+      new ScrollSnap(element, {
+        snapDestinationY: '90%',
+        time: true,
+      })
+    }
   }, [ref])
 
   function receiveData(newData: any) {

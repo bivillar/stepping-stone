@@ -12,7 +12,7 @@ declare global {
 
   interface FormEntry {
     degree: string
-    gradYear: string
+    gradYear: number
     degreeLevel: string
     degreeSuggestion?: string
     motive: string
@@ -25,7 +25,7 @@ declare global {
     companyType: string
     companyName?: string
     salary: string
-    satisfaction: string
+    satisfaction: number
     satisfactionReason?: string
     challenge?: string
     advice?: string
@@ -37,7 +37,7 @@ declare global {
     field?: string
     fieldChangeReason?: string
     otherFieldSalary: string
-    otherFieldSatisfaction?: string
+    otherFieldSatisfaction?: number
     otherFieldSatisfactionReason?: string
   }
 
