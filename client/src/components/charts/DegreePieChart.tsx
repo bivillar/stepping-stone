@@ -18,7 +18,7 @@ const DegreePieChart: FC<Props> = ({ data }) => (
           data={data}
           cx="30%"
           cy="50%"
-          outerRadius={200}
+          outerRadius={100}
           dataKey="value"
           nameKey="name"
           blendStroke
