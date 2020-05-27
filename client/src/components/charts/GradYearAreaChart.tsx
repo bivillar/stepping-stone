@@ -12,7 +12,6 @@ import {
 } from 'recharts'
 import useVisible from '../../utils/hooks/useVisible'
 
-import { getGradients } from '../../utils'
 import { COLORS } from '../../constants'
 
 const data = [
@@ -53,7 +52,8 @@ const CustomTooltip = ({ active, payload, label }: TooltipProps) => {
   return (
     <div className="chartTooltip pv2 ph3">
       <div className="pa0 pb1 b">{label}</div>
-      <div className="pa0">{`Mulheres: ${payload && payload[0].value}`}</div>
+      <div className="pa0">{`Mulheres Formadas: ${payload &&
+        payload[0].value}`}</div>
     </div>
   )
 }
@@ -69,12 +69,6 @@ const GradYear: FC = () => {
           height={300}
           data={data}
           margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-          <defs>
-            <linearGradient id="gradient" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor={COLORS[0]} stopOpacity={0.8} />
-              <stop offset="95%" stopColor={COLORS[3]} stopOpacity={0.8} />
-            </linearGradient>
-          </defs>
           <CartesianGrid
             strokeDasharray="3 3"
             stroke={COLORS[0]}

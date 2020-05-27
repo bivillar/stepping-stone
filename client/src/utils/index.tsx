@@ -14,3 +14,12 @@ export const getGradients = (n: number) => (
     ))}
   </defs>
 )
+
+export const LIGHTS = (mode: number) =>
+  new Map([
+    ['Engenharia da Computação', mode],
+    ['Ciência da Computação', mode],
+    ['Sistemas de Informação', mode],
+    ['Informática', mode],
+    ['Tecnólogo', mode],
+  ])
