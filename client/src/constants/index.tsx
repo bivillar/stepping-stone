@@ -9,3 +9,13 @@ export enum AdminPagesEnum {
   Upload = '/admin/upload',
   List = '/admin/list',
 }
+
+export const COLORS = [
+  '#5204BF',
+  '#6D0AB8',
+  '#8710B2',
+  '#A216AB',
+  '#BD1BA4',
+  '#D7219E',
+  '#F22797',
+]
