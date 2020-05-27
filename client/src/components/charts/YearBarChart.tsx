@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, useState } from 'react'
 import {
   BarChart,
   CartesianGrid,
@@ -9,32 +9,47 @@ import {
   Bar,
 } from 'recharts'
 
-import { COLORS } from '../../constants'
+import { LIGHTS } from '../../utils'
+import { COLORS, ON, OFF } from '../../constants'
 
-const YearBarChart: FC<Props> = ({ yearsData, degreeData }) => (
-  <BarChart
-    width={600}
-    height={300}
-    data={yearsData}
-    margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-    <CartesianGrid
-      strokeDasharray="3 3"
-      stroke={COLORS[0]}
-      strokeOpacity={0.4}
-    />
-    <XAxis dataKey="year" />
-    <YAxis />
-    <Tooltip />
-    <Legend />
-    {degreeData.map(({ name }, i) => (
-      <Bar
-        dataKey={name.charAt(0).toLowerCase()}
-        fill={COLORS[i]}
-        name={name}
+const YearBarChart: FC<Props> = ({ yearsData, degreeData }) => {
+  const [opacity, setOpacity] = useState<any>(LIGHTS(ON))
+
+  const handleMouseEnter = ({ value }: { value: string }) => {
+    const newOpacity = new Map([...LIGHTS(OFF)])
+    newOpacity.set(value, 1)
+    setOpacity(newOpacity)
+  }
+  const handleMouseLeave = () => {
+    setOpacity(LIGHTS(ON))
+  }
+
+  return (
+    <BarChart
+      width={600}
+      height={300}
+      data={yearsData}
+      margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+      <CartesianGrid
+        strokeDasharray="3 3"
+        stroke={COLORS[0]}
+        strokeOpacity={0.4}
       />
-    ))}
-  </BarChart>
-)
+      <XAxis dataKey="year" />
+      <YAxis />
+      <Tooltip />
+      <Legend onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} />
+      {degreeData.map(({ name }, i) => (
+        <Bar
+          dataKey={name.charAt(0).toLowerCase()}
+          fill={COLORS[i]}
+          name={name}
+          opacity={opacity.get(name)}
+        />
+      ))}
+    </BarChart>
+  )
+}
 
 export interface YearsChartData {
   year: number
