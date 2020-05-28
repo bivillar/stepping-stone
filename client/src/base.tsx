@@ -168,7 +168,7 @@ class Firebase {
             }
           }
         })
-        return { inField, notInField, aswers }
+        return { inField, notInField }
       })
   }
 }
