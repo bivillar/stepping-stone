@@ -8,6 +8,7 @@ import Logo from '../../components/Logo'
 import Firebase from '../../base'
 import Degree from './Degree'
 import Title from './Title'
+import Suggestions from './Suggestions'
 
 interface Props {
   history: History
@@ -21,6 +22,9 @@ const Home: FC<Props> = ({ history }) => {
     inField: InFieldFormEntry[]
     notInField: NotInFieldFormEntry[]
   } | null>(null)
+  const [formEntries, setFormEntries] = useState<
+    (InFieldFormEntry | NotInFieldFormEntry)[] | null
+  >(null)
   const [ref, setRef] = useState<any>(null)
 
   useEffect(() => {
@@ -40,10 +44,13 @@ const Home: FC<Props> = ({ history }) => {
     }
   }, [ref])
 
-  function receiveData(newData: any) {
+  function receiveData(newData: {
+    inField: InFieldFormEntry[]
+    notInField: NotInFieldFormEntry[]
+  }) {
     setData(newData)
+    setFormEntries([...newData.inField, ...newData.notInField])
     setLoading(false)
-    console.log(newData)
   }
 
   useScrollPosition(({ currPos }) => {
@@ -53,7 +60,7 @@ const Home: FC<Props> = ({ history }) => {
 
   return (
     <div ref={setRef as any}>
-      {!data ? (
+      {!formEntries ? (
         <>
           {loading && <Spinner animation="border" />}
           {error && <div>Error!</div>}
@@ -64,7 +71,8 @@ const Home: FC<Props> = ({ history }) => {
             <Logo />
           </div>
           <Title />
-          <Degree formEntries={[...data.notInField, ...data.inField]} />
+          <Degree formEntries={formEntries} />
+          <Suggestions formEntries={formEntries} />
         </>
       )}
     </div>
