@@ -38,7 +38,11 @@ const YearBarChart: FC<Props> = ({ yearsData, degreeData }) => {
       <XAxis dataKey="year" />
       <YAxis />
       <Tooltip />
-      <Legend onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} />
+      <Legend
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        layout="vertical"
+      />
       {degreeData.map(({ name }, i) => (
         <Bar
           dataKey={name.charAt(0).toLowerCase()}
