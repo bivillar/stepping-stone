@@ -8,6 +8,7 @@ import Logo from '../../components/Logo'
 import Firebase from '../../base'
 import Degree from './Degree'
 import Title from './Title'
+import MaxDegree from './MaxDegree'
 
 interface Props {
   history: History
@@ -21,6 +22,9 @@ const Home: FC<Props> = ({ history }) => {
     inField: InFieldFormEntry[]
     notInField: NotInFieldFormEntry[]
   } | null>(null)
+  const [formEntries, setFormEntries] = useState<
+    (InFieldFormEntry | NotInFieldFormEntry)[] | null
+  >(null)
   const [ref, setRef] = useState<any>(null)
 
   useEffect(() => {
@@ -40,8 +44,12 @@ const Home: FC<Props> = ({ history }) => {
     }
   }, [ref])
 
-  function receiveData(newData: any) {
+  function receiveData(newData: {
+    inField: InFieldFormEntry[]
+    notInField: NotInFieldFormEntry[]
+  }) {
     setData(newData)
+    setFormEntries([...newData.inField, ...newData.notInField])
     setLoading(false)
     console.log(newData)
   }
@@ -64,7 +72,8 @@ const Home: FC<Props> = ({ history }) => {
             <Logo />
           </div>
           <Title />
-          <Degree formEntries={[...data.notInField, ...data.inField]} />
+          {formEntries && <Degree formEntries={formEntries} />}
+          {formEntries && <MaxDegree formEntries={formEntries} />}
         </>
       )}
     </div>
