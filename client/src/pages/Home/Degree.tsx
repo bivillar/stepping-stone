@@ -98,11 +98,11 @@ const Degree: FC<Props> = ({ formEntries }) => {
         <div className="h-50">
           <DegreePieChart data={degreeData} />
         </div>
-        <div className="h-50">
+        <div className="h-50 w-80">
           <DegreePieChart data={degreeLevelsData} />
         </div>
       </div>
-      <div className="w-50 h-100 flex items-center">
+      <div className="w-50 h-100 flex items-center justify-end">
         <YearBarChart yearsData={yearsData} degreeData={degreeData} />
       </div>
     </Container>

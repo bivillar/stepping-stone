@@ -8,7 +8,7 @@ import Logo from '../../components/Logo'
 import Firebase from '../../base'
 import Degree from './Degree'
 import Title from './Title'
-import MaxDegree from './MaxDegree'
+import Suggestions from './Suggestions'
 
 interface Props {
   history: History
@@ -51,7 +51,6 @@ const Home: FC<Props> = ({ history }) => {
     setData(newData)
     setFormEntries([...newData.inField, ...newData.notInField])
     setLoading(false)
-    console.log(newData)
   }
 
   useScrollPosition(({ currPos }) => {
@@ -61,7 +60,7 @@ const Home: FC<Props> = ({ history }) => {
 
   return (
     <div ref={setRef as any}>
-      {!data ? (
+      {!formEntries ? (
         <>
           {loading && <Spinner animation="border" />}
           {error && <div>Error!</div>}
@@ -72,8 +71,8 @@ const Home: FC<Props> = ({ history }) => {
             <Logo />
           </div>
           <Title />
-          {formEntries && <Degree formEntries={formEntries} />}
-          {formEntries && <MaxDegree formEntries={formEntries} />}
+          <Degree formEntries={formEntries} />
+          <Suggestions formEntries={formEntries} />
         </>
       )}
     </div>
