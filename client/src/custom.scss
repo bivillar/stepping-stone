@@ -78,9 +78,27 @@ $font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas,
   -webkit-text-fill-color: transparent;
 }
 
+.header {
+  margin-top: -7%;
+  text-align: right;
+  padding: 1%;
+  opacity: 0.8;
+  span {
+    font-weight: 900;
+    font-size: 60px;
+    line-height: 0.8;
+    text-transform: uppercase;
+    background: linear-gradient(to right, $COLOR3 0%, $COLOR6 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
+
 .chartTooltip {
   position: relative;
 }
+
 .chartTooltip:before {
   content: '';
   background: $COLOR4;
@@ -96,9 +114,15 @@ $font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas,
   padding: 15% 10%;
   height: 100vh;
   width: 100%;
-  display: flex;
-  justify-content: center;
-  align-content: center;
+}
+
+.pv15 {
+  padding-top: 15%;
+  padding-bottom: 15%;
+}
+.ph10 {
+  padding-left: 10%;
+  padding-right: 10%;
 }
 
 .title {
