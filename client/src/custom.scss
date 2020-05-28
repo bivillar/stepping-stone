@@ -4,6 +4,14 @@ $SteppingStone3: #5204bf;
 $SteppingStone4: #4158d9;
 $SteppingStone5: #0d0d0d;
 
+$COLOR0: #5204bf;
+$COLOR1: #6d0ab8;
+$COLOR2: #8710b2;
+$COLOR3: #a216ab;
+$COLOR4: #bd1ba4;
+$COLOR5: #d7219e;
+$COLOR6: #f22797;
+
 $SteppingStoneBG1: #5204bf;
 $SteppingStoneBG2: #0d0d0d;
 
@@ -70,28 +78,45 @@ $font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas,
   -webkit-text-fill-color: transparent;
 }
 
+.chartTooltip {
+  position: relative;
+}
+.chartTooltip:before {
+  content: '';
+  background: $COLOR4;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  opacity: 0.3;
+}
+
+.homeContainer {
+  padding: 15% 10%;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
 .title {
   padding: 20% 10%;
   height: 100vh;
   width: 100%;
-  display: flex;
-  justify-content: space-between;
 
   .subtitle {
-    font-weight: 900;
-    color: $SteppingStone4;
-    width: 100%;
-    opacity: 40%;
-    font-weight: 900;
-    padding-top: 6%;
-    background: linear-gradient(
-      to right,
-      $SteppingStone2 0%,
-      $SteppingStone1 100%
-    );
+    font-weight: 100;
+    background: linear-gradient(to right, $COLOR3 0%, $COLOR6 100%);
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    text-align: justify;
+    text-justify: inter-word;
+    padding-top: 15%;
+    position: absolute;
+    width: 40%;
   }
 }
 
