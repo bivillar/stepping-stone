@@ -1,6 +1,18 @@
 import React, { FC } from 'react'
-import { AreaChart, Area, XAxis, YAxis, Tooltip } from 'recharts'
+import {
+  AreaChart,
+  Area,
+  XAxis,
+  YAxis,
+  Tooltip,
+  LineChart,
+  CartesianGrid,
+  Line,
+  TooltipProps,
+} from 'recharts'
 import useVisible from '../../utils/hooks/useVisible'
+
+import { COLORS } from '../../constants'
 
 const data = [
   { name: 1991, value: 5 },
@@ -34,37 +46,47 @@ const data = [
   { name: 2019, value: 3 },
 ]
 
+const CustomTooltip = ({ active, payload, label }: TooltipProps) => {
+  if (!active) return null
+
+  return (
+    <div className="chartTooltip pv2 ph3">
+      <div className="pa0 pb1 b">{label}</div>
+      <div className="pa0">{`Mulheres Formadas: ${payload &&
+        payload[0].value}`}</div>
+    </div>
+  )
+}
+
 const GradYear: FC = () => {
   const [isVisible, setRef] = useVisible()
 
   return (
-    <div ref={setRef as any}>
+    <div ref={setRef as any} className="w-100 flex justify-end">
       {isVisible && (
-        <AreaChart
+        <LineChart
           width={600}
           height={300}
           data={data}
           margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-          <defs>
-            <linearGradient id="gradient" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#5204bf" stopOpacity={0.8} />
-              <stop offset="95%" stopColor="#5204bf" stopOpacity={0.1} />
-            </linearGradient>
-          </defs>
+          <CartesianGrid
+            strokeDasharray="3 3"
+            stroke={COLORS[0]}
+            strokeOpacity={0.4}
+          />
+          <XAxis dataKey="name" stroke={COLORS[0]} />
+          <YAxis stroke={COLORS[0]} name="Mulheres" />
+          <Tooltip content={CustomTooltip} />
 
-          <XAxis dataKey="name" stroke="#5204bf" />
-          <YAxis stroke="#5204bf" name="Mulheres" />
-          <Tooltip />
-
-          <Area
+          <Line
             type="monotone"
             dataKey="value"
-            stroke="#5204bf"
-            fillOpacity={1}
-            fill="url(#gradient)"
-            activeDot={{ r: 8 }}
+            name="Mulheres"
+            stroke={COLORS[5]}
+            activeDot={{ r: 6, fill: COLORS[4], stroke: COLORS[4] }}
+            dot={{ r: 3, fill: COLORS[4], stroke: COLORS[4] }}
           />
-        </AreaChart>
+        </LineChart>
       )}
     </div>
   )
