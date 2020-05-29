@@ -155,22 +155,59 @@ class Firebase {
     return this.db
       .collection('data')
       .get()
-      .then(snapshot => {
-        const inField: InFieldFormEntry[] = []
-        const notInField: NotInFieldFormEntry[] = []
-        const aswers: any = {}
-        snapshot.forEach(answer => {
-          if (answer.get('filter').toLowerCase() == 'sim') {
-            if (answer.get('stillInField').toLowerCase() == 'sim') {
-              inField.push(answer.data() as InFieldFormEntry)
-            } else {
-              notInField.push(answer.data() as NotInFieldFormEntry)
-            }
-          }
-        })
-        return { inField, notInField }
-      })
+      .then(getAllTotalizers)
   }
+}
+
+function getAllTotalizers(
+  snapshots: app.firestore.QuerySnapshot<app.firestore.DocumentData>
+) {
+  const inField: InFieldFormEntry[] = []
+  const notInField: NotInFieldFormEntry[] = []
+  const formEntries: (NotInFieldFormEntry | InFieldFormEntry)[] = []
+  const fields = new Map()
+  snapshots.forEach(snapshot => {
+    if (snapshot.get('filter').toLowerCase() == 'sim') {
+      if (snapshot.get('stillInField').toLowerCase() == 'sim') {
+        inField.push(snapshot.data() as InFieldFormEntry)
+      } else {
+        notInField.push(snapshot.data() as NotInFieldFormEntry)
+      }
+      formEntries.push(snapshot.data() as any)
+    }
+
+    const data = snapshot.data()
+    Object.keys(data).forEach(field => {
+      const value = data[field]
+
+      if (!fields.has(field)) {
+        fields.set(field, new Map())
+      }
+      const totalizer = fields.get(field)
+
+      if (!totalizer.has(value)) totalizer.set(value, 1)
+      else {
+        const total = totalizer.get(value)
+        totalizer.set(data[field], total + 1)
+      }
+    })
+    if (!fields.has('gradPerYear')) {
+      fields.set('gradPerYear', new Map())
+    }
+    const gradPerYear = fields.get('gradPerYear')
+    if (!gradPerYear.has(data.gradYear)) {
+      gradPerYear.set(data.gradYear, new Map())
+    }
+    const gradYearDegreeMap = gradPerYear.get(data.gradYear)
+    const degreeKey = data.degree.charAt(0)
+    if (!gradYearDegreeMap.has(degreeKey)) gradYearDegreeMap.set(degreeKey, 1)
+    else {
+      const total = gradYearDegreeMap.get(degreeKey)
+      gradYearDegreeMap.get(degreeKey, total + 1)
+    }
+  })
+  console.log(fields)
+  return { totalizers: fields, inField, notInField, formEntries }
 }
 
 export default new Firebase()
