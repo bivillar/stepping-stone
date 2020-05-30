@@ -206,7 +206,6 @@ function getAllTotalizers(
       gradYearDegreeMap.get(degreeKey, total + 1)
     }
   })
-  console.log(formEntries)
   return { totalizers: fields, inField, notInField, formEntries }
 }
 

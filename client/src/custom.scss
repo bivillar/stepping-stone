@@ -49,6 +49,11 @@ $font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas,
   'Liberation Mono', 'Courier New', monospace;
 
 @import '~bootstrap/scss/bootstrap.scss';
+
+html {
+  scroll-snap-type: y mandatory;
+}
+
 .c-success {
   color: $green;
 }
@@ -62,6 +67,10 @@ $font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas,
   -ms-transition: none !important;
   -o-transition: none !important;
   transition: none !important;
+}
+
+.homeBlocks {
+  scroll-snap-align: start;
 }
 
 .logo {
@@ -116,13 +125,12 @@ $font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas,
   width: 100%;
 }
 
-.pv15 {
-  padding-top: 15%;
-  padding-bottom: 15%;
+.withTitle {
+  padding: 15% 10% 5% 10%;
 }
-.ph10 {
-  padding-left: 10%;
-  padding-right: 10%;
+
+.withoutTitle {
+  padding: 15% 10%;
 }
 
 .title {
