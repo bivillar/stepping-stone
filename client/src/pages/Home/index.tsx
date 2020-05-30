@@ -2,7 +2,6 @@ import React, { FC, useEffect, useState, useRef } from 'react'
 import { History } from 'history'
 import { useScrollPosition } from '@n8tb1t/use-scroll-position'
 // import ScrollSnap from 'scroll-snap'
-import { Spinner } from 'react-bootstrap'
 
 import Logo from '../../components/Logo'
 import Firebase from '../../base'
@@ -64,24 +63,19 @@ const Home: FC<Props> = ({ history }) => {
     else if (currPos.y > -200 && fixed) setFixed(false)
   })
 
+  if (loading) return <Loading />
+
+  if (error) return <Error />
+
   return (
-    <div>
-      {loading || error ? (
-        <>
-          {loading && <Loading />}
-          {error && <Error />}
-        </>
-      ) : (
-        <>
-          <div className={`logoDiv ${fixed ? 'fixed' : ''}`}>
-            <Logo />
-          </div>
-          <Title />
-          <Degree totalizers={totalizers} />
-          <Suggestions totalizers={totalizers} />
-        </>
-      )}
-    </div>
+    <>
+      <div className={`logoDiv ${fixed ? 'fixed' : ''}`}>
+        <Logo />
+      </div>
+      <Title />
+      <Degree totalizers={totalizers} />
+      <Suggestions totalizers={totalizers} />
+    </>
   )
 }
 
