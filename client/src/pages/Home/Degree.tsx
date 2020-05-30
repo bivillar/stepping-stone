@@ -12,12 +12,12 @@ const Degree: FC<Props> = ({ totalizers }) => {
   const [yearsData, setYearsData] = useState<YearsChartData[]>([])
 
   useEffect(() => {
-    setYearsData(totalizers.get('gradPerYear'))
-    setDegreeLevelData(totalizers.get('degreeLevel'))
-    setDegreeData(totalizers.get('degree'))
-    console.log(totalizers)
+    setYearsData([...totalizers.get('gradPerYear').values()])
+    setDegreeLevelData([...totalizers.get('degreeLevel').values()])
+    setDegreeData([...totalizers.get('degree').values()])
   }, [totalizers])
 
+  console.log(degreeData, degreeLevelsData, yearsData)
   return (
     <Container style={{ paddingTop: '10%' }} title="Formação">
       <div className="w-50">

@@ -185,10 +185,10 @@ function getAllTotalizers(
       }
       const totalizer = fields.get(field)
 
-      if (!totalizer.has(value)) totalizer.set(value, 1)
+      if (!totalizer.has(value)) totalizer.set(value, { name: value, value: 1 })
       else {
         const total = totalizer.get(value)
-        totalizer.set(data[field], total + 1)
+        total.value += 1
       }
     })
     if (!fields.has('gradPerYear')) {
@@ -206,7 +206,7 @@ function getAllTotalizers(
       gradYearDegreeMap.get(degreeKey, total + 1)
     }
   })
-  console.log(fields)
+  console.log(formEntries)
   return { totalizers: fields, inField, notInField, formEntries }
 }
 
