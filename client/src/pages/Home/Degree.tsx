@@ -5,93 +5,31 @@ import Container from '../../components/Container'
 import YearBarChart, {
   YearsChartData,
 } from '../../components/charts/YearBarChart'
+import { DEGREES } from '../../constants'
 
-const DEGREES = new Map([
-  ['Engenharia da Computação', 0],
-  ['Ciência da Computação', 1],
-  ['Sistemas de Informação', 2],
-  ['Informática', 3],
-  ['Tecnólogo', 4],
-])
-
-const DEGREE_INITIAL_DATA = [
-  { name: 'Engenharia da Computação', value: 0 },
-  { name: 'Ciência da Computação', value: 0 },
-  { name: 'Sistemas de Informação', value: 0 },
-  { name: 'Informática', value: 0 },
-  { name: 'Tecnólogo', value: 0 },
-  { name: 'Other', value: 0 },
-]
-
-const DEGREE_LEVELS = new Map([
-  ['Tecnólogo', 0],
-  ['Bacharelado', 1],
-  ['Licenciatura', 2],
-  ['Mestrado', 3],
-  ['Doutorado', 4],
-])
-
-const DEGREE_LVL_INITIAL_DATA = [
-  { name: 'Tecnólogo', value: 0 },
-  { name: 'Bacharelado', value: 0 },
-  { name: 'Licenciatura', value: 0 },
-  { name: 'Mestrado', value: 0 },
-  { name: 'Doutorado', value: 0 },
-]
-
-const YEARS = new Map()
-
-const YEARS_INITAL_DATA: YearsChartData[] = []
-
-const YEAR_INITIAL_DATA = {
-  year: 0,
-  e: 0,
-  c: 0,
-  s: 0,
-  i: 0,
-  t: 0,
-  o: 0,
-}
-const Degree: FC<Props> = ({ formEntries }) => {
-  const [degreeData, setDegreeData] = useState<ChartData[]>(DEGREE_INITIAL_DATA)
-  const [degreeLevelsData, setDegreeLevelData] = useState<ChartData[]>(
-    DEGREE_LVL_INITIAL_DATA
-  )
-  const [yearsData, setYearsData] = useState<YearsChartData[]>(
-    YEARS_INITAL_DATA
-  )
-  const [loading, setLoading] = useState<boolean>(true)
+const Degree: FC<Props> = ({ totalizers }) => {
+  const [degreeData, setDegreeData] = useState<ChartData[]>([])
+  const [degreeLevelsData, setDegreeLevelData] = useState<ChartData[]>([])
+  const [yearsData, setYearsData] = useState<YearsChartData[]>([])
 
   useEffect(() => {
-    let newDegreeData = DEGREE_INITIAL_DATA
-    let newDegreeLevelData = DEGREE_LVL_INITIAL_DATA
-    let yearsNewData = YEARS_INITAL_DATA
-    formEntries.forEach(({ degree, degreeLevel, gradYear }: FormEntry) => {
-      const degreeLevelIndex = DEGREE_LEVELS.get(degreeLevel)
-      if (degreeLevelIndex) newDegreeLevelData[degreeLevelIndex].value += 1
-
-      const degreeIndex = DEGREES.get(degree) ?? 5
-      newDegreeData[degreeIndex].value += 1
-
-      let yearIndex = YEARS.get(gradYear)
-      if (!yearIndex) {
-        yearIndex = yearsNewData.length
-        YEARS.set(gradYear, yearIndex)
-        yearsNewData.push({ ...YEAR_INITIAL_DATA, year: gradYear })
+    setYearsData([...totalizers.get('gradPerYear').values()])
+    setDegreeLevelData([...totalizers.get('degreeLevel').values()])
+    let newDegreeData = [...totalizers.get('degree').values()]
+    const data: ChartData[] = []
+    const outros = { name: 'Outros', value: 0 }
+    newDegreeData.forEach(({ name, value }) => {
+      if (DEGREES.includes(name)) {
+        data.push({ name, value })
+      } else {
+        outros.value += value
       }
-      if (degreeIndex == 5) yearsNewData[yearIndex].o += 1
-      // @ts-ignore
-      else yearsNewData[yearIndex][degree.charAt(0).toLowerCase()] += 1
     })
-    setDegreeData(newDegreeData.filter(({ value }) => value > 0))
-    setDegreeLevelData(newDegreeLevelData.filter(({ value }) => value > 0))
-    console.log(newDegreeLevelData)
-    setYearsData(
-      yearsNewData.sort(({ year: yearA }, { year: yearB }) => yearA - yearB)
-    )
-    setLoading(false)
-  }, [])
+    if (outros.value > 0) data.push(outros)
+    setDegreeData(data)
+  }, [totalizers])
 
+  console.log(degreeData, degreeLevelsData, yearsData)
   return (
     <Container style={{ paddingTop: '10%' }} title="Formação">
       <div className="w-50">
@@ -110,7 +48,7 @@ const Degree: FC<Props> = ({ formEntries }) => {
 }
 
 interface Props {
-  formEntries: (NotInFieldFormEntry | InFieldFormEntry)[]
+  totalizers: Map<string, any>
 }
 
 export default Degree
