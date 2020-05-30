@@ -21,16 +21,16 @@ const Suggestions: FC<Props> = ({ totalizers }) => {
     <Container title="Suggestões de Cursos">
       <div>
         <div className={`${suggestions.length > 3 ? 'h-50' : 'h-100'}flex`}>
-          {suggestions.slice(0, 3).map(suggestion => (
-            <div className="w-33 ma5">
+          {suggestions.slice(0, 3).map((suggestion, i) => (
+            <div className="w-33 ma5" key={i}>
               <FadeUpCard text={suggestion} />
             </div>
           ))}
         </div>
         {suggestions.length > 3 && (
           <div className="h-50 flex">
-            {suggestions.slice(3, suggestions.length).map(suggestion => (
-              <div className="w-33 ma5">
+            {suggestions.slice(3, suggestions.length).map((suggestion, i) => (
+              <div className="w-33 ma5" key={i}>
                 <FadeUpCard text={suggestion} />
               </div>
             ))}
