@@ -29,10 +29,9 @@ const Degree: FC<Props> = ({ totalizers }) => {
     setDegreeData(data)
   }, [totalizers])
 
-  console.log(degreeData, degreeLevelsData, yearsData)
   return (
-    <Container style={{ paddingTop: '10%' }} title="Formação">
-      <div className="w-50">
+    <Container title="Formação">
+      <div className="w-50 pt5">
         <div className="h-50">
           <DegreePieChart data={degreeData} />
         </div>
