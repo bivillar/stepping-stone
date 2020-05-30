@@ -23,7 +23,7 @@ const DegreePieChart: FC<Props> = ({ data }) => (
         blendStroke
         label>
         {data.map((_, index) => (
-          <Cell fill={COLORS[index]} />
+          <Cell fill={COLORS[index]} key={index} />
         ))}
       </Pie>
       <Tooltip />

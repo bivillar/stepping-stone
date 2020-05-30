@@ -1,31 +1,32 @@
 import React, { FC, useEffect, useState, useRef } from 'react'
 import { History } from 'history'
 import { useScrollPosition } from '@n8tb1t/use-scroll-position'
-import ScrollSnap from 'scroll-snap'
-import { Spinner } from 'react-bootstrap'
+// import ScrollSnap from 'scroll-snap'
 
 import Logo from '../../components/Logo'
 import Firebase from '../../base'
 import Degree from './Degree'
 import Title from './Title'
 import Suggestions from './Suggestions'
+import Loading from '../../components/Loading'
+import Error from '../../components/Error'
 
 interface Props {
   history: History
 }
 
 const Home: FC<Props> = ({ history }) => {
+  // const [ref, setRef] = useState<any>(null)
   const [fixed, setFixed] = useState<boolean>(false)
   const [error, setError] = useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>(true)
-  const [data, setData] = useState<{
-    inField: InFieldFormEntry[]
-    notInField: NotInFieldFormEntry[]
-  } | null>(null)
+
+  const [inField, setInField] = useState<InFieldFormEntry[]>([])
+  const [notInField, setNotInField] = useState<NotInFieldFormEntry[]>([])
   const [formEntries, setFormEntries] = useState<
-    (InFieldFormEntry | NotInFieldFormEntry)[] | null
-  >(null)
-  const [ref, setRef] = useState<any>(null)
+    (InFieldFormEntry | NotInFieldFormEntry)[]
+  >([])
+  const [totalizers, setTotalizers] = useState<Map<string, any>>(new Map())
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -34,22 +35,26 @@ const Home: FC<Props> = ({ history }) => {
       .catch(() => setError(true))
   }, [])
 
-  useEffect(() => {
-    if (ref) {
-      const element = ref.current
-      new ScrollSnap(element, {
-        snapDestinationY: '90%',
-        time: true,
-      })
-    }
-  }, [ref])
+  // useEffect(() => {
+  //   if (ref) {
+  //     const element = ref.current
+  //     new ScrollSnap(element, {
+  //       snapDestinationY: '90%',
+  //       time: true,
+  //     })
+  //   }
+  // }, [ref])
 
   function receiveData(newData: {
     inField: InFieldFormEntry[]
     notInField: NotInFieldFormEntry[]
+    totalizers: any
+    formEntries: (InFieldFormEntry | NotInFieldFormEntry)[]
   }) {
-    setData(newData)
-    setFormEntries([...newData.inField, ...newData.notInField])
+    setFormEntries(newData.formEntries)
+    setTotalizers(newData.totalizers)
+    setNotInField(newData.notInField)
+    setInField(newData.inField)
     setLoading(false)
   }
 
@@ -58,24 +63,19 @@ const Home: FC<Props> = ({ history }) => {
     else if (currPos.y > -200 && fixed) setFixed(false)
   })
 
+  if (loading) return <Loading />
+
+  if (error) return <Error />
+
   return (
-    <div ref={setRef as any}>
-      {!formEntries ? (
-        <>
-          {loading && <Spinner animation="border" />}
-          {error && <div>Error!</div>}
-        </>
-      ) : (
-        <>
-          <div className={`logoDiv ${fixed ? 'fixed' : ''}`}>
-            <Logo />
-          </div>
-          <Title />
-          <Degree formEntries={formEntries} />
-          <Suggestions formEntries={formEntries} />
-        </>
-      )}
-    </div>
+    <>
+      <div className={`logoDiv ${fixed ? 'fixed' : ''}`}>
+        <Logo />
+      </div>
+      <Title />
+      <Degree totalizers={totalizers} />
+      <Suggestions totalizers={totalizers} />
+    </>
   )
 }
 
