@@ -5,6 +5,7 @@ import Container from '../../components/Container'
 import YearBarChart, {
   YearsChartData,
 } from '../../components/charts/YearBarChart'
+import { DEGREES } from '../../constants'
 
 const Degree: FC<Props> = ({ totalizers }) => {
   const [degreeData, setDegreeData] = useState<ChartData[]>([])
@@ -14,7 +15,18 @@ const Degree: FC<Props> = ({ totalizers }) => {
   useEffect(() => {
     setYearsData([...totalizers.get('gradPerYear').values()])
     setDegreeLevelData([...totalizers.get('degreeLevel').values()])
-    setDegreeData([...totalizers.get('degree').values()])
+    let newDegreeData = [...totalizers.get('degree').values()]
+    const data: ChartData[] = []
+    const outros = { name: 'Outros', value: 0 }
+    newDegreeData.forEach(({ name, value }) => {
+      if (DEGREES.includes(name)) {
+        data.push({ name, value })
+      } else {
+        outros.value += value
+      }
+    })
+    if (outros.value > 0) data.push(outros)
+    setDegreeData(data)
   }, [totalizers])
 
   console.log(degreeData, degreeLevelsData, yearsData)

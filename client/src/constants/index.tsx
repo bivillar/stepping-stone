@@ -22,3 +22,11 @@ export const COLORS = [
 
 export const ON = 1
 export const OFF = 0.2
+
+export const DEGREES = [
+  'Engenharia da Computação',
+  'Ciência da Computação',
+  'Sistemas de Informação',
+  'Informática',
+  'Tecnólogo',
+]
