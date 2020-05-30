@@ -9,6 +9,8 @@ import Firebase from '../../base'
 import Degree from './Degree'
 import Title from './Title'
 import Suggestions from './Suggestions'
+import Loading from '../../components/Loading'
+import Error from '../../components/Error'
 
 interface Props {
   history: History
@@ -66,8 +68,8 @@ const Home: FC<Props> = ({ history }) => {
     <div>
       {loading || error ? (
         <>
-          {loading && <Spinner animation="border" />}
-          {error && <div>Error!</div>}
+          {loading && <Loading />}
+          {error && <Error />}
         </>
       ) : (
         <>
