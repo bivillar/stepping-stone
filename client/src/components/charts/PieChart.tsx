@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 import {
-  PieChart,
+  PieChart as _PieChart,
   Pie,
   Tooltip,
   Legend,
@@ -10,30 +10,32 @@ import {
 
 import { COLORS } from '../../constants'
 
-const DegreePieChart: FC<Props> = ({ data }) => (
+const PieChart: FC<Props> = ({ data, radius, colors = COLORS }) => (
   <ResponsiveContainer>
-    <PieChart>
+    <_PieChart>
       <Pie
         data={data}
-        cx={100}
+        cx={radius + 40}
         cy="50%"
-        outerRadius={100}
+        outerRadius={radius}
         dataKey="value"
         nameKey="name"
         blendStroke
         label>
         {data.map((_, index) => (
-          <Cell fill={COLORS[index]} key={index} />
+          <Cell fill={colors[index]} key={index} />
         ))}
       </Pie>
       <Tooltip />
       <Legend layout="vertical" verticalAlign="middle" align="right" />
-    </PieChart>
+    </_PieChart>
   </ResponsiveContainer>
 )
 
 interface Props {
   data: ChartData[]
+  radius: number
+  colors?: string[]
 }
 
-export default DegreePieChart
+export default PieChart

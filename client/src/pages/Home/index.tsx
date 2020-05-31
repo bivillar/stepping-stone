@@ -11,6 +11,7 @@ import Suggestions from './Suggestions'
 import Loading from '../../components/Loading'
 import Error from '../../components/Error'
 import Motive from './Motive'
+import InField from './InField'
 
 interface Props {
   history: History
@@ -77,6 +78,7 @@ const Home: FC<Props> = ({ history }) => {
       <Degree totalizers={totalizers} />
       <Suggestions totalizers={totalizers} />
       <Motive totalizers={totalizers} />
+      <InField totalizers={totalizers} />
     </div>
   )
 }

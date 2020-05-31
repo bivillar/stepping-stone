@@ -1,11 +1,12 @@
 import React, { FC, useEffect, useState } from 'react'
 
-import DegreePieChart from '../../components/charts/DegreePieChart'
+import DegreePieChart from '../../components/charts/PieChart'
 import Container from '../../components/Container'
 import YearBarChart, {
   YearsChartData,
 } from '../../components/charts/YearBarChart'
 import { DEGREES } from '../../constants'
+import { getTotalizer } from '../../utils'
 
 const Degree: FC<Props> = ({ totalizers }) => {
   const [degreeData, setDegreeData] = useState<ChartData[]>([])
@@ -13,9 +14,10 @@ const Degree: FC<Props> = ({ totalizers }) => {
   const [yearsData, setYearsData] = useState<YearsChartData[]>([])
 
   useEffect(() => {
-    setYearsData([...totalizers.get('gradPerYear').values()])
-    setDegreeLevelData([...totalizers.get('degreeLevel').values()])
-    let newDegreeData = [...totalizers.get('degree').values()]
+    setYearsData(getTotalizer(totalizers, 'gradPerYear'))
+    setDegreeLevelData(getTotalizer(totalizers, 'degreeLevel'))
+    let newDegreeData = getTotalizer(totalizers, 'degree')
+
     const data: ChartData[] = []
     const outros = { name: 'Outros', value: 0 }
     newDegreeData.forEach(({ name, value }) => {
@@ -33,10 +35,10 @@ const Degree: FC<Props> = ({ totalizers }) => {
     <Container title="Formação">
       <div className="w-50 h-100">
         <div className="h-50">
-          <DegreePieChart data={degreeData} />
+          <DegreePieChart data={degreeData} radius={100} />
         </div>
         <div className="h-50 w-80">
-          <DegreePieChart data={degreeLevelsData} />
+          <DegreePieChart data={degreeLevelsData} radius={100} />
         </div>
       </div>
       <div className="w-50 h-50 flex items-center justify-end">
