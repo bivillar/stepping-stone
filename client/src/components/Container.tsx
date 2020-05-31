@@ -15,7 +15,9 @@ const Container: FC<Props> = ({ style = {}, children, title }) => {
           <span>{title}</span>
         </div>
       )}
-      <div ref={setRef as any} className="w-100 flex h-100">
+      <div
+        ref={setRef as any}
+        className="w-100 flex h-100 items-center justify-center">
         {isVisible && children}
       </div>
     </div>
