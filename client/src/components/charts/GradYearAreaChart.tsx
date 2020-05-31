@@ -1,7 +1,5 @@
 import React, { FC } from 'react'
 import {
-  AreaChart,
-  Area,
   XAxis,
   YAxis,
   Tooltip,
