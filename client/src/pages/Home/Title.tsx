@@ -7,7 +7,7 @@ const Title: FC = () => {
   const [isVisible, setRef] = useVisible()
 
   return (
-    <div ref={setRef as any} className="title">
+    <div ref={setRef as any} className="title homeBlocks">
       <div
         className={`self-start fade-in-section ${
           isVisible ? 'is-visible' : ''
