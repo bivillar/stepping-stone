@@ -31,7 +31,7 @@ const Degree: FC<Props> = ({ totalizers }) => {
 
   return (
     <Container title="Formação">
-      <div className="w-50 pt5">
+      <div className="w-50">
         <div className="h-50">
           <DegreePieChart data={degreeData} />
         </div>
