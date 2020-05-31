@@ -2,12 +2,13 @@ import React, { FC, useState, useEffect } from 'react'
 import YearBarChart from '../../components/charts/YearBarChart'
 import Container from '../../components/Container'
 import MotivesBarChart from '../../components/charts/MotivesBarChart'
+import { getTotalizer } from '../../utils'
 
 const Motive: FC<Props> = ({ totalizers }) => {
   const [motives, setMotives] = useState<ChartData[]>([])
 
   useEffect(() => {
-    setMotives([...totalizers.get('motive').values()])
+    setMotives(getTotalizer(totalizers, 'motive'))
   }, [totalizers])
 
   return (
