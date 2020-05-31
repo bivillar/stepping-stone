@@ -31,7 +31,7 @@ const Degree: FC<Props> = ({ totalizers }) => {
 
   return (
     <Container title="Formação">
-      <div className="w-50">
+      <div className="w-50 h-100">
         <div className="h-50">
           <DegreePieChart data={degreeData} />
         </div>
@@ -39,7 +39,7 @@ const Degree: FC<Props> = ({ totalizers }) => {
           <DegreePieChart data={degreeLevelsData} />
         </div>
       </div>
-      <div className="w-50 h-100 flex items-center justify-end">
+      <div className="w-50 h-50 flex items-center justify-end">
         <YearBarChart yearsData={yearsData} degreeData={degreeData} />
       </div>
     </Container>
