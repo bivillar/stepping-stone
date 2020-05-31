@@ -7,6 +7,7 @@ import {
   Tooltip,
   Legend,
   Bar,
+  ResponsiveContainer,
 } from 'recharts'
 
 import { LIGHTS } from '../../utils'
@@ -25,34 +26,34 @@ const YearBarChart: FC<Props> = ({ yearsData, degreeData }) => {
   }
 
   return (
-    <BarChart
-      width={600}
-      height={300}
-      data={yearsData}
-      margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-      <CartesianGrid
-        strokeDasharray="3 3"
-        stroke={COLORS[0]}
-        strokeOpacity={0.4}
-      />
-      <XAxis dataKey="year" />
-      <YAxis />
-      <Tooltip />
-      <Legend
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-        layout="vertical"
-      />
-      {degreeData.map(({ name }, i) => (
-        <Bar
-          key={i}
-          dataKey={name.charAt(0)}
-          fill={COLORS[i]}
-          name={name}
-          opacity={opacity.get(name)}
+    <ResponsiveContainer>
+      <BarChart
+        data={yearsData}
+        margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+        <CartesianGrid
+          strokeDasharray="3 3"
+          stroke={COLORS[0]}
+          strokeOpacity={0.4}
         />
-      ))}
-    </BarChart>
+        <XAxis dataKey="year" />
+        <YAxis />
+        <Tooltip />
+        <Legend
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+          layout="vertical"
+        />
+        {degreeData.map(({ name }, i) => (
+          <Bar
+            key={i}
+            dataKey={name.charAt(0)}
+            fill={COLORS[i]}
+            name={name}
+            opacity={opacity.get(name)}
+          />
+        ))}
+      </BarChart>
+    </ResponsiveContainer>
   )
 }
 
