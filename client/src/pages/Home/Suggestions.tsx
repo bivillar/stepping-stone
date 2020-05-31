@@ -2,12 +2,13 @@ import React, { FC, useState, useEffect } from 'react'
 
 import Container from '../../components/Container'
 import FadeUpCard from '../../components/FadeUpCard'
+import { getTotalizerKeys } from '../../utils'
 
 const Suggestions: FC<Props> = ({ totalizers }) => {
   const [suggestions, setSuggestions] = useState<string[]>([])
   const [hasTwoLevels, setHasTwoLevels] = useState<boolean>(false)
   useEffect(() => {
-    let degreeSuggestions = [...totalizers.get('degreeSuggestion').keys()]
+    let degreeSuggestions = getTotalizerKeys(totalizers, 'degreeSuggestion')
     if (degreeSuggestions?.length > 6) {
       degreeSuggestions = degreeSuggestions.slice(0, 6)
     }

@@ -23,3 +23,12 @@ export const LIGHTS = (mode: number) =>
     ['Informática', mode],
     ['Tecnólogo', mode],
   ])
+
+export const getTotalizer = (totalizers: Map<string, any>, field: string) => [
+  ...totalizers.get(field).values(),
+]
+
+export const getTotalizerKeys = (
+  totalizers: Map<string, any>,
+  field: string
+) => [...totalizers.get(field).keys()]
