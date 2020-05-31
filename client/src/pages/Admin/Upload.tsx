@@ -42,7 +42,6 @@ const Upload: FC = () => {
     const file = event?.target?.files?.[0]
     if (file) {
       setFile(file)
-      console.log(file.name)
     } else setFile(null)
   }
 

@@ -68,14 +68,14 @@ const Home: FC<Props> = ({ history }) => {
   if (error) return <Error />
 
   return (
-    <>
+    <div className="homePage">
       <div className={`logoDiv ${fixed ? 'fixed' : ''}`}>
         <Logo />
       </div>
       <Title />
       <Degree totalizers={totalizers} />
       <Suggestions totalizers={totalizers} />
-    </>
+    </div>
   )
 }
 

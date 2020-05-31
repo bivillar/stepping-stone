@@ -5,7 +5,11 @@ const Container: FC<Props> = ({ style = {}, children, title }) => {
   const [isVisible, setRef] = useVisible()
 
   return (
-    <div className="w-100 fillPage pv15 ph10" style={style}>
+    <div
+      className={`w-100 fillPage homeBlocks ${
+        title ? 'withTitle' : 'withoutTitle'
+      }`}
+      style={style}>
       {title && (
         <div className="header">
           <span>{title}</span>
