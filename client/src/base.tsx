@@ -196,15 +196,13 @@ function getAllTotalizers(
     }
     const gradPerYear = fields.get('gradPerYear')
     if (!gradPerYear.has(data.gradYear)) {
-      gradPerYear.set(data.gradYear, new Map())
+      gradPerYear.set(data.gradYear, { year: data.gradYear })
     }
-    const gradYearDegreeMap = gradPerYear.get(data.gradYear)
+    const gradPerYearData = gradPerYear.get(data.gradYear)
     const degreeKey = data.degree.charAt(0)
-    if (!gradYearDegreeMap.has(degreeKey)) gradYearDegreeMap.set(degreeKey, 1)
-    else {
-      const total = gradYearDegreeMap.get(degreeKey)
-      gradYearDegreeMap.get(degreeKey, total + 1)
-    }
+    if (typeof gradPerYearData[degreeKey] === 'undefined')
+      gradPerYearData[degreeKey] = 1
+    else gradPerYearData[degreeKey] += 1
   })
   return { totalizers: fields, inField, notInField, formEntries }
 }

@@ -6,7 +6,7 @@ const Container: FC<Props> = ({ style = {}, children, title }) => {
 
   return (
     <div
-      className={`w-100 fillPage ph10 homeBlocks ${
+      className={`w-100 fillPage homeBlocks ${
         title ? 'withTitle' : 'withoutTitle'
       }`}
       style={style}>
