@@ -10,6 +10,7 @@ import Title from './Title'
 import Suggestions from './Suggestions'
 import Loading from '../../components/Loading'
 import Error from '../../components/Error'
+import Motive from './Motive'
 
 interface Props {
   history: History
@@ -75,6 +76,7 @@ const Home: FC<Props> = ({ history }) => {
       <Title />
       <Degree totalizers={totalizers} />
       <Suggestions totalizers={totalizers} />
+      <Motive totalizers={totalizers} />
     </div>
   )
 }
