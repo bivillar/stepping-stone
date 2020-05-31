@@ -46,7 +46,7 @@ const YearBarChart: FC<Props> = ({ yearsData, degreeData }) => {
       {degreeData.map(({ name }, i) => (
         <Bar
           key={i}
-          dataKey={name.charAt(0).toLowerCase()}
+          dataKey={name.charAt(0)}
           fill={COLORS[i]}
           name={name}
           opacity={opacity.get(name)}

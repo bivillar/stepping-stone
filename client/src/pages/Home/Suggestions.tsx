@@ -8,7 +8,6 @@ const Suggestions: FC<Props> = ({ totalizers }) => {
   const [hasTwoLevels, setHasTwoLevels] = useState<boolean>(false)
   useEffect(() => {
     let degreeSuggestions = [...totalizers.get('degreeSuggestion').keys()]
-    console.log(degreeSuggestions)
     if (degreeSuggestions?.length > 6) {
       degreeSuggestions = degreeSuggestions.slice(0, 6)
     }
