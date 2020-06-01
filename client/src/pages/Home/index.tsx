@@ -71,8 +71,15 @@ const Home: FC<Props> = ({ history }) => {
 
   return (
     <div className="homePage">
-      <div className={`logoDiv ${fixed ? 'fixed' : ''}`}>
+      <div className={`logoDiv${fixed ? '--fixed' : ''}`}>
         <Logo />
+      </div>
+      <div className="flex h-100 items-center justify-end fixed right-0 pr4">
+        <ul className="guide">
+          <li className="page">PAGE 1</li>
+          <li className="page">PAGE 2</li>
+          <li className="page">PAGE 3</li>
+        </ul>
       </div>
       <Title />
       <Degree totalizers={totalizers} />
