@@ -54,6 +54,10 @@ html {
   scroll-snap-type: y mandatory;
 }
 
+.fixed {
+  position: fixed;
+}
+
 .c-success {
   color: $green;
 }
@@ -165,12 +169,13 @@ html {
   &--admin {
     padding: 0% !important;
   }
-}
 
-.fixed {
-  position: fixed;
-  padding-top: 3%;
-  font-size: 40px;
+  &--fixed {
+    position: fixed;
+    padding-top: 3%;
+    padding-left: 10%;
+    font-size: 40px;
+  }
 }
 
 .fade-in-section {
@@ -500,5 +505,55 @@ ul {
   }
   60% {
     opacity: 1;
+  }
+}
+
+$dot: 11px;
+$weight: 1px;
+$spacing: 10px;
+
+.guide {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  margin: $spacing auto;
+  border-right: $weight solid pink;
+  line-height: 1.4em;
+  padding: $spacing;
+
+  li {
+    position: relative;
+    margin: 0;
+    list-style: none;
+  }
+
+  .page {
+    padding-bottom: $spacing;
+    margin-bottom: $spacing;
+
+    &:last-of-type {
+      padding-bottom: 0;
+      margin-bottom: 0;
+      border: none;
+    }
+
+    &:before,
+    &:after {
+      position: absolute;
+      display: block;
+      top: 0;
+    }
+
+    &:after {
+      box-shadow: 0 0 0 1px pink;
+      right: -($spacing + ($weight * 0.5) + ($dot * 0.5));
+      background: $SteppingStoneBG2;
+      border: $pink;
+      border-radius: 50%;
+      height: $dot;
+      width: $dot;
+      content: '';
+      top: 5px;
+    }
   }
 }
