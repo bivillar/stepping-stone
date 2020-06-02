@@ -15,7 +15,7 @@ import InField from './InField'
 const PAGES = [
   { component: Title, title: 'Home' },
   { component: Degree, title: 'Formação' },
-  { component: Suggestions, title: 'Suggestões' },
+  { component: Suggestions, title: 'Sugestões' },
   { component: Motive, title: 'Motivos' },
   { component: InField, title: 'Área' },
 ]
@@ -25,10 +25,10 @@ interface Props {
 }
 
 const Home: FC<Props> = ({ history }) => {
-  // const [ref, setRef] = useState<any>(null)
   const [fixed, setFixed] = useState<boolean>(false)
   const [error, setError] = useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>(true)
+  const [position, setPosition] = useState<number>(0)
 
   const [inField, setInField] = useState<InFieldFormEntry[]>([])
   const [notInField, setNotInField] = useState<NotInFieldFormEntry[]>([])
@@ -36,7 +36,6 @@ const Home: FC<Props> = ({ history }) => {
     (InFieldFormEntry | NotInFieldFormEntry)[]
   >([])
   const [totalizers, setTotalizers] = useState<Map<string, any>>(new Map())
-  const [position, setPosition] = useState<number>(0)
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -86,14 +85,19 @@ const Home: FC<Props> = ({ history }) => {
         <Logo />
       </div>
       <div className="flex h-100 items-center justify-end fixed right-0 pr4">
-        <ul className="guide">
-          {PAGES.map(({ title }, i) => (
-            <li
-              className={`page${i == position ? '--current' : ''} tr pointer`}
-              onClick={() => goToPosition(i)}>
-              <span className="text">{title}</span>
-            </li>
-          ))}
+        <ul className="guide h-100 flex items-end flex-column justify-center">
+          {PAGES.map(({ title }, i) => {
+            const current = i == position
+            return (
+              <li
+                className={`page ${current ? 'current' : ''} tr pointer`}
+                onClick={() => goToPosition(i)}>
+                <span className={`text${current ? '--current' : ''}`}>
+                  {title}
+                </span>
+              </li>
+            )
+          })}
         </ul>
       </div>
       <Title />
