@@ -1,7 +1,6 @@
 import React, { FC, useEffect, useState, useRef } from 'react'
 import { History } from 'history'
 import { useScrollPosition } from '@n8tb1t/use-scroll-position'
-// import ScrollSnap from 'scroll-snap'
 
 import Logo from '../../components/Logo'
 import Firebase from '../../base'
@@ -12,6 +11,14 @@ import Loading from '../../components/Loading'
 import Error from '../../components/Error'
 import Motive from './Motive'
 import InField from './InField'
+
+const PAGES = [
+  { component: Title, title: 'Home' },
+  { component: Degree, title: 'Formação' },
+  { component: Suggestions, title: 'Suggestões' },
+  { component: Motive, title: 'Motivos' },
+  { component: InField, title: 'Área' },
+]
 
 interface Props {
   history: History
@@ -29,6 +36,7 @@ const Home: FC<Props> = ({ history }) => {
     (InFieldFormEntry | NotInFieldFormEntry)[]
   >([])
   const [totalizers, setTotalizers] = useState<Map<string, any>>(new Map())
+  const [position, setPosition] = useState<number>(0)
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -36,16 +44,6 @@ const Home: FC<Props> = ({ history }) => {
       .then(receiveData)
       .catch(() => setError(true))
   }, [])
-
-  // useEffect(() => {
-  //   if (ref) {
-  //     const element = ref.current
-  //     new ScrollSnap(element, {
-  //       snapDestinationY: '90%',
-  //       time: true,
-  //     })
-  //   }
-  // }, [ref])
 
   function receiveData(newData: {
     inField: InFieldFormEntry[]
@@ -63,7 +61,20 @@ const Home: FC<Props> = ({ history }) => {
   useScrollPosition(({ currPos }) => {
     if (currPos.y < -200 && !fixed) setFixed(true)
     else if (currPos.y > -200 && fixed) setFixed(false)
+
+    const pos = Math.floor(
+      (-currPos.y + window.innerHeight * 0.5) / window.innerHeight
+    )
+    if (pos !== position) {
+      setPosition(pos)
+    }
   })
+
+  const goToPosition = (pos: number) =>
+    window.scrollTo({
+      top: pos * window.innerHeight,
+      behavior: 'smooth',
+    })
 
   if (loading) return <Loading />
 
@@ -76,9 +87,13 @@ const Home: FC<Props> = ({ history }) => {
       </div>
       <div className="flex h-100 items-center justify-end fixed right-0 pr4">
         <ul className="guide">
-          <li className="page">PAGE 1</li>
-          <li className="page">PAGE 2</li>
-          <li className="page">PAGE 3</li>
+          {PAGES.map(({ title }, i) => (
+            <li
+              className={`page${i == position ? '--current' : ''} tr pointer`}
+              onClick={() => goToPosition(i)}>
+              <span className="text">{title}</span>
+            </li>
+          ))}
         </ul>
       </div>
       <Title />
