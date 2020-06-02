@@ -510,14 +510,15 @@ ul {
 
 $dot: 11px;
 $weight: 1px;
-$spacing: 10px;
+$spacing: 15px;
+$font-size: 16px;
 
 .guide {
   margin: 0;
   padding: 0;
   list-style: none;
   margin: $spacing auto;
-  border-right: $weight solid pink;
+  border-right: $weight solid $COLOR3;
   line-height: 1.4em;
   padding: $spacing;
 
@@ -528,23 +529,34 @@ $spacing: 10px;
   }
 
   .page {
-    padding-bottom: $spacing;
-    margin-bottom: $spacing;
+    margin: $spacing 0px;
     opacity: 1;
+    transition: opacity 0.1s linear;
+
     .text {
       opacity: 0.6;
+      font-size: $font-size;
+      font-weight: 100;
       &:hover {
         opacity: 0.8;
       }
       &--current {
         opacity: 1;
+        font-weight: 100;
+        font-size: $font-size + 2;
       }
     }
 
     &:last-of-type {
-      padding-bottom: 0;
-      margin-bottom: 0;
-      border: none;
+      padding-bottom: 0 !important;
+      margin-bottom: 0 !important;
+      border: none !important;
+    }
+
+    &:first-of-type {
+      padding-top: 0 !important;
+      margin-top: 0 !important;
+      border: none !important;
     }
 
     &:before,
@@ -555,39 +567,18 @@ $spacing: 10px;
     }
 
     &:after {
-      box-shadow: 0 0 0 1px pink;
+      box-shadow: 0 0 0 1px $COLOR5;
       right: -($spacing + ($weight * 0.5) + ($dot * 0.5));
       background: $SteppingStoneBG2;
-      border: $pink;
       border-radius: 50%;
       height: $dot;
       width: $dot;
       content: '';
       top: 5px;
     }
-
-    &--current {
-      padding-bottom: $spacing + 2px;
-      margin-bottom: $spacing + 2px;
-      margin-top: $spacing + 2px;
-      &:before,
-      &:after {
-        position: absolute;
-        display: block;
-        top: 0;
-      }
-
-      &:after {
-        box-shadow: 0 0 0 1px pink;
-        right: -($spacing + ($weight * 0.5) + ($dot * 0.5));
-        background: $SteppingStoneBG2;
-        border: $pink;
-        border-radius: 50%;
-        height: $dot;
-        width: $dot;
-        content: '';
-        top: 5px;
-      }
-    }
+  }
+  .current {
+    margin: $spacing + 5px 0px;
+    opacity: 1;
   }
 }

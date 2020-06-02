@@ -45,6 +45,8 @@ const YearBarChart: FC<Props> = ({ yearsData, degreeData }) => {
         />
         {degreeData.map(({ name }, i) => (
           <Bar
+            animationEasing="ease-out"
+            animationDuration={1000}
             key={i}
             dataKey={name.charAt(0)}
             fill={COLORS[i]}
