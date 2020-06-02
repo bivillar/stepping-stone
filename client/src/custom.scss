@@ -530,6 +530,16 @@ $spacing: 10px;
   .page {
     padding-bottom: $spacing;
     margin-bottom: $spacing;
+    opacity: 1;
+    .text {
+      opacity: 0.6;
+      &:hover {
+        opacity: 0.8;
+      }
+      &--current {
+        opacity: 1;
+      }
+    }
 
     &:last-of-type {
       padding-bottom: 0;
@@ -554,6 +564,30 @@ $spacing: 10px;
       width: $dot;
       content: '';
       top: 5px;
+    }
+
+    &--current {
+      padding-bottom: $spacing + 2px;
+      margin-bottom: $spacing + 2px;
+      margin-top: $spacing + 2px;
+      &:before,
+      &:after {
+        position: absolute;
+        display: block;
+        top: 0;
+      }
+
+      &:after {
+        box-shadow: 0 0 0 1px pink;
+        right: -($spacing + ($weight * 0.5) + ($dot * 0.5));
+        background: $SteppingStoneBG2;
+        border: $pink;
+        border-radius: 50%;
+        height: $dot;
+        width: $dot;
+        content: '';
+        top: 5px;
+      }
     }
   }
 }
