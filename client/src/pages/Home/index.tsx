@@ -1,7 +1,6 @@
 import React, { FC, useEffect, useState, useRef } from 'react'
 import { History } from 'history'
 import { useScrollPosition } from '@n8tb1t/use-scroll-position'
-// import ScrollSnap from 'scroll-snap'
 
 import Logo from '../../components/Logo'
 import Firebase from '../../base'
@@ -13,15 +12,23 @@ import Error from '../../components/Error'
 import Motive from './Motive'
 import InField from './InField'
 
+const PAGES = [
+  { component: Title, title: 'Home' },
+  { component: Degree, title: 'Formação' },
+  { component: Suggestions, title: 'Sugestões' },
+  { component: Motive, title: 'Motivos' },
+  { component: InField, title: 'Área' },
+]
+
 interface Props {
   history: History
 }
 
 const Home: FC<Props> = ({ history }) => {
-  // const [ref, setRef] = useState<any>(null)
   const [fixed, setFixed] = useState<boolean>(false)
   const [error, setError] = useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>(true)
+  const [position, setPosition] = useState<number>(0)
 
   const [inField, setInField] = useState<InFieldFormEntry[]>([])
   const [notInField, setNotInField] = useState<NotInFieldFormEntry[]>([])
@@ -36,16 +43,6 @@ const Home: FC<Props> = ({ history }) => {
       .then(receiveData)
       .catch(() => setError(true))
   }, [])
-
-  // useEffect(() => {
-  //   if (ref) {
-  //     const element = ref.current
-  //     new ScrollSnap(element, {
-  //       snapDestinationY: '90%',
-  //       time: true,
-  //     })
-  //   }
-  // }, [ref])
 
   function receiveData(newData: {
     inField: InFieldFormEntry[]
@@ -63,7 +60,20 @@ const Home: FC<Props> = ({ history }) => {
   useScrollPosition(({ currPos }) => {
     if (currPos.y < -200 && !fixed) setFixed(true)
     else if (currPos.y > -200 && fixed) setFixed(false)
+
+    const pos = Math.floor(
+      (-currPos.y + window.innerHeight * 0.5) / window.innerHeight
+    )
+    if (pos !== position) {
+      setPosition(pos)
+    }
   })
+
+  const goToPosition = (pos: number) =>
+    window.scrollTo({
+      top: pos * window.innerHeight,
+      behavior: 'smooth',
+    })
 
   if (loading) return <Loading />
 
@@ -71,8 +81,24 @@ const Home: FC<Props> = ({ history }) => {
 
   return (
     <div className="homePage">
-      <div className={`logoDiv ${fixed ? 'fixed' : ''}`}>
+      <div className={`logoDiv${fixed ? '--fixed' : ''}`}>
         <Logo />
+      </div>
+      <div className="flex h-100 items-center justify-end fixed right-0 pr4">
+        <ul className="guide h-100 flex items-end flex-column justify-center">
+          {PAGES.map(({ title }, i) => {
+            const current = i == position
+            return (
+              <li
+                className={`page ${current ? 'current' : ''} tr pointer`}
+                onClick={() => goToPosition(i)}>
+                <span className={`text${current ? '--current' : ''}`}>
+                  {title}
+                </span>
+              </li>
+            )
+          })}
+        </ul>
       </div>
       <Title />
       <Degree totalizers={totalizers} />
