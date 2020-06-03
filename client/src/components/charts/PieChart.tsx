@@ -14,6 +14,7 @@ const PieChart: FC<Props> = ({ data, radius, colors = COLORS }) => (
   <ResponsiveContainer>
     <_PieChart>
       <Pie
+        animationDuration={1000}
         data={data}
         cx={radius + 40}
         cy="50%"

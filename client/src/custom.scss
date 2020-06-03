@@ -54,6 +54,10 @@ html {
   scroll-snap-type: y mandatory;
 }
 
+.fixed {
+  position: fixed;
+}
+
 .c-success {
   color: $green;
 }
@@ -120,13 +124,13 @@ html {
 }
 
 .homeContainer {
-  padding: 15% 10%;
+  padding: 15% 13% 15% 10%;
   height: 100vh;
   width: 100%;
 }
 
 .withTitle {
-  padding: 15% 10% 5% 10%;
+  padding: 15% 13% 5% 10%;
 }
 
 .withoutTitle {
@@ -134,7 +138,7 @@ html {
 }
 
 .title {
-  padding: 20% 10%;
+  padding: 20% 13% 20% 10%;
   height: 100vh;
   width: 100%;
 
@@ -165,12 +169,13 @@ html {
   &--admin {
     padding: 0% !important;
   }
-}
 
-.fixed {
-  position: fixed;
-  padding-top: 3%;
-  font-size: 40px;
+  &--fixed {
+    position: fixed;
+    padding-top: 3%;
+    padding-left: 10%;
+    font-size: 40px;
+  }
 }
 
 .fade-in-section {
@@ -499,6 +504,83 @@ ul {
     opacity: 0.2;
   }
   60% {
+    opacity: 1;
+  }
+}
+
+$dot: 11px;
+$weight: 1px;
+$spacing: 15px;
+$font-size: 16px;
+
+.guide {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  margin: $spacing auto;
+  border-right: $weight solid $COLOR3;
+  line-height: 1.4em;
+  padding: $spacing;
+
+  li {
+    position: relative;
+    margin: 0;
+    list-style: none;
+  }
+
+  .page {
+    margin: $spacing 0px;
+    opacity: 1;
+    transition: opacity 0.1s linear;
+
+    .text {
+      opacity: 0.6;
+      font-size: $font-size;
+      font-weight: 100;
+      transition: font-size 0.3s linear;
+      &:hover {
+        opacity: 0.8;
+      }
+      &--current {
+        transition: font-size 0.3s linear;
+        opacity: 1;
+        font-weight: 100;
+        font-size: $font-size + 2;
+      }
+    }
+
+    &:last-of-type {
+      padding-bottom: 0 !important;
+      margin-bottom: 0 !important;
+      border: none !important;
+    }
+
+    &:first-of-type {
+      padding-top: 0 !important;
+      margin-top: 0 !important;
+      border: none !important;
+    }
+
+    &:before,
+    &:after {
+      position: absolute;
+      display: block;
+      top: 0;
+    }
+
+    &:after {
+      box-shadow: 0 0 0 1px $COLOR5;
+      right: -($spacing + ($weight * 0.5) + ($dot * 0.5));
+      background: $SteppingStoneBG2;
+      border-radius: 50%;
+      height: $dot;
+      width: $dot;
+      content: '';
+      top: 5px;
+    }
+  }
+  .current {
+    margin: $spacing + 5px 0px;
     opacity: 1;
   }
 }
