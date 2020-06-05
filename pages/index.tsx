@@ -6,7 +6,7 @@ const Home = ({ data }: Props) => {
   return <div>Next stars: {JSON.stringify(data)}</div>
 }
 
-Home.getInitialProps = async (ctx) => {
+Home.getInitialProps = async () => {
   const data = await Firebase.getData()
   console.log(data)
   return { data }
