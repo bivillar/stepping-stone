@@ -2,25 +2,25 @@ import * as firebase from 'firebase'
 import 'firebase/auth'
 import 'firebase/firebase-firestore'
 
-const config = {
-  apiKey: process.env.REACT_APP_FIREBASE_KEY,
-  authDomain: process.env.REACT_APP_FIREBASE_DOMAIN,
-  databaseURL: process.env.REACT_APP_FIREBASE_DATABASE,
-  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.REACT_APP_FIREBASE_SENDER_ID,
-  appId: process.env.REACT_APP_FIREBASE_APPID,
-}
-
 // const config = {
-//   apiKey: 'AIzaSyBxkUCpDT2Zcy4BevHLQuqgamxRl2GXGtI',
-//   authDomain: 'stepping-stone-db.firebaseapp.com',
-//   databaseURL: 'https://stepping-stone-db.firebaseio.com',
-//   projectId: 'stepping-stone-db',
-//   storageBucket: 'stepping-stone-db.appspot.com',
-//   messagingSenderId: '201844952341',
-//   appId: '1:201844952341:web:a49cc4aa0d5a5922eded1c',
+//   apiKey: process.env.REACT_APP_FIREBASE_KEY,
+//   authDomain: process.env.REACT_APP_FIREBASE_DOMAIN,
+//   databaseURL: process.env.REACT_APP_FIREBASE_DATABASE,
+//   projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+//   storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+//   messagingSenderId: process.env.REACT_APP_FIREBASE_SENDER_ID,
+//   appId: process.env.REACT_APP_FIREBASE_APPID,
 // }
+
+const config = {
+  apiKey: 'AIzaSyBxkUCpDT2Zcy4BevHLQuqgamxRl2GXGtI',
+  authDomain: 'stepping-stone-db.firebaseapp.com',
+  databaseURL: 'https://stepping-stone-db.firebaseio.com',
+  projectId: 'stepping-stone-db',
+  storageBucket: 'stepping-stone-db.appspot.com',
+  messagingSenderId: '201844952341',
+  appId: '1:201844952341:web:a49cc4aa0d5a5922eded1c',
+}
 
 class Firebase {
   db: firebase.firestore.Firestore
