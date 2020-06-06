@@ -23,7 +23,7 @@ const PieChart: FC<Props> = ({ data, radius, colors = COLORS }) => (
         nameKey="name"
         blendStroke
         label>
-        {data.map((_, index) => (
+        {Object.keys(data).map((_, index) => (
           <Cell fill={colors[index]} key={index} />
         ))}
       </Pie>

@@ -11,6 +11,8 @@ import Degree from '../components/blocks/Degree'
 import Suggestions from '../components/blocks/Suggestions'
 import Motive from '../components/blocks/Motive'
 import InField from '../components/blocks/InField'
+import Loading from '../components/Loading'
+import Error from '../components/Error'
 
 const PAGES = [
   { component: Title, title: 'Home' },
@@ -29,16 +31,15 @@ const Home = ({ data }: Props) => {
   const [inField, setInField] = useState<any[]>([])
   const [notInField, setNotInField] = useState<any[]>([])
   const [formEntries, setFormEntries] = useState<any[]>([])
-  // const [totalizers, setTotalizers] = useState<Map<string, any>>(new Map())
+  const [totalizers, setTotalizers] = useState<{}>({})
 
-  // useEffect(() => {
-  //   setFormEntries(data.formEntries)
-  //   setTotalizers(data.totalizers)
-  //   setNotInField(data.notInField)
-  //   setInField(data.inField)
-  //   setLoading(false)
-  //   console.log(data.totalizers)
-  // }, [data])
+  useEffect(() => {
+    setFormEntries(data.formEntries)
+    setTotalizers(data.totalizers)
+    setNotInField(data.notInField)
+    setInField(data.inField)
+    setLoading(false)
+  }, [data])
 
   useScrollPosition(({ currPos }) => {
     if (currPos.y < -200 && !fixed) setFixed(true)
@@ -58,7 +59,9 @@ const Home = ({ data }: Props) => {
       behavior: 'smooth',
     })
 
-  console.log(data)
+  if (loading) return <Loading />
+
+  if (error) return <Error />
 
   return (
     <div>
@@ -83,10 +86,10 @@ const Home = ({ data }: Props) => {
         </ul>
       </div>
       <Title />
-      <Degree totalizers={data} />
-      <Suggestions totalizers={data} />
-      <Motive totalizers={data} />
-      <InField totalizers={data} />
+      <Degree totalizers={totalizers} />
+      <Suggestions totalizers={totalizers} />
+      <Motive totalizers={totalizers} />
+      <InField totalizers={totalizers} />
     </div>
   )
 }

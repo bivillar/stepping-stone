@@ -21,7 +21,7 @@ const Motive: FC<Props> = ({ totalizers }) => {
 }
 
 interface Props {
-  totalizers: Map<string, any>
+  totalizers: any
 }
 
 export default Motive
