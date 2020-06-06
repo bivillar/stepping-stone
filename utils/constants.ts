@@ -30,3 +30,21 @@ export const DEGREES = [
   'Informática',
   'Tecnólogo',
 ]
+
+export enum ChartType {
+  pie = 'pie',
+  bar = 'bar',
+}
+
+const PieConfig = {
+  type: ChartType.pie,
+}
+
+export const charts = [
+  { name: 'degreeLevel', chartType: ChartType.pie },
+  { name: 'degree', chartType: ChartType.pie, givenOptions: DEGREES },
+  { name: 'gradPerYear', chartType: ChartType.bar, x: 'gradYear', y: 'degree' },
+  { name: 'stillInField', chartType: ChartType.pie },
+  { name: 'motive', chartType: ChartType.pie },
+  { name: 'degreeSuggestion', chartType: ChartType.pie },
+]

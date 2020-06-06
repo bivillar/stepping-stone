@@ -1,7 +1,7 @@
-// @ts-nocheck
 import * as firebase from 'firebase'
 import 'firebase/auth'
 import 'firebase/firebase-firestore'
+import { charts, ChartType } from './constants'
 
 // const config = {
 //   apiKey: process.env.REACT_APP_FIREBASE_KEY,
@@ -41,45 +41,93 @@ class Firebase {
 function getAllTotalizers(
   snapshots: firebase.firestore.QuerySnapshot<firebase.firestore.DocumentData>
 ) {
-  const inField: any[] = []
-  const notInField: any[] = []
-  const formEntries: (any | any)[] = []
-  const fields = { gradPerYear: {} }
+  const inField: FormEntry[] = []
+  const notInField: FormEntry[] = []
+  const formEntries: FormEntry[] = []
+  const totalizers: Totalizers = {
+    degree: {},
+    gradYear: {},
+    degreeLevel: {},
+    degreeSuggestion: {},
+    motive: {},
+    stillInField: {},
+    gradPerYear: {},
+  }
+
   snapshots.forEach((snapshot) => {
+    const data = snapshot.data() as FormEntry
+
     if (snapshot.get('filter').toLowerCase() == 'sim') {
       if (snapshot.get('stillInField').toLowerCase() == 'sim') {
-        inField.push(snapshot.data() as any)
+        inField.push(data)
       } else {
-        notInField.push(snapshot.data() as any)
+        notInField.push(data)
       }
-      formEntries.push(snapshot.data() as any)
+      formEntries.push(data)
     }
 
-    const data = snapshot.data()
-    Object.keys(data).forEach((field) => {
-      const value = data[field]
-      if (typeof fields[field] === 'undefined') {
-        fields[field] = {}
-      }
-
-      const totalizer = fields[field]
-
-      if (typeof totalizer[value] === 'undefined')
-        totalizer[value] = { name: value, value: 1 }
-      else {
-        totalizer[value].value += 1
+    charts.forEach((chartOptions) => {
+      const { chartType, name } = chartOptions
+      switch (chartType) {
+        case ChartType.pie:
+          updateTotalizersPie(totalizers, data, name as Field)
+        case ChartType.bar:
+          updateTotalizersBar(
+            totalizers,
+            data,
+            name as Totals,
+            chartOptions.x as Field,
+            chartOptions.y as Field
+          )
       }
     })
-    const gradPerYear = fields['gradPerYear']
-    if (typeof gradPerYear[data.gradYear] === 'undefined') {
-      gradPerYear[data.gradYear] = { year: data.gradYear }
-    }
-    const degreeKey = data.degree.charAt(0)
-    if (typeof gradPerYear[data.gradYear][degreeKey] === 'undefined') {
-      gradPerYear[data.gradYear][degreeKey] = 1
-    } else gradPerYear[data.gradYear][degreeKey] += 1
   })
-  return { totalizers: fields, inField, notInField, formEntries }
+  console.log(totalizers)
+  return { totalizers, inField, notInField, formEntries }
+}
+
+function updateTotalizersPie(
+  totalizers: Totalizers,
+  data: FormEntry,
+  name: Field
+) {
+  const option = data[name]
+  if (!option) return
+  if (doesNotHave(totalizers, name)) {
+    totalizers[name] = {}
+  }
+  if (doesNotHave(totalizers[name], option)) {
+    totalizers[name]![option] = { name: option, value: 0 }
+  }
+  totalizers[name]![option]!.value += 1
+}
+
+function updateTotalizersBar(
+  totalizers: Totalizers,
+  data: FormEntry,
+  name: Totals,
+  x?: Field,
+  y?: Field
+) {
+  if (!x || !y) return
+  const chartX = data[x]
+  const chartY = data[y]
+  if (!chartX || !chartY) return
+  if (doesNotHave(totalizers, name)) {
+    totalizers[name] = {}
+  }
+  if (doesNotHave(totalizers[name], chartX)) {
+    totalizers[name]![chartX] = {}
+    totalizers[name]![chartX][x] = chartX
+  }
+  if (doesNotHave(totalizers[name]![chartX], chartY)) {
+    totalizers[name]![chartX][chartY] = 0
+  }
+  totalizers[name]![chartX][chartY] += 1
+}
+
+const doesNotHave = (obj: any, field: string | number) => {
+  return typeof obj[field] === typeof undefined
 }
 
 export default new Firebase()
