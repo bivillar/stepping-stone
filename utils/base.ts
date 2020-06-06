@@ -1,3 +1,4 @@
+// @ts-nocheck
 import * as firebase from 'firebase'
 import 'firebase/auth'
 import 'firebase/firebase-firestore'
@@ -43,7 +44,7 @@ function getAllTotalizers(
   const inField: any[] = []
   const notInField: any[] = []
   const formEntries: (any | any)[] = []
-  const fields = new Map()
+  const fields = { gradPerYear: {} }
   snapshots.forEach((snapshot) => {
     if (snapshot.get('filter').toLowerCase() == 'sim') {
       if (snapshot.get('stillInField').toLowerCase() == 'sim') {
@@ -57,33 +58,28 @@ function getAllTotalizers(
     const data = snapshot.data()
     Object.keys(data).forEach((field) => {
       const value = data[field]
-
-      if (!fields.has(field)) {
-        fields.set(field, new Map())
+      if (typeof fields[field] === 'undefined') {
+        fields[field] = {}
       }
-      const totalizer = fields.get(field)
 
-      if (!totalizer.has(value)) totalizer.set(value, { name: value, value: 1 })
+      const totalizer = fields[field]
+
+      if (typeof totalizer[value] === 'undefined')
+        totalizer[value] = { name: value, value: 1 }
       else {
-        const total = totalizer.get(value)
-        total.value += 1
+        totalizer[value].value += 1
       }
     })
-    if (!fields.has('gradPerYear')) {
-      fields.set('gradPerYear', new Map())
+    const gradPerYear = fields['gradPerYear']
+    if (typeof gradPerYear[data.gradYear] === 'undefined') {
+      gradPerYear[data.gradYear] = { year: data.gradYear }
     }
-    const gradPerYear = fields.get('gradPerYear')
-    if (!gradPerYear.has(data.gradYear)) {
-      gradPerYear.set(data.gradYear, { year: data.gradYear })
-    }
-    const gradPerYearData = gradPerYear.get(data.gradYear)
     const degreeKey = data.degree.charAt(0)
-    if (typeof gradPerYearData[degreeKey] === 'undefined')
-      gradPerYearData[degreeKey] = 1
-    else gradPerYearData[degreeKey] += 1
+    if (typeof gradPerYear[data.gradYear][degreeKey] === 'undefined') {
+      gradPerYear[data.gradYear][degreeKey] = 1
+    } else gradPerYear[data.gradYear][degreeKey] += 1
   })
-  console.log(JSON.stringify(fields))
-  return JSON.stringify(fields)
+  return { totalizers: fields, inField, notInField, formEntries }
 }
 
 export default new Firebase()

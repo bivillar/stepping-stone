@@ -18,7 +18,7 @@ const Degree: FC<Props> = ({ totalizers }) => {
 
     const data: any[] = []
     const outros = { name: 'Outros', value: 0 }
-    newDegreeData.forEach(({ name, value }) => {
+    newDegreeData.forEach(({ name, value }: any) => {
       if (DEGREES.includes(name)) {
         data.push({ name, value })
       } else {
@@ -47,7 +47,7 @@ const Degree: FC<Props> = ({ totalizers }) => {
 }
 
 interface Props {
-  totalizers: Map<string, any>
+  totalizers: any
 }
 
 export default Degree
