@@ -24,8 +24,15 @@ export const LIGHTS = (mode: number) =>
     ['Tecnólogo', mode],
   ])
 
-export const getTotalizer = (totalizers: any, field: string) =>
-  Object.values(totalizers[field])
+export const getTotalizer = (totalizers: any, field: string) => {
+  if (!totalizers[field]['Outros']) return Object.values(totalizers[field])
+
+  const outros = totalizers[field]['Outros']
+  delete totalizers[field]['Outros']
+  const values = Object.values(totalizers[field])
+  values.push(outros)
+  return values
+}
 
 export const getTotalizerKeys = (totalizers: any, field: string) =>
   Object.keys(totalizers[field])
