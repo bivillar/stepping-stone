@@ -82,7 +82,8 @@ function getAllTotalizers(
       gradPerYearData[degreeKey] = 1
     else gradPerYearData[degreeKey] += 1
   })
-  return { totalizers: fields, inField, notInField, formEntries }
+  console.log(JSON.stringify(fields))
+  return JSON.stringify(fields)
 }
 
 export default new Firebase()
