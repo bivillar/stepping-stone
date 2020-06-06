@@ -14,6 +14,13 @@ import InField from '../components/blocks/InField'
 import Loading from '../components/Loading'
 import Error from '../components/Error'
 
+const Header = () => (
+  <Head>
+    <title>Stepping Stone</title>
+    <link rel="shortcut icon" href="/favicon.png" />
+  </Head>
+)
+
 const PAGES = [
   { component: Title, title: 'Home' },
   { component: Degree, title: 'Formação' },
@@ -64,33 +71,36 @@ const Home = ({ data }: Props) => {
   if (error) return <Error />
 
   return (
-    <div>
-      <div className={`logoDiv${fixed ? '--fixed' : ''}`}>
-        <Logo />
+    <>
+      <Header />
+      <div>
+        <div className={`logoDiv${fixed ? '--fixed' : ''}`}>
+          <Logo />
+        </div>
+        <div className="flex h-100 items-center justify-end fixed right-0 pr4">
+          <ul className="guide h-100 flex items-end flex-column justify-center">
+            {PAGES.map(({ title }, i) => {
+              const current = i == position
+              return (
+                <li
+                  key={title}
+                  className={`page ${current ? 'current' : ''} tr pointer`}
+                  onClick={() => goToPosition(i)}>
+                  <span className={`text${current ? '--current' : ''}`}>
+                    {title}
+                  </span>
+                </li>
+              )
+            })}
+          </ul>
+        </div>
+        <Title />
+        <Degree totalizers={totalizers} />
+        <Suggestions totalizers={totalizers} />
+        <Motive totalizers={totalizers} />
+        <InField totalizers={totalizers} />
       </div>
-      <div className="flex h-100 items-center justify-end fixed right-0 pr4">
-        <ul className="guide h-100 flex items-end flex-column justify-center">
-          {PAGES.map(({ title }, i) => {
-            const current = i == position
-            return (
-              <li
-                key={title}
-                className={`page ${current ? 'current' : ''} tr pointer`}
-                onClick={() => goToPosition(i)}>
-                <span className={`text${current ? '--current' : ''}`}>
-                  {title}
-                </span>
-              </li>
-            )
-          })}
-        </ul>
-      </div>
-      <Title />
-      <Degree totalizers={totalizers} />
-      <Suggestions totalizers={totalizers} />
-      <Motive totalizers={totalizers} />
-      <InField totalizers={totalizers} />
-    </div>
+    </>
   )
 }
 
