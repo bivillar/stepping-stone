@@ -36,10 +36,6 @@ export enum ChartType {
   bar = 'bar',
 }
 
-const PieConfig = {
-  type: ChartType.pie,
-}
-
 export const charts = [
   { name: 'degreeLevel', chartType: ChartType.pie },
   { name: 'degree', chartType: ChartType.pie, givenOptions: DEGREES },
@@ -47,4 +43,5 @@ export const charts = [
   { name: 'stillInField', chartType: ChartType.pie },
   { name: 'motive', chartType: ChartType.pie },
   { name: 'degreeSuggestion', chartType: ChartType.pie },
+  { name: 'gradYear', chartType: ChartType.pie },
 ]

@@ -67,34 +67,38 @@ function getAllTotalizers(
     }
 
     charts.forEach((chartOptions) => {
-      const { chartType, name } = chartOptions
+      const { chartType, name, givenOptions } = chartOptions
       switch (chartType) {
         case ChartType.pie:
-          updateTotalizersPie(totalizers, data, name as Field)
+          updateTotalizersPie(totalizers, data, name as Field, givenOptions)
         case ChartType.bar:
           updateTotalizersBar(
             totalizers,
             data,
             name as Totals,
             chartOptions.x as Field,
-            chartOptions.y as Field
+            chartOptions.y as Field,
+            givenOptions
           )
       }
     })
   })
-  console.log(totalizers)
   return { totalizers, inField, notInField, formEntries }
 }
 
 function updateTotalizersPie(
   totalizers: Totalizers,
   data: FormEntry,
-  name: Field
+  name: Field,
+  givenOptions?: (string | number)[]
 ) {
-  const option = data[name]
+  let option = data[name]
   if (!option) return
   if (doesNotHave(totalizers, name)) {
     totalizers[name] = {}
+  }
+  if (givenOptions && !givenOptions.includes(option)) {
+    option = 'Outros'
   }
   if (doesNotHave(totalizers[name], option)) {
     totalizers[name]![option] = { name: option, value: 0 }
@@ -107,11 +111,12 @@ function updateTotalizersBar(
   data: FormEntry,
   name: Totals,
   x?: Field,
-  y?: Field
+  y?: Field,
+  givenOptions?: (string | number)[]
 ) {
   if (!x || !y) return
   const chartX = data[x]
-  const chartY = data[y]
+  let chartY = data[y]
   if (!chartX || !chartY) return
   if (doesNotHave(totalizers, name)) {
     totalizers[name] = {}
@@ -119,6 +124,9 @@ function updateTotalizersBar(
   if (doesNotHave(totalizers[name], chartX)) {
     totalizers[name]![chartX] = {}
     totalizers[name]![chartX][x] = chartX
+  }
+  if (givenOptions && !givenOptions.includes(chartY)) {
+    chartY = 'Outros'
   }
   if (doesNotHave(totalizers[name]![chartX], chartY)) {
     totalizers[name]![chartX][chartY] = 0
