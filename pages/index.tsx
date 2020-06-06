@@ -5,7 +5,7 @@ import Firebase from '../utils/base'
 import '../styles/styles.scss'
 
 const Home = ({ data }: Props) => {
-  return <div>Next stars: {JSON.stringify(data)}</div>
+  return <div className="c-success">Next stars: {JSON.stringify(data)}</div>
 }
 
 Home.getInitialProps = async () => {
