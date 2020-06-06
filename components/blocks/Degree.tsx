@@ -14,19 +14,7 @@ const Degree: FC<Props> = ({ totalizers }) => {
   useEffect(() => {
     setYearsData(getTotalizer(totalizers, 'gradPerYear'))
     setDegreeLevelData(getTotalizer(totalizers, 'degreeLevel'))
-    let newDegreeData = getTotalizer(totalizers, 'degree')
-
-    const data: any[] = []
-    const outros = { name: 'Outros', value: 0 }
-    newDegreeData.forEach(({ name, value }: any) => {
-      if (DEGREES.includes(name)) {
-        data.push({ name, value })
-      } else {
-        outros.value += value
-      }
-    })
-    if (outros.value > 0) data.push(outros)
-    setDegreeData(data)
+    setDegreeData(getTotalizer(totalizers, 'degree'))
   }, [totalizers])
 
   return (

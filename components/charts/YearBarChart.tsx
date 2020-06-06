@@ -35,7 +35,7 @@ const YearBarChart: FC<Props> = ({ yearsData, degreeData }) => {
           stroke={COLORS[0]}
           strokeOpacity={0.4}
         />
-        <XAxis dataKey="year" />
+        <XAxis dataKey="gradYear" />
         <YAxis />
         <Tooltip />
         <Legend
@@ -48,7 +48,7 @@ const YearBarChart: FC<Props> = ({ yearsData, degreeData }) => {
             animationEasing="ease-out"
             animationDuration={1000}
             key={i}
-            dataKey={name.charAt(0)}
+            dataKey={name}
             fill={COLORS[i]}
             name={name}
             opacity={opacity.get(name)}

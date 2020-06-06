@@ -13,6 +13,7 @@ import Motive from '../components/blocks/Motive'
 import InField from '../components/blocks/InField'
 import Loading from '../components/Loading'
 import Error from '../components/Error'
+import Menu from '../components/Menu'
 
 const Header = () => (
   <Head>
@@ -60,12 +61,6 @@ const Home = ({ data }: Props) => {
     }
   })
 
-  const goToPosition = (pos: number) =>
-    window.scrollTo({
-      top: pos * window.innerHeight,
-      behavior: 'smooth',
-    })
-
   if (loading) return <Loading />
 
   if (error) return <Error />
@@ -78,21 +73,7 @@ const Home = ({ data }: Props) => {
           <Logo />
         </div>
         <div className="flex h-100 items-center justify-end fixed right-0 pr4">
-          <ul className="guide h-100 flex items-end flex-column justify-center">
-            {PAGES.map(({ title }, i) => {
-              const current = i == position
-              return (
-                <li
-                  key={title}
-                  className={`page ${current ? 'current' : ''} tr pointer`}
-                  onClick={() => goToPosition(i)}>
-                  <span className={`text${current ? '--current' : ''}`}>
-                    {title}
-                  </span>
-                </li>
-              )
-            })}
-          </ul>
+          <Menu position={position} pages={PAGES} />
         </div>
         <Title />
         <Degree totalizers={totalizers} />
