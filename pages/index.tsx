@@ -1,6 +1,8 @@
 import Head from 'next/head'
-import Firebase from '../utils/base'
 import { Component, FC } from 'react'
+
+import Firebase from '../utils/base'
+import '../styles/styles.scss'
 
 const Home = ({ data }: Props) => {
   return <div>Next stars: {JSON.stringify(data)}</div>
