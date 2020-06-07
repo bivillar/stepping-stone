@@ -11,7 +11,7 @@ const Container: FC<Props> = ({ style = {}, children, title }) => {
       }`}
       style={style}>
       {title && (
-        <div className="header">
+        <div className="header db">
           <span>{title}</span>
         </div>
       )}
