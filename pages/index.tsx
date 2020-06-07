@@ -14,6 +14,7 @@ import InField from '../components/blocks/InField'
 import Loading from '../components/Loading'
 import Error from '../components/Error'
 import Menu from '../components/Menu'
+import Container from '../components/Container'
 
 const Header = () => (
   <Head>
@@ -22,12 +23,27 @@ const Header = () => (
   </Head>
 )
 
-const PAGES = [
-  { component: Title, title: 'Home' },
-  { component: Degree, title: 'Formação' },
-  { component: Suggestions, title: 'Sugestões' },
-  { component: Motive, title: 'Motivos' },
-  { component: InField, title: 'Área' },
+const PAGES: BlocksOptions[] = [
+  { menu: 'Home', title: 'Home', showMobile: true },
+  { Block: Degree, menu: 'Formação', title: 'Formação', showMobile: true },
+  {
+    Block: Suggestions,
+    menu: 'Sugestões',
+    title: 'Sugestões de Curso',
+    showMobile: false,
+  },
+  {
+    Block: Motive,
+    menu: 'Motivos',
+    title: 'Motivos',
+    showMobile: true,
+  },
+  {
+    Block: InField,
+    menu: 'Área',
+    title: 'Continuam na área',
+    showMobile: true,
+  },
 ]
 
 const Home = ({ data }: Props) => {
@@ -36,10 +52,10 @@ const Home = ({ data }: Props) => {
   const [loading, setLoading] = useState<boolean>(true)
   const [position, setPosition] = useState<number>(0)
 
-  const [inField, setInField] = useState<any[]>([])
-  const [notInField, setNotInField] = useState<any[]>([])
-  const [formEntries, setFormEntries] = useState<any[]>([])
-  const [totalizers, setTotalizers] = useState<{}>({})
+  const [inField, setInField] = useState<ChartData[]>([])
+  const [notInField, setNotInField] = useState<ChartData[]>([])
+  const [formEntries, setFormEntries] = useState<ChartData[]>([])
+  const [totalizers, setTotalizers] = useState<Totalizers>()
 
   useEffect(() => {
     setFormEntries(data.formEntries)
@@ -63,22 +79,32 @@ const Home = ({ data }: Props) => {
 
   if (loading) return <Loading />
 
-  if (error || !data) return <Error />
+  if (error || !data || !totalizers) return <Error />
 
   return (
-    <div>
-      <div className={`logoDiv${fixed ? '--fixed' : ''}`}>
-        <Logo />
+    <>
+      <Header />
+      <div>
+        <div className={`logoDiv${fixed ? '--fixed' : ''}`}>
+          <Logo />
+        </div>
+        <div className="flex-ns dn h-100 items-center justify-end fixed right-0 pr4-ns pr3">
+          <Menu position={position} pages={PAGES} />
+        </div>
+        <Title />
+        {PAGES.map(
+          ({ Block, title, showMobile, menu }) =>
+            Block && (
+              <Container
+                key={title || menu}
+                showMobile={showMobile}
+                title={title ?? menu}>
+                <Block totalizers={totalizers} />
+              </Container>
+            )
+        )}
       </div>
-      <div className="flex-ns dn h-100 items-center justify-end fixed right-0 pr4-ns pr3">
-        <Menu position={position} pages={PAGES} />
-      </div>
-      <Title />
-      <Degree totalizers={totalizers} />
-      <Suggestions totalizers={totalizers} />
-      <Motive totalizers={totalizers} />
-      <InField totalizers={totalizers} />
-    </div>
+    </>
   )
 }
 
