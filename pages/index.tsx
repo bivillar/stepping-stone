@@ -75,7 +75,7 @@ const Home = ({ data }: Props) => {
       </div>
       <Title />
       <Degree totalizers={totalizers} />
-      {/* <Suggestions totalizers={totalizers} /> */}
+      <Suggestions totalizers={totalizers} />
       <Motive totalizers={totalizers} />
       <InField totalizers={totalizers} />
     </div>
