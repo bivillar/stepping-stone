@@ -83,6 +83,7 @@ function getAllTotalizers(
       }
     })
   })
+  console.log(totalizers['gradPerYear'])
   return { totalizers, inField, notInField, formEntries }
 }
 
