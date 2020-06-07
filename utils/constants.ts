@@ -39,7 +39,13 @@ export enum ChartType {
 export const charts = [
   { name: 'degreeLevel', chartType: ChartType.pie },
   { name: 'degree', chartType: ChartType.pie, givenOptions: DEGREES },
-  { name: 'gradPerYear', chartType: ChartType.bar, x: 'gradYear', y: 'degree' },
+  {
+    name: 'gradPerYear',
+    chartType: ChartType.bar,
+    x: 'gradYear',
+    y: 'degree',
+    givenOptions: DEGREES,
+  },
   { name: 'stillInField', chartType: ChartType.pie },
   { name: 'motive', chartType: ChartType.pie },
   { name: 'degreeSuggestion', chartType: ChartType.pie },
