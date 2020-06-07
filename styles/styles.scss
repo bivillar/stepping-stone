@@ -48,7 +48,6 @@ $font-family-sans-serif: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
 $font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas,
   'Liberation Mono', 'Courier New', monospace;
 
-@import '~bootstrap/scss/bootstrap.scss';
 @import '~tachyons/css/tachyons.min.css';
 
 html {
@@ -92,23 +91,6 @@ html {
   -webkit-text-fill-color: transparent;
 }
 
-.header {
-  margin-top: -7%;
-  text-align: right;
-  padding: 1%;
-  opacity: 0.8;
-  span {
-    font-weight: 900;
-    font-size: 60px;
-    line-height: 0.8;
-    text-transform: uppercase;
-    background: linear-gradient(to right, $COLOR3 0%, $COLOR6 100%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-}
-
 .chartTooltip {
   position: relative;
 }
@@ -124,64 +106,50 @@ html {
   opacity: 0.3;
 }
 
-.homeContainer {
-  padding: 15% 13% 15% 10%;
-  height: 100vh;
-  width: 100%;
-}
+// .title {
+//   padding: 20% 13% 20% 10%;
+//   height: 100vh;
+//   width: 100%;
 
-.withTitle {
-  padding: 15% 13% 5% 10%;
-}
+//   .subtitle {
+//     font-weight: 100;
+//     background: linear-gradient(to right, $COLOR3 0%, $COLOR6 100%);
+//     background-clip: text;
+//     -webkit-background-clip: text;
+//     -webkit-text-fill-color: transparent;
+//     text-align: justify;
+//     text-justify: inter-word;
+//     padding-top: 15%;
+//     position: absolute;
+//     width: 40%;
+//   }
+// }
 
-.withoutTitle {
-  padding: 15% 10%;
-}
+// .logoDiv {
+//   position: absolute;
+//   padding-top: 20%;
+//   padding-left: 10%;
+//   font-size: 80px;
+//   -webkit-transition: font-size 0.5s ease;
+//   -moz-transition: font-size 0.5s ease;
+//   -o-transition: font-size 0.5s ease;
+//   transition: font-size 0.5s ease;
 
-.title {
-  padding: 20% 13% 20% 10%;
-  height: 100vh;
-  width: 100%;
+//   &--admin {
+//     padding: 0% !important;
+//   }
 
-  .subtitle {
-    font-weight: 100;
-    background: linear-gradient(to right, $COLOR3 0%, $COLOR6 100%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-align: justify;
-    text-justify: inter-word;
-    padding-top: 15%;
-    position: absolute;
-    width: 40%;
-  }
-}
-
-.logoDiv {
-  position: absolute;
-  padding-top: 20%;
-  padding-left: 10%;
-  font-size: 80px;
-  -webkit-transition: font-size 0.5s ease;
-  -moz-transition: font-size 0.5s ease;
-  -o-transition: font-size 0.5s ease;
-  transition: font-size 0.5s ease;
-
-  &--admin {
-    padding: 0% !important;
-  }
-
-  &--fixed {
-    position: fixed;
-    padding-top: 3%;
-    padding-left: 10%;
-    font-size: 40px;
-    -webkit-transition: font-size 0.5s ease;
-    -moz-transition: font-size 0.5s ease;
-    -o-transition: font-size 0.5s ease;
-    transition: font-size 0.5s ease;
-  }
-}
+//   &--fixed {
+//     position: fixed;
+//     padding-top: 3%;
+//     padding-left: 10%;
+//     font-size: 40px;
+//     -webkit-transition: font-size 0.5s ease;
+//     -moz-transition: font-size 0.5s ease;
+//     -o-transition: font-size 0.5s ease;
+//     transition: font-size 0.5s ease;
+//   }
+// }
 
 .fade-in-section {
   opacity: 0;
@@ -513,79 +481,469 @@ ul {
   }
 }
 
-$dot: 11px;
-$weight: 1px;
-$spacing: 15px;
-$font-size: 16px;
+@media screen and (max-width: 30em) {
+  $padding-top: 30%;
+  $padding-bottom: 0%;
+  $padding-left: 10%;
+  $padding-right: 10%;
+  $containerPadding: $padding-top $padding-left $padding-bottom $padding-left;
+  $dot: 9px;
+  $weight: 1px;
+  $spacing: 10px;
+  $font-size: 13px;
 
-.guide {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  margin: $spacing auto;
-  border-right: $weight solid $COLOR3;
-  line-height: 1.4em;
-  padding: $spacing;
+  .title {
+    padding: $containerPadding;
+    width: 100%;
+    height: 100vh;
 
-  li {
-    position: relative;
-    margin: 0;
-    list-style: none;
-  }
-
-  .page {
-    margin: $spacing 0px;
-    opacity: 1;
-    transition: opacity 0.1s linear;
-
-    .text {
-      opacity: 0.6;
-      font-size: $font-size;
+    .subtitle {
       font-weight: 100;
-      transition: font-size 0.3s linear;
-      &:hover {
-        opacity: 0.8;
-      }
-      &--current {
-        transition: font-size 0.3s linear;
-        opacity: 1;
-        font-weight: 100;
-        font-size: $font-size + 2;
-      }
-    }
-
-    &:last-of-type {
-      padding-bottom: 0 !important;
-      margin-bottom: 0 !important;
-      border: none !important;
-    }
-
-    &:first-of-type {
-      padding-top: 0 !important;
-      margin-top: 0 !important;
-      border: none !important;
-    }
-
-    &:before,
-    &:after {
-      position: absolute;
-      display: block;
-      top: 0;
-    }
-
-    &:after {
-      box-shadow: 0 0 0 1px $COLOR5;
-      right: -($spacing + ($weight * 0.5) + ($dot * 0.5));
-      background: $SteppingStoneBG2;
-      border-radius: 50%;
-      height: $dot;
-      width: $dot;
-      content: '';
-      top: 5px;
+      background: linear-gradient(to right, $COLOR3 0%, $COLOR6 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-align: justify;
+      text-justify: inter-word;
+      padding-top: $padding-top;
     }
   }
-  .current {
-    margin: $spacing + 5px 0px;
-    opacity: 1;
+
+  .logoDiv {
+    position: absolute;
+    padding-top: $padding-top - 10%;
+    padding-left: $padding-left;
+    font-size: 40px;
+    -webkit-transition: font-size 0.5s ease;
+    -moz-transition: font-size 0.5s ease;
+    -o-transition: font-size 0.5s ease;
+    transition: font-size 0.5s ease;
+
+    &--fixed {
+      position: fixed;
+      padding-top: 3%;
+      padding-left: $padding-left;
+      font-size: 30px;
+      -webkit-transition: font-size 0.5s ease;
+      -moz-transition: font-size 0.5s ease;
+      -o-transition: font-size 0.5s ease;
+      transition: font-size 0.5s ease;
+    }
+  }
+
+  .guide {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    margin: $spacing auto;
+    border-right: $weight solid $COLOR3;
+    line-height: 1.4em;
+    padding: $spacing;
+
+    li {
+      position: relative;
+      margin: 0;
+      list-style: none;
+    }
+
+    .page {
+      margin: $spacing 0px;
+      opacity: 1;
+      transition: opacity 0.1s linear;
+
+      .text {
+        opacity: 0.6;
+        font-size: $font-size;
+        font-weight: 100;
+        transition: font-size 0.3s linear;
+        &:hover {
+          opacity: 0.8;
+        }
+        &--current {
+          transition: font-size 0.3s linear;
+          opacity: 1;
+          font-weight: 100;
+          font-size: $font-size + 2;
+        }
+      }
+
+      &:last-of-type {
+        padding-bottom: 0 !important;
+        margin-bottom: 0 !important;
+        border: none !important;
+      }
+
+      &:first-of-type {
+        padding-top: 0 !important;
+        margin-top: 0 !important;
+        border: none !important;
+      }
+
+      &:before,
+      &:after {
+        position: absolute;
+        display: block;
+        top: 0;
+      }
+
+      &:after {
+        box-shadow: 0 0 0 1px $COLOR5;
+        right: -($spacing + ($weight * 0.5) + ($dot * 0.5));
+        background: $SteppingStoneBG2;
+        border-radius: 50%;
+        height: $dot;
+        width: $dot;
+        content: '';
+        top: 5px;
+      }
+    }
+    .current {
+      margin: $spacing + 5px 0px;
+      opacity: 1;
+    }
+  }
+
+  .homeContainer {
+    padding: $containerPadding;
+    height: 100vh;
+    width: 100%;
+  }
+
+  .withTitle {
+    padding: $containerPadding;
+  }
+
+  .withoutTitle {
+    padding: 15% 10%;
+  }
+
+  .header {
+    text-align: right;
+    padding: 1%;
+    opacity: 0.8;
+    span {
+      font-weight: 600;
+      font-size: 30px;
+      line-height: 0.8;
+      text-transform: uppercase;
+      background: linear-gradient(to right, $COLOR3 0%, $COLOR6 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
   }
 }
+
+@media screen and (min-width: 30em) and (max-width: 60em) {
+  $dot: 11px;
+  $weight: 1px;
+  $spacing: 15px;
+  $font-size: 16px;
+
+  .title {
+    padding: 25% 10% 10% 10%;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+
+    .subtitle {
+      font-weight: 400;
+      background: linear-gradient(to right, $COLOR3 0%, $COLOR6 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-align: justify;
+      text-justify: inter-word;
+    }
+  }
+
+  .logoDiv {
+    position: absolute;
+    padding-top: 10%;
+    padding-left: 10%;
+    font-size: 80px;
+    -webkit-transition: font-size 0.5s ease;
+    -moz-transition: font-size 0.5s ease;
+    -o-transition: font-size 0.5s ease;
+    transition: font-size 0.5s ease;
+
+    &--admin {
+      padding: 0% !important;
+    }
+
+    &--fixed {
+      position: fixed;
+      padding-top: 3%;
+      padding-left: 10%;
+      font-size: 40px;
+      -webkit-transition: font-size 0.5s ease;
+      -moz-transition: font-size 0.5s ease;
+      -o-transition: font-size 0.5s ease;
+      transition: font-size 0.5s ease;
+    }
+  }
+
+  .guide {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    margin: $spacing auto;
+    border-right: $weight solid $COLOR3;
+    line-height: 1.4em;
+    padding: $spacing;
+
+    li {
+      position: relative;
+      margin: 0;
+      list-style: none;
+    }
+
+    .page {
+      margin: $spacing 0px;
+      opacity: 1;
+      transition: opacity 0.1s linear;
+
+      .text {
+        opacity: 0.6;
+        font-size: $font-size;
+        font-weight: 100;
+        transition: font-size 0.3s linear;
+        &:hover {
+          opacity: 0.8;
+        }
+        &--current {
+          transition: font-size 0.3s linear;
+          opacity: 1;
+          font-weight: 100;
+          font-size: $font-size + 2;
+        }
+      }
+
+      &:last-of-type {
+        padding-bottom: 0 !important;
+        margin-bottom: 0 !important;
+        border: none !important;
+      }
+
+      &:first-of-type {
+        padding-top: 0 !important;
+        margin-top: 0 !important;
+        border: none !important;
+      }
+
+      &:before,
+      &:after {
+        position: absolute;
+        display: block;
+        top: 0;
+      }
+
+      &:after {
+        box-shadow: 0 0 0 1px $COLOR5;
+        right: -($spacing + ($weight * 0.5) + ($dot * 0.5));
+        background: $SteppingStoneBG2;
+        border-radius: 50%;
+        height: $dot;
+        width: $dot;
+        content: '';
+        top: 5px;
+      }
+    }
+    .current {
+      margin: $spacing + 5px 0px;
+      opacity: 1;
+    }
+  }
+
+  .homeContainer {
+    padding: 15% 13% 15% 10%;
+    height: 100vh;
+    width: 100%;
+  }
+
+  .withTitle {
+    padding: 15% 13% 5% 10%;
+  }
+
+  .withoutTitle {
+    padding: 15% 10%;
+  }
+
+  .header {
+    margin-top: -7%;
+    text-align: right;
+    padding: 1%;
+    opacity: 0.8;
+    span {
+      font-weight: 900;
+      font-size: 60px;
+      line-height: 0.8;
+      text-transform: uppercase;
+      background: linear-gradient(to right, $COLOR3 0%, $COLOR6 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  }
+}
+@media screen and (min-width: 60em) {
+  .title {
+    padding: 20% 13% 20% 10%;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: flex-end;
+
+    .subtitle {
+      font-weight: 100;
+      background: linear-gradient(to right, $COLOR3 0%, $COLOR6 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-align: justify;
+      text-justify: inter-word;
+      align-self: flex-end;
+    }
+  }
+
+  .logoDiv {
+    position: absolute;
+    padding-top: 20%;
+    padding-left: 10%;
+    font-size: 80px;
+    -webkit-transition: font-size 0.5s ease;
+    -moz-transition: font-size 0.5s ease;
+    -o-transition: font-size 0.5s ease;
+    transition: font-size 0.5s ease;
+
+    &--admin {
+      padding: 0% !important;
+    }
+
+    &--fixed {
+      position: fixed;
+      padding-top: 3%;
+      padding-left: 10%;
+      font-size: 40px;
+      -webkit-transition: font-size 0.5s ease;
+      -moz-transition: font-size 0.5s ease;
+      -o-transition: font-size 0.5s ease;
+      transition: font-size 0.5s ease;
+    }
+  }
+
+  $dot: 11px;
+  $weight: 1px;
+  $spacing: 15px;
+  $font-size: 16px;
+
+  .guide {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    margin: $spacing auto;
+    border-right: $weight solid $COLOR3;
+    line-height: 1.4em;
+    padding: $spacing;
+
+    li {
+      position: relative;
+      margin: 0;
+      list-style: none;
+    }
+
+    .page {
+      margin: $spacing 0px;
+      opacity: 1;
+      transition: opacity 0.1s linear;
+
+      .text {
+        opacity: 0.6;
+        font-size: $font-size;
+        font-weight: 100;
+        transition: font-size 0.3s linear;
+        &:hover {
+          opacity: 0.8;
+        }
+        &--current {
+          transition: font-size 0.3s linear;
+          opacity: 1;
+          font-weight: 100;
+          font-size: $font-size + 2;
+        }
+      }
+
+      &:last-of-type {
+        padding-bottom: 0 !important;
+        margin-bottom: 0 !important;
+        border: none !important;
+      }
+
+      &:first-of-type {
+        padding-top: 0 !important;
+        margin-top: 0 !important;
+        border: none !important;
+      }
+
+      &:before,
+      &:after {
+        position: absolute;
+        display: block;
+        top: 0;
+      }
+
+      &:after {
+        box-shadow: 0 0 0 1px $COLOR5;
+        right: -($spacing + ($weight * 0.5) + ($dot * 0.5));
+        background: $SteppingStoneBG2;
+        border-radius: 50%;
+        height: $dot;
+        width: $dot;
+        content: '';
+        top: 5px;
+      }
+    }
+    .current {
+      margin: $spacing + 5px 0px;
+      opacity: 1;
+    }
+  }
+
+  .homeContainer {
+    padding: 15% 13% 15% 10%;
+    height: 100vh;
+    width: 100%;
+  }
+
+  .withTitle {
+    padding: 15% 13% 5% 10%;
+  }
+
+  .withoutTitle {
+    padding: 15% 10%;
+  }
+
+  .header {
+    margin-top: -7%;
+    text-align: right;
+    padding: 1%;
+    opacity: 0.8;
+    span {
+      font-weight: 900;
+      font-size: 60px;
+      line-height: 0.8;
+      text-transform: uppercase;
+      background: linear-gradient(to right, $COLOR3 0%, $COLOR6 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  }
+}
+
+// html,
+// body {
+//   padding: 0;
+//   margin: 0;
+// }
