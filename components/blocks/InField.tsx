@@ -13,8 +13,11 @@ const InField: FC<Props> = ({ totalizers }) => {
 
   return (
     <Container title="Continuam na área">
-      <div className="h-100 w-50">
+      <div className="h-100 w-50 dn db-ns">
         <PieChart data={data} colors={[COLORS[0], COLORS[4]]} radius={200} />
+      </div>
+      <div className="h-100 w-100 db dn-ns">
+        <PieChart data={data} colors={[COLORS[0], COLORS[4]]} radius={80} />
       </div>
     </Container>
   )
