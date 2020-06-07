@@ -22,6 +22,7 @@ export const LIGHTS = (mode: number) =>
     ['Sistemas de Informação', mode],
     ['Informática', mode],
     ['Tecnólogo', mode],
+    ['Outros', mode],
   ])
 
 export const getTotalizer = (totalizers: any, field: string) => {
