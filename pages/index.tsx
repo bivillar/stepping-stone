@@ -35,7 +35,7 @@ const PAGES: BlocksOptions[] = [
   {
     Block: Motive,
     menu: 'Motivos',
-    title: 'Motivos para entrar no curso',
+    title: 'Motivos',
     showMobile: true,
   },
   {
@@ -82,26 +82,29 @@ const Home = ({ data }: Props) => {
   if (error || !data || !totalizers) return <Error />
 
   return (
-    <div>
-      <div className={`logoDiv${fixed ? '--fixed' : ''}`}>
-        <Logo />
+    <>
+      <Header />
+      <div>
+        <div className={`logoDiv${fixed ? '--fixed' : ''}`}>
+          <Logo />
+        </div>
+        <div className="flex-ns dn h-100 items-center justify-end fixed right-0 pr4-ns pr3">
+          <Menu position={position} pages={PAGES} />
+        </div>
+        <Title />
+        {PAGES.map(
+          ({ Block, title, showMobile, menu }) =>
+            Block && (
+              <Container
+                key={title || menu}
+                showMobile={showMobile}
+                title={title ?? menu}>
+                <Block totalizers={totalizers} />
+              </Container>
+            )
+        )}
       </div>
-      <div className="flex-ns dn h-100 items-center justify-end fixed right-0 pr4-ns pr3">
-        <Menu position={position} pages={PAGES} />
-      </div>
-      <Title />
-      {PAGES.map(
-        ({ Block, title, showMobile, menu }) =>
-          Block && (
-            <Container
-              key={title || menu}
-              showMobile={showMobile}
-              title={title ?? menu}>
-              <Block totalizers={totalizers} />
-            </Container>
-          )
-      )}
-    </div>
+    </>
   )
 }
 
