@@ -1,6 +1,5 @@
 import React, { FC, useState, useEffect } from 'react'
 
-import Container from '../Container'
 import FadeUpCard from '../FadeUpCard'
 import { getTotalizerKeys } from '../../utils'
 
@@ -17,36 +16,28 @@ const Suggestions: FC<Props> = ({ totalizers }) => {
   }, [])
 
   return (
-    <div className="dn db-ns">
-      {suggestions && (
-        <Container title="Suggestões de Cursos">
-          <div>
-            <div className={`flex ${hasTwoLevels ? 'h-50' : 'h-100'}`}>
-              {suggestions.slice(0, 3).map((suggestion, i) => (
-                <div className="w-33 ma5" key={i}>
-                  <FadeUpCard text={suggestion} />
-                </div>
-              ))}
-            </div>
-            {hasTwoLevels && (
-              <div className="h-50 flex">
-                {suggestions
-                  .slice(3, suggestions.length)
-                  .map((suggestion, i) => (
-                    <div className="w-33 ma5" key={i}>
-                      <FadeUpCard text={suggestion} />
-                    </div>
-                  ))}
-              </div>
-            )}
+    <div>
+      <div className={`flex ${hasTwoLevels ? 'h-50' : 'h-100'}`}>
+        {suggestions.slice(0, 3).map((suggestion, i) => (
+          <div className="w-33 ma5" key={i}>
+            <FadeUpCard text={suggestion} />
           </div>
-        </Container>
+        ))}
+      </div>
+      {hasTwoLevels && (
+        <div className="h-50 flex">
+          {suggestions.slice(3, suggestions.length).map((suggestion, i) => (
+            <div className="w-33 ma5" key={i}>
+              <FadeUpCard text={suggestion} />
+            </div>
+          ))}
+        </div>
       )}
     </div>
   )
 }
 interface Props {
-  totalizers: any
+  totalizers: Totalizers
 }
 
 export default Suggestions

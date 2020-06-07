@@ -1,9 +1,7 @@
 import React, { FC, useEffect, useState } from 'react'
 
 import DegreePieChart from '../charts/PieChart'
-import Container from '../Container'
-import YearBarChart, { YearsChartData } from '../charts/YearBarChart'
-import { DEGREES } from '../../utils/constants'
+import YearBarChart from '../charts/YearBarChart'
 import { getTotalizer } from '../../utils'
 
 const Degree: FC<Props> = ({ totalizers }) => {
@@ -17,11 +15,13 @@ const Degree: FC<Props> = ({ totalizers }) => {
     setDegreeData(getTotalizer(totalizers, 'degree'))
   }, [totalizers])
 
+  const mobileLegend = { margin: { left: 10, right: 1 }, width: 125 }
+
   return (
-    <Container title="Formação">
+    <>
       <div className="w-50 h-100 dn db-ns">
         {/* not mobile */}
-        <div className="h-50">
+        <div className="h-50 w-100">
           <DegreePieChart data={degreeData} radius={100} />
         </div>
         <div className="h-50 w-80">
@@ -32,14 +32,14 @@ const Degree: FC<Props> = ({ totalizers }) => {
         {/* mobile */}
         <div className="h-30 w-100">
           <DegreePieChart
-            legendOptions={{ margin: { left: 10, right: 0 }, width: 125 }}
+            legendOptions={mobileLegend}
             data={degreeData}
             radius={50}
           />
         </div>
         <div className="h-30 w-100">
           <DegreePieChart
-            legendOptions={{ margin: { left: 10, right: 0 }, width: 125 }}
+            legendOptions={mobileLegend}
             data={degreeLevelsData}
             radius={50}
           />
@@ -48,12 +48,12 @@ const Degree: FC<Props> = ({ totalizers }) => {
       <div className="dn w-50 h-50 flex-ns items-center-ns justify-end-ns">
         <YearBarChart yearsData={yearsData} degreeData={degreeData} />
       </div>
-    </Container>
+    </>
   )
 }
 
 interface Props {
-  totalizers: any
+  totalizers: Totalizers
 }
 
 export default Degree

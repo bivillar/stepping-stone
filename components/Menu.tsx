@@ -9,14 +9,14 @@ const Menu: FC<Props> = ({ position, pages }) => {
 
   return (
     <ul className="guide h-100 flex items-end flex-column justify-center">
-      {pages.map(({ title }, i) => {
+      {pages.map(({ menu }, i) => {
         const current = i == position
         return (
           <li
-            key={title}
+            key={menu}
             className={`page ${current ? 'current' : ''} tr pointer`}
             onClick={() => goToPosition(i)}>
-            <span className={`text${current ? '--current' : ''}`}>{title}</span>
+            <span className={`text${current ? '--current' : ''}`}>{menu}</span>
           </li>
         )
       })}
@@ -26,7 +26,7 @@ const Menu: FC<Props> = ({ position, pages }) => {
 
 interface Props {
   position: number
-  pages: { component: FC<any>; title: string }[]
+  pages: BlocksOptions[]
 }
 
 export default Menu
