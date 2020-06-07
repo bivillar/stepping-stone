@@ -17,28 +17,32 @@ const Suggestions: FC<Props> = ({ totalizers }) => {
   }, [])
 
   return (
-    suggestions && (
-      <Container title="Suggestões de Cursos">
-        <div className="dn db-ns">
-          <div className={`flex ${hasTwoLevels ? 'h-50' : 'h-100'}`}>
-            {suggestions.slice(0, 3).map((suggestion, i) => (
-              <div className="w-33 ma5" key={i}>
-                <FadeUpCard text={suggestion} />
-              </div>
-            ))}
-          </div>
-          {hasTwoLevels && (
-            <div className="h-50 flex">
-              {suggestions.slice(3, suggestions.length).map((suggestion, i) => (
+    <div className="dn db-ns">
+      {suggestions && (
+        <Container title="Suggestões de Cursos">
+          <div>
+            <div className={`flex ${hasTwoLevels ? 'h-50' : 'h-100'}`}>
+              {suggestions.slice(0, 3).map((suggestion, i) => (
                 <div className="w-33 ma5" key={i}>
                   <FadeUpCard text={suggestion} />
                 </div>
               ))}
             </div>
-          )}
-        </div>
-      </Container>
-    )
+            {hasTwoLevels && (
+              <div className="h-50 flex">
+                {suggestions
+                  .slice(3, suggestions.length)
+                  .map((suggestion, i) => (
+                    <div className="w-33 ma5" key={i}>
+                      <FadeUpCard text={suggestion} />
+                    </div>
+                  ))}
+              </div>
+            )}
+          </div>
+        </Container>
+      )}
+    </div>
   )
 }
 interface Props {

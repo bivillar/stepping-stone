@@ -19,7 +19,8 @@ const Degree: FC<Props> = ({ totalizers }) => {
 
   return (
     <Container title="Formação">
-      <div className="w-50 h-100">
+      <div className="w-50 h-100 dn db-ns">
+        {/* not mobile */}
         <div className="h-50">
           <DegreePieChart data={degreeData} radius={100} />
         </div>
@@ -27,7 +28,24 @@ const Degree: FC<Props> = ({ totalizers }) => {
           <DegreePieChart data={degreeLevelsData} radius={100} />
         </div>
       </div>
-      <div className="w-50 h-50 flex items-center justify-end">
+      <div className="w-100 h-100 flex flex-column justify-center dn-ns">
+        {/* mobile */}
+        <div className="h-30 w-100">
+          <DegreePieChart
+            legendOptions={{ margin: { left: 10, right: 0 }, width: 125 }}
+            data={degreeData}
+            radius={50}
+          />
+        </div>
+        <div className="h-30 w-100">
+          <DegreePieChart
+            legendOptions={{ margin: { left: 10, right: 0 }, width: 125 }}
+            data={degreeLevelsData}
+            radius={50}
+          />
+        </div>
+      </div>
+      <div className="dn w-50 h-50 flex-ns items-center-ns justify-end-ns">
         <YearBarChart yearsData={yearsData} degreeData={degreeData} />
       </div>
     </Container>
