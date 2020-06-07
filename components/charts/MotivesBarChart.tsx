@@ -10,6 +10,7 @@ import {
   ResponsiveContainer,
   TooltipProps,
 } from 'recharts'
+
 import { COLORS } from '../../utils/constants'
 
 const CustomTooltip = ({ active, payload, label }: TooltipProps) => {

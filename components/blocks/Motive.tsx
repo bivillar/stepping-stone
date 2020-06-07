@@ -1,6 +1,5 @@
 import React, { FC, useState, useEffect } from 'react'
-import YearBarChart from '../charts/YearBarChart'
-import Container from '../Container'
+
 import MotivesBarChart from '../charts/MotivesBarChart'
 import { getTotalizer } from '../../utils'
 
@@ -12,16 +11,16 @@ const Motive: FC<Props> = ({ totalizers }) => {
   }, [totalizers])
 
   return (
-    <Container title="Motivos">
+    <>
       <div className="w-70-ns w-100" style={{ height: '40%' }}>
         <MotivesBarChart data={motives} />
       </div>
-    </Container>
+    </>
   )
 }
 
 interface Props {
-  totalizers: any
+  totalizers: Totalizers
 }
 
 export default Motive

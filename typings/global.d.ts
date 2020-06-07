@@ -84,3 +84,10 @@ type Field =
   | 'otherFieldSatisfactionReason'
 
 type Totals = Field | 'gradPerYear'
+
+interface BlocksOptions {
+  Block?: FC<{ totalizers: Totalizers }>
+  title?: string
+  menu: string
+  showMobile: boolean
+}
