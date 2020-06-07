@@ -13,7 +13,7 @@ const Motive: FC<Props> = ({ totalizers }) => {
 
   return (
     <Container title="Motivos">
-      <div className="w-70" style={{ height: '40%' }}>
+      <div className="w-70-ns w-100" style={{ height: '40%' }}>
         <MotivesBarChart data={motives} />
       </div>
     </Container>
