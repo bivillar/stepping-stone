@@ -7,8 +7,8 @@ import {
   CartesianGrid,
   Line,
   TooltipProps,
+  ResponsiveContainer,
 } from 'recharts'
-import useVisible from '../../utils/useVisible'
 
 import { COLORS } from '../../utils/constants'
 
@@ -57,38 +57,28 @@ const CustomTooltip = ({ active, payload, label }: TooltipProps) => {
   )
 }
 
-const GradYear: FC = () => {
-  const [isVisible, setRef] = useVisible()
+const GradYear: FC = () => (
+  <ResponsiveContainer>
+    <LineChart data={data} margin={{ top: 5, right: 20, left: -30, bottom: 5 }}>
+      <CartesianGrid
+        strokeDasharray="3 3"
+        stroke={COLORS[0]}
+        strokeOpacity={0.4}
+      />
+      <XAxis dataKey="name" stroke={COLORS[0]} />
+      <YAxis stroke={COLORS[0]} name="Mulheres" />
+      <Tooltip content={CustomTooltip} />
 
-  return (
-    <div ref={setRef as any} className="w-100 flex justify-end">
-      {isVisible && (
-        <LineChart
-          width={600}
-          height={300}
-          data={data}
-          margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-          <CartesianGrid
-            strokeDasharray="3 3"
-            stroke={COLORS[0]}
-            strokeOpacity={0.4}
-          />
-          <XAxis dataKey="name" stroke={COLORS[0]} />
-          <YAxis stroke={COLORS[0]} name="Mulheres" />
-          <Tooltip content={CustomTooltip} />
-
-          <Line
-            type="monotone"
-            dataKey="value"
-            name="Mulheres"
-            stroke={COLORS[5]}
-            activeDot={{ r: 6, fill: COLORS[4], stroke: COLORS[4] }}
-            dot={{ r: 3, fill: COLORS[4], stroke: COLORS[4] }}
-          />
-        </LineChart>
-      )}
-    </div>
-  )
-}
+      <Line
+        type="monotone"
+        dataKey="value"
+        name="Mulheres"
+        stroke={COLORS[5]}
+        activeDot={{ r: 6, fill: COLORS[4], stroke: COLORS[4] }}
+        dot={{ r: 3, fill: COLORS[4], stroke: COLORS[4] }}
+      />
+    </LineChart>
+  </ResponsiveContainer>
+)
 
 export default GradYear

@@ -63,25 +63,22 @@ const Home = ({ data }: Props) => {
 
   if (loading) return <Loading />
 
-  if (error) return <Error />
+  if (error || !data) return <Error />
 
   return (
-    <>
-      <Header />
-      <div>
-        <div className={`logoDiv${fixed ? '--fixed' : ''}`}>
-          <Logo />
-        </div>
-        <div className="flex h-100 items-center justify-end fixed right-0 pr4">
-          <Menu position={position} pages={PAGES} />
-        </div>
-        <Title />
-        <Degree totalizers={totalizers} />
-        <Suggestions totalizers={totalizers} />
-        <Motive totalizers={totalizers} />
-        <InField totalizers={totalizers} />
+    <div>
+      <div className={`logoDiv${fixed ? '--fixed' : ''}`}>
+        <Logo />
       </div>
-    </>
+      <div className="flex-ns dn h-100 items-center justify-end fixed right-0 pr4-ns pr3">
+        <Menu position={position} pages={PAGES} />
+      </div>
+      <Title />
+      <Degree totalizers={totalizers} />
+      {/* <Suggestions totalizers={totalizers} /> */}
+      <Motive totalizers={totalizers} />
+      <InField totalizers={totalizers} />
+    </div>
   )
 }
 
@@ -91,7 +88,12 @@ Home.getInitialProps = async () => {
 }
 
 interface Props {
-  data: any
+  data: {
+    totalizers: Totalizers
+    inField: FormEntry[]
+    notInField: FormEntry[]
+    formEntries: FormEntry[]
+  }
 }
 
 export default Home
