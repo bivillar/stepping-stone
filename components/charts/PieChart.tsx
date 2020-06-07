@@ -10,7 +10,12 @@ import {
 
 import { COLORS } from '../../utils/constants'
 
-const PieChart: FC<Props> = ({ data, radius, colors = COLORS }) => (
+const PieChart: FC<Props> = ({
+  data,
+  radius,
+  colors = COLORS,
+  legendOptions,
+}) => (
   <ResponsiveContainer>
     <_PieChart>
       <Pie
@@ -28,7 +33,12 @@ const PieChart: FC<Props> = ({ data, radius, colors = COLORS }) => (
         ))}
       </Pie>
       <Tooltip />
-      <Legend layout="vertical" verticalAlign="middle" align="right" />
+      <Legend
+        layout="vertical"
+        verticalAlign="middle"
+        align="right"
+        {...legendOptions}
+      />
     </_PieChart>
   </ResponsiveContainer>
 )
@@ -37,6 +47,7 @@ interface Props {
   data: any[]
   radius: number
   colors?: string[]
+  legendOptions?: any
 }
 
 export default PieChart
