@@ -1,14 +1,14 @@
 import React, { FC, CSSProperties } from 'react'
 import useVisible from '../utils/useVisible'
 
-const Container: FC<Props> = ({ style = {}, children, title }) => {
+const Container: FC<Props> = ({ style = {}, children, title, showMobile }) => {
   const [isVisible, setRef] = useVisible()
 
   return (
     <div
       className={`w-100 fillPage homeBlocks ${
         title ? 'withTitle' : 'withoutTitle'
-      }`}
+      } ${!showMobile ? 'dn db-ns' : ''}`}
       style={style}>
       {title && (
         <div className="header db">
@@ -27,6 +27,7 @@ const Container: FC<Props> = ({ style = {}, children, title }) => {
 interface Props {
   style?: CSSProperties
   title?: string
+  showMobile?: boolean
 }
 
 export default Container
