@@ -19,7 +19,7 @@ const Suggestions: FC<Props> = ({ totalizers }) => {
   return (
     suggestions && (
       <Container title="Suggestões de Cursos">
-        <div>
+        <div className="dn db-ns">
           <div className={`flex ${hasTwoLevels ? 'h-50' : 'h-100'}`}>
             {suggestions.slice(0, 3).map((suggestion, i) => (
               <div className="w-33 ma5" key={i}>
