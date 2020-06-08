@@ -11,13 +11,29 @@ const InField: FC<Props> = ({ totalizers }) => {
     setData(getTotalizer(totalizers, 'stillInField'))
   }, [])
 
+  const legendOptions = {
+    layout: 'vertical',
+    verticalAlign: 'middle',
+    align: 'right',
+  }
+
   return (
     <>
       <div className="h-100 w-50 dn db-ns">
-        <PieChart data={data} colors={[COLORS[0], COLORS[4]]} radius={200} />
+        <PieChart
+          data={data}
+          colors={[COLORS[0], COLORS[4]]}
+          radius={200}
+          legendOptions={legendOptions}
+        />
       </div>
       <div className="h-100 w-100 db dn-ns">
-        <PieChart data={data} colors={[COLORS[0], COLORS[4]]} radius={80} />
+        <PieChart
+          data={data}
+          colors={[COLORS[0], COLORS[4]]}
+          radius={80}
+          legendOptions={legendOptions}
+        />
       </div>
     </>
   )
