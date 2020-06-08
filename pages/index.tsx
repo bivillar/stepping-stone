@@ -15,6 +15,7 @@ import Loading from '../components/Loading'
 import Error from '../components/Error'
 import Menu from '../components/Menu'
 import Container from '../components/Container'
+import Role from '../components/blocks/Role'
 
 const Header = () => (
   <Head>
@@ -44,6 +45,12 @@ const PAGES: BlocksOptions[] = [
     title: 'Continuam na área',
     showMobile: true,
   },
+  {
+    Block: Role,
+    menu: 'Cargo',
+    title: 'Colocação',
+    showMobile: true,
+  },
 ]
 
 const Home = ({ data }: Props) => {
@@ -52,9 +59,9 @@ const Home = ({ data }: Props) => {
   const [loading, setLoading] = useState<boolean>(true)
   const [position, setPosition] = useState<number>(0)
 
-  const [inField, setInField] = useState<ChartData[]>([])
-  const [notInField, setNotInField] = useState<ChartData[]>([])
-  const [formEntries, setFormEntries] = useState<ChartData[]>([])
+  const [inField, setInField] = useState<ChartData[]>()
+  const [notInField, setNotInField] = useState<ChartData[]>()
+  const [formEntries, setFormEntries] = useState<ChartData[]>()
   const [totalizers, setTotalizers] = useState<Totalizers>()
 
   useEffect(() => {
