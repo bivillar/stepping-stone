@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from 'react'
 
-import DegreePieChart from '../charts/PieChart'
+import PieChart from '../charts/PieChart'
 import YearBarChart from '../charts/YearBarChart'
 import { getTotalizer } from '../../utils'
 
@@ -15,31 +15,50 @@ const Degree: FC<Props> = ({ totalizers }) => {
     setDegreeData(getTotalizer(totalizers, 'degree'))
   }, [totalizers])
 
-  const mobileLegend = { margin: { left: 10, right: 1 }, width: 125 }
+  const legendOptions = {
+    layout: 'vertical',
+    verticalAlign: 'middle',
+    align: 'right',
+  }
+
+  const mobileLegend = {
+    layout: 'vertical',
+    verticalAlign: 'middle',
+    align: 'right',
+    width: 125,
+  }
 
   return (
     <>
       <div className="w-50 h-100 dn db-ns">
         {/* not mobile */}
         <div className="h-50 w-100">
-          <DegreePieChart data={degreeData} radius={100} />
+          <PieChart
+            data={degreeData}
+            radius={100}
+            legendOptions={legendOptions}
+          />
         </div>
         <div className="h-50 w-80">
-          <DegreePieChart data={degreeLevelsData} radius={100} />
+          <PieChart
+            data={degreeLevelsData}
+            radius={100}
+            legendOptions={legendOptions}
+          />
         </div>
       </div>
       <div className="w-100 h-100 flex flex-column justify-center dn-ns">
         {/* mobile */}
         <div className="h-30 w-100">
-          <DegreePieChart
+          <PieChart
             legendOptions={mobileLegend}
             data={degreeData}
             radius={50}
           />
         </div>
         <div className="h-30 w-100">
-          <DegreePieChart
-            legendOptions={mobileLegend}
+          <PieChart
+            legendOptions={legendOptions}
             data={degreeLevelsData}
             radius={50}
           />
