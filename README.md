@@ -5,7 +5,7 @@
 [![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/tterb/atomic-design-ui/blob/master/LICENSEs)
 [![standard-readme compliant](https://img.shields.io/badge/standard--readme-OK-green.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
 
-A NextJS server-side rendered ReactJS webapp served by an Firebase database and deployed using Vercel.
+A [NextJS](https://nextjs.org/) server-side rendered [ReactJS](https://reactjs.org/) webapp served by a [Firebase](https://firebase.google.com/) database and deployed using [Vercel](https://vercel.com/).
 
 This project was created as a bachelor&#39;s thesis project, with the aim of creating role models for female developers by increasing the visibility of PUC-Rio&#39;s former female students.
 
