@@ -1,30 +1,57 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Stepping Stone _(stepping-stone)_
 
-## Getting Started
+![banner](public/favicon.png)
 
-First, run the development server:
+[![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/tterb/atomic-design-ui/blob/master/LICENSEs)
+[![standard-readme compliant](https://img.shields.io/badge/standard--readme-OK-green.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
 
-```bash
-npm run dev
-# or
+A [NextJS](https://nextjs.org/) server-side rendered [ReactJS](https://reactjs.org/) webapp served by a [Firebase](https://firebase.google.com/) database and deployed using [Vercel](https://vercel.com/).
+
+This project was created as a bachelor&#39;s thesis project, with the aim of creating role models for female developers by increasing the visibility of PUC-Rio&#39;s former female students.
+
+## Table of Contents
+
+- [Install](#install)
+- [Usage](#usage)
+- [Maintainers](#maintainers)
+- [Contributing](#contributing)
+- [License](#license)
+
+## Install
+
+First, clone the repository.
+
+```
+git clone https://github.com/bivillar/stepping-stone.git
+```
+
+Then, load its dependencies.
+
+```
+cd stepping-stone
+yarn
+```
+
+## Usage
+
+Since this project uses a firebase database, you'll need to create your own and add its configs to the project for it to run correctly. Keep in mind that the project entities need to be the same.
+
+For Running:
+
+```
 yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Maintainers
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+[@bivillar](https://github.com/@bivillar)
 
-## Learn More
+## Contributing
 
-To learn more about Next.js, take a look at the following resources:
+PRs accepted.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Small note: If editing the README, please conform to the [standard-readme](https://github.com/RichardLitt/standard-readme) specification.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## License
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/import?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+MIT © 2020 Bianca Villar
