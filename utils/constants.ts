@@ -52,4 +52,6 @@ export const charts = [
   { name: 'gradYear', chartType: ChartType.pie },
   { name: 'role', chartType: ChartType.pie },
   { name: 'seniorityDegree', chartType: ChartType.pie },
+  { name: 'companyType', chartType: ChartType.pie },
+  { name: 'companyName', chartType: ChartType.pie },
 ]

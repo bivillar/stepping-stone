@@ -1,6 +1,5 @@
 import React, { FC, useState, useEffect } from 'react'
 
-import MotivesBarChart from '../charts/MotivesBarChart'
 import { getTotalizer } from '../../utils'
 import PieChart from '../charts/PieChart'
 
