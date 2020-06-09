@@ -20,6 +20,8 @@ export const COLORS = [
   '#F22797',
 ]
 
+export const BLACK = '#0d0d0d'
+
 export const ON = 1
 export const OFF = 0.2
 
