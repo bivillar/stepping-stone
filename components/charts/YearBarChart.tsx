@@ -59,18 +59,8 @@ const YearBarChart: FC<Props> = ({ yearsData, degreeData }) => {
   )
 }
 
-export interface YearsChartData {
-  year: number
-  e: number
-  c: number
-  s: number
-  i: number
-  t: number
-  o: number
-}
-
 interface Props {
-  yearsData: YearsChartData[]
+  yearsData: any[]
   degreeData: any[]
 }
 
