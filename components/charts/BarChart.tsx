@@ -24,7 +24,12 @@ const CustomTooltip = ({ active, payload, label }: TooltipProps) => {
   )
 }
 
-const MotivesBarChart: FC<Props> = ({ data }) => {
+const MotivesBarChart: FC<Props> = ({
+  name,
+  data,
+  customTooltip = CustomTooltip,
+  invertGradient = false,
+}) => {
   return (
     <ResponsiveContainer>
       <BarChart layout="vertical" data={data}>
@@ -37,20 +42,26 @@ const MotivesBarChart: FC<Props> = ({ data }) => {
             y1="0"
             x2="1"
             y2="0">
-            <stop offset="0%" stopColor={COLORS[6]} />
+            <stop
+              offset="0%"
+              stopColor={invertGradient ? COLORS[0] : COLORS[6]}
+            />
             <stop offset="68" stopColor={COLORS[3]} />
-            <stop offset="100%" stopColor={COLORS[0]} />
+            <stop
+              offset="100%"
+              stopColor={invertGradient ? COLORS[6] : COLORS[0]}
+            />
           </linearGradient>
         </defs>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis type="number" />
         <YAxis type="category" dataKey="name" width={100} />
-        <Tooltip content={CustomTooltip} />
+        <Tooltip content={customTooltip} />
         <Legend />
         <Bar
           animationDuration={2000}
           dataKey="value"
-          name="Motivo"
+          name={name}
           fill="url(#gradient)"
           background={{ fill: COLORS[4], opacity: 0.3 }}
         />
@@ -61,6 +72,13 @@ const MotivesBarChart: FC<Props> = ({ data }) => {
 
 interface Props {
   data: any[]
+  name: string
+  customTooltip?: ({
+    active,
+    payload,
+    label,
+  }: TooltipProps) => JSX.Element | null
+  invertGradient?: boolean
 }
 
 export default MotivesBarChart

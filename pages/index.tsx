@@ -16,6 +16,7 @@ import Error from '../components/Error'
 import Menu from '../components/Menu'
 import Container from '../components/Container'
 import Role from '../components/blocks/Role'
+import Company from '../components/blocks/Company'
 
 const Header = () => (
   <Head>
@@ -49,6 +50,12 @@ const PAGES: BlocksOptions[] = [
     Block: Role,
     menu: 'Cargo',
     title: 'Colocação',
+    showMobile: true,
+  },
+  {
+    Block: Company,
+    menu: 'Empresas',
+    title: 'Empresas',
     showMobile: true,
   },
 ]
