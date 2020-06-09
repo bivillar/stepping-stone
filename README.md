@@ -2,7 +2,6 @@
 
 ![banner](public/favicon.png)
 
-[![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/tterb/atomic-design-ui/blob/master/LICENSEs)
 [![standard-readme compliant](https://img.shields.io/badge/standard--readme-OK-green.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
 
 A [NextJS](https://nextjs.org/) server-side rendered [ReactJS](https://reactjs.org/) webapp served by a [Firebase](https://firebase.google.com/) database and deployed using [Vercel](https://vercel.com/).
