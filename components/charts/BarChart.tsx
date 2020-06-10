@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 import {
-  BarChart,
+  BarChart as _BarChart,
   CartesianGrid,
   XAxis,
   YAxis,
@@ -24,7 +24,7 @@ const CustomTooltip = ({ active, payload, label }: TooltipProps) => {
   )
 }
 
-const MotivesBarChart: FC<Props> = ({
+const BarChart: FC<Props> = ({
   name,
   data,
   customTooltip = CustomTooltip,
@@ -32,7 +32,7 @@ const MotivesBarChart: FC<Props> = ({
 }) => {
   return (
     <ResponsiveContainer>
-      <BarChart layout="vertical" data={data}>
+      <_BarChart layout="vertical" data={data}>
         <defs>
           <linearGradient
             id="gradient"
@@ -65,7 +65,7 @@ const MotivesBarChart: FC<Props> = ({
           fill="url(#gradient)"
           background={{ fill: COLORS[4], opacity: 0.3 }}
         />
-      </BarChart>
+      </_BarChart>
     </ResponsiveContainer>
   )
 }
@@ -81,4 +81,4 @@ interface Props {
   invertGradient?: boolean
 }
 
-export default MotivesBarChart
+export default BarChart

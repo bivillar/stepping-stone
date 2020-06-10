@@ -20,6 +20,8 @@ export const COLORS = [
   '#F22797',
 ]
 
+export const BLACK = '#0d0d0d'
+
 export const ON = 1
 export const OFF = 0.2
 
@@ -34,6 +36,7 @@ export const DEGREES = [
 export enum ChartType {
   pie = 'pie',
   bar = 'bar',
+  cloud = 'cloud',
 }
 
 export const charts = [
@@ -53,5 +56,7 @@ export const charts = [
   { name: 'role', chartType: ChartType.pie },
   { name: 'seniorityDegree', chartType: ChartType.pie },
   { name: 'companyType', chartType: ChartType.pie },
-  { name: 'companyName', chartType: ChartType.pie },
+  { name: 'companyName', chartType: ChartType.cloud },
+  { name: 'satisfaction', chartType: ChartType.pie },
+  // { name: 'satisfaction', ChartType: ChartType.pie, givenOptions: [...Array(6).keys()].splice(1)}
 ]

@@ -60,9 +60,9 @@ function getAllTotalizers(
       const { chartType, name, givenOptions } = chartOptions
       switch (chartType) {
         case ChartType.pie:
-          updateTotalizersPie(totalizers, data, name as Field, givenOptions)
+          updateTotalizersTwo(totalizers, data, name as Field, givenOptions)
         case ChartType.bar:
-          updateTotalizersBar(
+          updateTotalizersMany(
             totalizers,
             data,
             name as Totals,
@@ -70,17 +70,22 @@ function getAllTotalizers(
             chartOptions.y as Field,
             givenOptions
           )
+        case ChartType.cloud:
+          updateTotalizersTwo(totalizers, data, name as Field, givenOptions, {
+            name: 'text',
+          })
       }
     })
   })
   return { totalizers, inField, notInField, formEntries }
 }
 
-function updateTotalizersPie(
+function updateTotalizersTwo(
   totalizers: Totalizers,
   data: FormEntry,
   name: Field,
-  givenOptions?: (string | number)[]
+  givenOptions?: (string | number)[],
+  customFieldNames?: { name?: string; value?: string }
 ) {
   let option = data[name]
   if (!option) return
@@ -90,13 +95,16 @@ function updateTotalizersPie(
   if (givenOptions && !givenOptions.includes(option)) {
     option = 'Outros'
   }
+  const nameField = customFieldNames?.name ?? 'name'
+  const valueField = customFieldNames?.value ?? 'value'
+
   if (doesNotHave(totalizers[name], option)) {
-    totalizers[name]![option] = { name: option, value: 0 }
+    totalizers[name]![option] = { [nameField]: option, [valueField]: 0 }
   }
-  totalizers[name]![option]!.value += 1
+  totalizers[name]![option]![valueField] += 1
 }
 
-function updateTotalizersBar(
+function updateTotalizersMany(
   totalizers: Totalizers,
   data: FormEntry,
   name: Totals,

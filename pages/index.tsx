@@ -17,6 +17,8 @@ import Menu from '../components/Menu'
 import Container from '../components/Container'
 import Role from '../components/blocks/Role'
 import Company from '../components/blocks/Company'
+import Satisfaction from '../components/blocks/Satisfaction'
+import Brief from '../components/blocks/Brief'
 
 const Header = () => (
   <Head>
@@ -26,7 +28,8 @@ const Header = () => (
 )
 
 const PAGES: BlocksOptions[] = [
-  { menu: 'Home', title: 'Home', showMobile: true },
+  { menu: 'Home', showMobile: true },
+  { menu: 'Início', showMobile: true },
   { Block: Degree, menu: 'Formação', title: 'Formação', showMobile: true },
   {
     Block: Suggestions,
@@ -56,6 +59,12 @@ const PAGES: BlocksOptions[] = [
     Block: Company,
     menu: 'Empresas',
     title: 'Empresas',
+    showMobile: true,
+  },
+  {
+    Block: Satisfaction,
+    menu: 'Satisfação',
+    title: 'Grau de Satisfação',
     showMobile: true,
   },
 ]
@@ -106,6 +115,7 @@ const Home = ({ data }: Props) => {
           <Menu position={position} pages={PAGES} />
         </div>
         <Title />
+        <Brief />
         {PAGES.map(
           ({ Block, title, showMobile, menu }) =>
             Block && (

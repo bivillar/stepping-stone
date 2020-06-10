@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, useState } from 'react'
 import {
   PieChart as _PieChart,
   Pie,
@@ -8,7 +8,7 @@ import {
   ResponsiveContainer,
 } from 'recharts'
 
-import { COLORS } from '../../utils/constants'
+import { COLORS, BLACK, OFF, ON } from '../../utils/constants'
 
 const PieChart: FC<Props> = ({
   data,
@@ -17,28 +17,47 @@ const PieChart: FC<Props> = ({
   legendOptions = {},
   pieOptions: _pieOptions = {},
 }) => {
+  const [focus, setFocus] = useState<string | null>(null)
+
+  const handleMouseEnter = ({ value }: { value: string }) => {
+    setFocus(value)
+  }
+
+  const handleMouseLeave = () => {
+    setFocus(null)
+  }
+
   const pieOptions = {
     animationDuration: 1000,
-    data: data,
+    data,
     cx: radius + 40,
     cy: '50%',
     outerRadius: radius,
     dataKey: 'value',
     nameKey: 'name',
-    blendStroke: true,
+    stroke: BLACK,
     label: true,
     ..._pieOptions,
   }
+
   return (
     <ResponsiveContainer>
       <_PieChart>
         <Pie {...pieOptions}>
-          {Object.keys(data).map((_, index) => (
-            <Cell fill={colors[index]} key={index} />
+          {data.map(({ name }, index) => (
+            <Cell
+              fill={colors[index]}
+              key={index}
+              opacity={!focus ? ON : focus === name ? ON : OFF}
+            />
           ))}
         </Pie>
         <Tooltip />
-        <Legend {...legendOptions} />
+        <Legend
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+          {...legendOptions}
+        />
       </_PieChart>
     </ResponsiveContainer>
   )

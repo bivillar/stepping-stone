@@ -10,19 +10,16 @@ import {
   ResponsiveContainer,
 } from 'recharts'
 
-import { LIGHTS } from '../../utils'
 import { COLORS, ON, OFF } from '../../utils/constants'
 
 const YearBarChart: FC<Props> = ({ yearsData, degreeData }) => {
-  const [opacity, setOpacity] = useState<any>(LIGHTS(ON))
+  const [focus, setFocus] = useState<string | null>(null)
 
   const handleMouseEnter = ({ value }: { value: string }) => {
-    const newOpacity = new Map([...LIGHTS(OFF)])
-    newOpacity.set(value, 1)
-    setOpacity(newOpacity)
+    setFocus(value)
   }
   const handleMouseLeave = () => {
-    setOpacity(LIGHTS(ON))
+    setFocus(null)
   }
 
   return (
@@ -51,7 +48,7 @@ const YearBarChart: FC<Props> = ({ yearsData, degreeData }) => {
             dataKey={name}
             fill={COLORS[i]}
             name={name}
-            opacity={opacity.get(name)}
+            opacity={focus ? (focus === name ? ON : OFF) : ON}
           />
         ))}
       </BarChart>
