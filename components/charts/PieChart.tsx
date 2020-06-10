@@ -22,37 +22,35 @@ const PieChart: FC<Props> = ({
   const handleMouseEnter = ({ value }: { value: string }) => {
     setFocus(value)
   }
+
   const handleMouseLeave = () => {
     setFocus(null)
   }
 
   const pieOptions = {
     animationDuration: 1000,
-    data: data,
+    data,
     cx: radius + 40,
     cy: '50%',
     outerRadius: radius,
     dataKey: 'value',
     nameKey: 'name',
-    blendStroke: false,
     stroke: BLACK,
     label: true,
     ..._pieOptions,
   }
+
   return (
     <ResponsiveContainer>
       <_PieChart>
         <Pie {...pieOptions}>
-          {Object.values(data).map(({ name }, index) => {
-            //@ts-ignore
-            return (
-              <Cell
-                fill={colors[index]}
-                key={index}
-                opacity={focus ? (focus === name ? ON : OFF) : ON}
-              />
-            )
-          })}
+          {data.map(({ name }, index) => (
+            <Cell
+              fill={colors[index]}
+              key={index}
+              opacity={!focus ? ON : focus === name ? ON : OFF}
+            />
+          ))}
         </Pie>
         <Tooltip />
         <Legend

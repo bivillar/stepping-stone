@@ -11,11 +11,9 @@ const Motive: FC<Props> = ({ totalizers }) => {
   }, [totalizers])
 
   return (
-    <>
-      <div className="w-70-ns w-100" style={{ height: '40%' }}>
-        <BarChart data={motives} name="Motivo" />
-      </div>
-    </>
+    <div className="w-70-ns w-100" style={{ height: '40%' }}>
+      <BarChart data={motives} name="Motivo" />
+    </div>
   )
 }
 

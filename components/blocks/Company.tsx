@@ -14,11 +14,9 @@ const Company: FC<Props> = ({ totalizers }) => {
   }, [])
 
   return (
-    <>
-      <div className="w-70-ns w-100" style={{ height: '40%' }}>
-        <BarChart data={type} name="Tipo de Empresa" invertGradient />
-      </div>
-    </>
+    <div className="w-70-ns w-100" style={{ height: '40%' }}>
+      <BarChart data={type} name="Tipo de Empresa" invertGradient />
+    </div>
   )
 }
 

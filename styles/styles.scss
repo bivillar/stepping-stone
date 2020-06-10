@@ -77,6 +77,20 @@ html {
   transition: none !important;
 }
 
+.brief {
+  color: $COLOR2;
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+.link {
+  color: $COLOR5;
+}
+
+.link:hover {
+  text-decoration: none !important;
+}
+
 .homeBlocks {
   scroll-snap-align: start;
 }
@@ -159,14 +173,6 @@ code {
 
 .focus {
   color: $SteppingStone3 !important;
-}
-
-.link {
-  color: $SteppingStone4;
-}
-
-.link:hover {
-  text-decoration: underline !important;
 }
 
 ul {
@@ -454,7 +460,7 @@ ul {
     $chart-padding-left;
   $dot: 9px;
   $weight: 1px;
-  $spacing: 10px;
+  $spacing: 7px;
   $font-size: 13px;
 
   .title {
@@ -602,7 +608,7 @@ ul {
 @media screen and (min-width: 30em) and (max-width: 60em) {
   $dot: 11px;
   $weight: 1px;
-  $spacing: 15px;
+  $spacing: 12px;
   $font-size: 16px;
 
   .title {
@@ -800,7 +806,7 @@ ul {
 
   $dot: 11px;
   $weight: 1px;
-  $spacing: 15px;
+  $spacing: 12px;
   $font-size: 16px;
 
   .guide {
