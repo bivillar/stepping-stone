@@ -12,8 +12,8 @@ const Title: FC = () => {
           isVisible ? 'is-visible' : ''
         }`}>
         <div className="subtitle">
-          O número de mulheres se formando em computação na PUC está cada fez
-          mais baixo. Este projeto tem como intuito incentivar mulheres a
+          O número de mulheres se formando em computação na PUC-Rio está cada
+          vez mais baixo. Este projeto tem como intuito incentivar mulheres a
           entrarem e se manterem no curso através de exemplos de mulheres que já
           se formaram.
         </div>
