@@ -23,7 +23,7 @@ const TopBar: FC = () => {
       </div>
       <div className="flex justify-end">
         <Button isLoading={loading} onClick={logOut}>
-          SING OUT
+          Sair
         </Button>
       </div>
     </div>
