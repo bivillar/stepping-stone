@@ -2,11 +2,10 @@ import Head from 'next/head'
 import { Component, FC, useEffect, useState } from 'react'
 import { useScrollPosition } from '@n8tb1t/use-scroll-position'
 
-import Firebase from '../utils/base'
+import Firebase from '../utils/firebase/base'
 import Logo from '../components/Logo'
 import Title from '../components/blocks/Title'
 
-import '../styles/styles.scss'
 import Degree from '../components/blocks/Degree'
 import Suggestions from '../components/blocks/Suggestions'
 import Motive from '../components/blocks/Motive'
@@ -19,6 +18,7 @@ import Role from '../components/blocks/Role'
 import Company from '../components/blocks/Company'
 import Satisfaction from '../components/blocks/Satisfaction'
 import Brief from '../components/blocks/Brief'
+import { useUser } from '../utils/firebase/useUser'
 
 const Header = () => (
   <Head>
@@ -133,7 +133,8 @@ const Home = ({ data }: Props) => {
 }
 
 Home.getInitialProps = async () => {
-  const data = await Firebase.getData()
+  const base = new Firebase()
+  const data = await base.getData()
   return { data }
 }
 

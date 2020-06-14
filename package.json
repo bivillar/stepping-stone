@@ -9,9 +9,12 @@
   },
   "dependencies": {
     "@n8tb1t/use-scroll-position": "^1.0.43",
+    "@types/js-cookie": "^2.2.6",
     "@zeit/next-sass": "^1.0.1",
     "bootstrap": "^4.5.0",
     "firebase": "^7.15.0",
+    "firebase-admin": "^8.12.1",
+    "js-cookie": "^2.2.1",
     "next": "9.4.4",
     "node-sass": "^4.14.1",
     "opencollective-postinstall": "^2.0.3",
@@ -19,11 +22,13 @@
     "react-animations": "^1.0.0",
     "react-bootstrap": "^1.0.1",
     "react-dom": "16.13.1",
+    "react-firebaseui": "^4.1.0",
     "react-icons": "^3.10.0",
     "react-loading-skeleton": "^2.0.1",
     "react-reveal": "^1.2.2",
     "recharts": "^1.8.5",
     "styled-components": "^5.1.1",
+    "swr": "^0.2.3",
     "tachyons": "^4.12.0"
   },
   "devDependencies": {

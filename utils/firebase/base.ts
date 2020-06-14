@@ -1,12 +1,12 @@
 import * as firebase from 'firebase'
 import 'firebase/auth'
 import 'firebase/firebase-firestore'
-import { charts, ChartType } from './constants'
+import { charts, ChartType } from '../constants'
 
 const config = {
   appId: process.env.FIREBASE_APPID,
   messagingSenderId: process.env.FIREBASE_MESSAGINGSENDERID,
-  apiKey: process.env.FIREBASE_APIKEY,
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_PUBLIC_API_KEY,
   authDomain: 'stepping-stone-db.firebaseapp.com',
   databaseURL: 'https://stepping-stone-db.firebaseio.com',
   storageBucket: 'stepping-stone-db.appspot.com',
@@ -23,12 +23,68 @@ class Firebase {
     this.db = app.firestore()
   }
 
+  addUser(
+    name: string,
+    canConfig: boolean,
+    canManageUsers: boolean,
+    userEmail: string
+  ) {
+    const isAdmin = canConfig || canManageUsers
+
+    return this.db.collection('users').doc(userEmail).set({
+      isAdmin,
+      canConfig,
+      canManageUsers,
+      name,
+    })
+  }
+
+  updateUser(userEmail: string, canConfig: boolean, canManageUsers: boolean) {
+    const isAdmin = canConfig || canManageUsers
+    return this.db.collection('users').doc(userEmail).update({
+      canConfig,
+      canManageUsers,
+      isAdmin,
+    })
+  }
+
+  async getUser(email: string) {
+    if (!email) return null
+    const user = await this.db.collection('users').doc(email).get()
+    return user.data() as User
+  }
+
+  async getCurrentUserPermissions(email: string) {
+    if (!email) return null
+    const user = await this.db.collection('users').doc(email).get()
+    const canManageUsers = user.get('canManageUsers')
+    const canConfig = user.get('canConfig')
+    return { canManageUsers, canConfig }
+  }
+
+  async getAllUsers() {
+    const users: User[] = []
+    await this.db
+      .collection('users')
+      .get()
+      .then((snapshot) => {
+        snapshot.forEach((user) => {
+          users.push({
+            // @ts-ignore
+            email: user.id,
+            ...(user.data() as User),
+          })
+        })
+      })
+    return users
+  }
+
   getData() {
     return this.db.collection('data').get().then(getAllTotalizers)
   }
 }
 
-function getAllTotalizers(
+export function getAllTotalizers(
   snapshots: firebase.firestore.QuerySnapshot<firebase.firestore.DocumentData>
 ) {
   const inField: FormEntry[] = []
@@ -136,4 +192,4 @@ const doesNotHave = (obj: any, field: string | number) => {
   return typeof obj[field] === typeof undefined
 }
 
-export default new Firebase()
+export default Firebase
