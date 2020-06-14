@@ -1,6 +1,9 @@
 import React, { FC, useState, useEffect } from 'react'
 import Router from 'next/router'
-import { BsUpload as UploadIcon, BsPeople as PeopleIcon } from 'react-icons/bs'
+import {
+  BsLayoutTextWindowReverse as TextIcon,
+  BsPeople as PeopleIcon,
+} from 'react-icons/bs'
 import { USERS_URL, CONFIGS_URL } from '../utils/constants'
 
 const MenuItem: FC<{ icon: any; label: string; isOpen: boolean }> = ({
@@ -56,8 +59,8 @@ const SideBar: FC<Props> = ({ isOpen, open }) => {
           className={url === CONFIGS_URL ? 'selected' : ''}
           onClick={() => goto(CONFIGS_URL)}>
           <MenuItem
-            icon={<UploadIcon />}
-            label="Fazer Upload de novos dados"
+            icon={<TextIcon />}
+            label="Gerenciar Posts"
             isOpen={isOpen}
           />
         </li>

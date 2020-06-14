@@ -9,6 +9,17 @@ import {
 
 import Firebase from '../../utils/firebase/base'
 
+const Icon = ({ checked }: { checked?: boolean }) =>
+  checked ? (
+    <span className="c-success" style={{ fontSize: 25 }}>
+      <CheckIcon />
+    </span>
+  ) : (
+    <span className="c-danger" style={{ fontSize: 25 }}>
+      <XIcon />
+    </span>
+  )
+
 const TableItem: FC<Props> = ({
   user: {
     email,
@@ -25,17 +36,6 @@ const TableItem: FC<Props> = ({
   const [canManageUsers, setcanManageUsers] = useState<boolean>(
     userManageUser || false
   )
-
-  const mark = (value: boolean) =>
-    value ? (
-      <span className="c-success" style={{ fontSize: 25 }}>
-        <CheckIcon />
-      </span>
-    ) : (
-      <span className="c-danger" style={{ fontSize: 25 }}>
-        <XIcon />
-      </span>
-    )
 
   const handleEdit = () => {
     setEdit(true)
@@ -63,7 +63,7 @@ const TableItem: FC<Props> = ({
             onChange={() => setcanConfig(!canConfig)}
           />
         ) : (
-          mark(canConfig)
+          <Icon checked={canConfig} />
         )}
       </td>
       <td className="tc">
@@ -76,7 +76,7 @@ const TableItem: FC<Props> = ({
             }}
           />
         ) : (
-          mark(canManageUsers)
+          <Icon checked={canManageUsers} />
         )}
       </td>
 
