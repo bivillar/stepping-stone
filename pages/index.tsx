@@ -2,7 +2,7 @@ import Head from 'next/head'
 import { Component, FC, useEffect, useState } from 'react'
 import { useScrollPosition } from '@n8tb1t/use-scroll-position'
 
-import Firebase from '../utils/base'
+import Firebase from '../utils/firebase/base'
 import Logo from '../components/Logo'
 import Title from '../components/blocks/Title'
 

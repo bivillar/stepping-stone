@@ -1,6 +1,6 @@
 import React, { FC, useContext, useEffect, useState } from 'react'
-import Firebase from '../../utils/base'
 import Router from 'next/router'
+
 import Loading from '../../components/Loading'
 
 const Admin = ({ currentUser }: any) => {
@@ -13,12 +13,6 @@ const Admin = ({ currentUser }: any) => {
   }, [currentUser])
 
   return <Loading />
-}
-
-Admin.getInitialProps = async () => {
-  const base = new Firebase()
-  const currentUser = await base.getCurrentUser()
-  return { currentUser }
 }
 
 export default Admin
