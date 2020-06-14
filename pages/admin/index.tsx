@@ -2,13 +2,14 @@ import React, { FC, useContext, useEffect, useState } from 'react'
 import Router from 'next/router'
 
 import Loading from '../../components/Loading'
+import { useUser } from '../../utils/firebase/useUser'
+import { LOGIN_URL, CONFIGS_URL } from '../../utils/constants'
 
-const Admin = ({ currentUser }: any) => {
+const Admin = () => {
+  const { currentUser } = useUser()
   useEffect(() => {
-    if (!currentUser) {
-      Router.push('/admin/login')
-    } else {
-      Router.push('/admin/configs')
+    if (currentUser) {
+      Router.push(CONFIGS_URL)
     }
   }, [currentUser])
 

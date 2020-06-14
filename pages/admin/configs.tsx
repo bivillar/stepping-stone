@@ -1,7 +1,13 @@
 import React, { FC } from 'react'
+import { useUser } from '../../utils/firebase/useUser'
+import AdminContainer from '../../components/AdminContainer'
 
 const Configs: FC<Props> = ({}) => {
-  return <h1>Configs</h1>
+  const { currentUser } = useUser()
+
+  return (
+    <AdminContainer hasPermission={currentUser?.canConfig}></AdminContainer>
+  )
 }
 
 interface Props {}

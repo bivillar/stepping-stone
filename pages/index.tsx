@@ -6,7 +6,6 @@ import Firebase from '../utils/firebase/base'
 import Logo from '../components/Logo'
 import Title from '../components/blocks/Title'
 
-import '../styles/styles.scss'
 import Degree from '../components/blocks/Degree'
 import Suggestions from '../components/blocks/Suggestions'
 import Motive from '../components/blocks/Motive'
@@ -19,6 +18,7 @@ import Role from '../components/blocks/Role'
 import Company from '../components/blocks/Company'
 import Satisfaction from '../components/blocks/Satisfaction'
 import Brief from '../components/blocks/Brief'
+import { useUser } from '../utils/firebase/useUser'
 
 const Header = () => (
   <Head>

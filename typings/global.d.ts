@@ -2,7 +2,7 @@ interface User {
   email: string
   isAdmin: boolean
   name: string
-  canUpload: boolean
+  canConfig: boolean
   canManageUsers: boolean
 }
 

@@ -23,6 +23,62 @@ class Firebase {
     this.db = app.firestore()
   }
 
+  addUser(
+    name: string,
+    canConfig: boolean,
+    canManageUsers: boolean,
+    userEmail: string
+  ) {
+    const isAdmin = canConfig || canManageUsers
+
+    return this.db.collection('users').doc(userEmail).set({
+      isAdmin,
+      canConfig,
+      canManageUsers,
+      name,
+    })
+  }
+
+  updateUser(userEmail: string, canConfig: boolean, canManageUsers: boolean) {
+    const isAdmin = canConfig || canManageUsers
+    return this.db.collection('users').doc(userEmail).update({
+      canConfig,
+      canManageUsers,
+      isAdmin,
+    })
+  }
+
+  async getUser(email: string) {
+    if (!email) return null
+    const user = await this.db.collection('users').doc(email).get()
+    return user.data() as User
+  }
+
+  async getCurrentUserPermissions(email: string) {
+    if (!email) return null
+    const user = await this.db.collection('users').doc(email).get()
+    const canManageUsers = user.get('canManageUsers')
+    const canConfig = user.get('canConfig')
+    return { canManageUsers, canConfig }
+  }
+
+  async getAllUsers() {
+    const users: User[] = []
+    await this.db
+      .collection('users')
+      .get()
+      .then((snapshot) => {
+        snapshot.forEach((user) => {
+          users.push({
+            // @ts-ignore
+            email: user.id,
+            ...(user.data() as User),
+          })
+        })
+      })
+    return users
+  }
+
   getData() {
     return this.db.collection('data').get().then(getAllTotalizers)
   }

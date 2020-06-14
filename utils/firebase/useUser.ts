@@ -5,11 +5,12 @@ import firebase from 'firebase/app'
 import 'firebase/auth'
 
 import initFirebase from './auth/initFirebase'
+import Firebase from './base'
 
 initFirebase()
 
 const useUser = () => {
-  const [user, setUser] = useState()
+  const [currentUser, setCurrentUser] = useState<User>()
   const router = useRouter()
 
   const logout = async () => {
@@ -30,17 +31,21 @@ const useUser = () => {
     return firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
-      .then(({ user }) => {
-        if (user) {
-          const { uid, email } = user
-          const userData = {
-            id: uid,
-            email,
-          }
-          cookies.set('auth', userData, {
-            expires: 1,
-          })
+      .then(async ({ user }) => {
+        if (!user) return
+        const base = new Firebase()
+        const { uid, email } = user
+        if (!email) return
+
+        const data = await base.getUser(email)
+        const userData = {
+          ...data,
+          id: uid,
+          email,
         }
+        cookies.set('auth', userData, {
+          expires: 1,
+        })
       })
   }
 
@@ -57,21 +62,21 @@ const useUser = () => {
   const getUserPermissions = async (email: string) => {
     const user = await firebase.firestore().collection('users').doc(email).get()
     const canManageUsers = user.get('canManageUsers')
-    const canUpload = user.get('canUpload')
-    return { canManageUsers, canUpload }
+    const canConfig = user.get('canConfig')
+    return { canManageUsers, canConfig }
   }
 
   useEffect(() => {
     const cookie = cookies.get('auth')
     if (!cookie) {
-      router.push('/')
+      router.push('/admin/login')
       return
     }
-    setUser(JSON.parse(cookie))
+    setCurrentUser(JSON.parse(cookie))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  return { user, logout, login, register }
+  return { currentUser, logout, login, register }
 }
 
 export { useUser }
