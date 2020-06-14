@@ -1,3 +1,5 @@
+export const MAX_TEXTS = 6
+
 export enum ResourcesEnum {
   AddUser = 'adduser',
   Upload = 'upload',

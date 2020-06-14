@@ -5,6 +5,7 @@ import { Table, InputGroup } from 'react-bootstrap'
 import BooleanIcon from '../BooleanIcon'
 import TextTableItem from './TextsTableItem'
 import Firebase from '../../utils/firebase/base'
+import { MAX_TEXTS } from '../../utils/constants'
 
 const TextsTable: FC<Props> = ({
   loading,
@@ -14,28 +15,30 @@ const TextsTable: FC<Props> = ({
   fieldName,
 }) => {
   const [isEditing, setIsEditing] = useState<boolean>(false)
-  const [selectedIds, setSelectedIds] = useState<string[]>(selectedIdsInitial)
+  const [selectedIds, setSelectedIds] = useState<string[]>([])
   const [saveLoading, setSaveLoading] = useState<boolean>(false)
 
-  useEffect(() => setSelectedIds(selectedIdsInitial), [selectedIdsInitial])
+  useEffect(() => {
+    if (!loading) setSelectedIds(selectedIdsInitial)
+  }, [selectedIdsInitial, loading])
 
   const handleCheck = (id: string, selected: boolean) => {
-    let select = selected
-    const ids = selectedIds
-    if (!selected && ids.length < 6) {
+    if (!selected && selectedIds.length >= MAX_TEXTS) return selected
+    let ids = selectedIds
+    if (!selected) {
       ids.push(id)
-      select = true
-    } else if (selected) {
-      ids.filter((value) => id != value)
-      select = false
+    } else {
+      ids = ids.filter((value) => id !== value)
     }
     setSelectedIds(ids)
-    return select
+
+    return !selected
   }
 
   const handleSave = () => {
     setSaveLoading(true)
     const base = new Firebase()
+
     base.saveSelected(fieldName, selectedIds).then(() => {
       setSaveLoading(false)
       setIsEditing(false)
@@ -60,7 +63,7 @@ const TextsTable: FC<Props> = ({
             <th className="w-90">Texto</th>
             <th className="w-10 tc">
               <div>Selecionado</div>
-              <div className="small">max: 6</div>
+              <div className="small">max: {MAX_TEXTS}</div>
             </th>
           </tr>
         </thead>
@@ -75,6 +78,7 @@ const TextsTable: FC<Props> = ({
                 isEditing={isEditing}
                 text={text}
                 initialSelected={selectedIds.includes(text.id)}
+                checkDisabled={selectedIds.length >= MAX_TEXTS}
               />
             ))
           ) : (

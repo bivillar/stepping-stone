@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useUser } from '../../utils/firebase/useUser'
 import Firebase from '../../utils/firebase/base'
 import AdminContainer from '../../components/AdminContainer'
-import Table from '../../components/textsTable/Table'
+import Table from '../../components/textsTable/TextsTable'
 
 const Configs = ({}: Props) => {
   const [texts, setTexts] = useState<AllTexts>()

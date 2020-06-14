@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react'
+import React, { FC, useState, useEffect } from 'react'
 import { InputGroup } from 'react-bootstrap'
 import BooleanIcon from '../BooleanIcon'
 
@@ -7,8 +7,18 @@ const TextTableItem: FC<Props> = ({
   onCheck,
   text: { id, value },
   initialSelected,
+  checkDisabled,
 }) => {
   const [selected, setSelected] = useState<boolean>(initialSelected)
+  const [disabled, setDisabled] = useState<boolean>(checkDisabled)
+
+  useEffect(() => {
+    setSelected(initialSelected)
+  }, [initialSelected])
+
+  useEffect(() => {
+    setDisabled(checkDisabled && !selected)
+  }, [checkDisabled, selected])
 
   const handleCheck = () => {
     setSelected(onCheck(id, selected))
@@ -22,6 +32,7 @@ const TextTableItem: FC<Props> = ({
           <InputGroup.Checkbox
             checked={selected}
             onChange={() => handleCheck()}
+            disabled={disabled}
           />
         ) : (
           <BooleanIcon checked={selected} />
@@ -36,6 +47,7 @@ interface Props {
   onCheck: (id: string, selected: boolean) => boolean
   text: Text
   initialSelected: boolean
+  checkDisabled: boolean
 }
 
 export default TextTableItem
