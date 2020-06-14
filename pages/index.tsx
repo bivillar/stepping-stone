@@ -28,6 +28,7 @@ const PAGES: BlocksOptions[] = [
     menu: 'Sugestões',
     title: 'Sugestões de Curso',
     showMobile: false,
+    textField: 'degreeSuggestion',
   },
   {
     Block: Motive,
@@ -35,12 +36,12 @@ const PAGES: BlocksOptions[] = [
     title: 'Motivos',
     showMobile: true,
   },
-  {
-    Block: InField,
-    menu: 'Área',
-    title: 'Continuam na área',
-    showMobile: true,
-  },
+  // {
+  //   Block: InField,
+  //   menu: 'Área',
+  //   title: 'Continuam na área',
+  //   showMobile: true,
+  // },
   {
     Block: Role,
     menu: 'Cargo',
@@ -71,6 +72,7 @@ const Home = ({ data }: Props) => {
   const [notInField, setNotInField] = useState<ChartData[]>()
   const [formEntries, setFormEntries] = useState<ChartData[]>()
   const [totalizers, setTotalizers] = useState<Totalizers>()
+  const [pages, setPages] = useState<BlocksOptions[]>(PAGES)
 
   useEffect(() => {
     setFormEntries(data.formEntries)
@@ -78,6 +80,13 @@ const Home = ({ data }: Props) => {
     setNotInField(data.notInField)
     setInField(data.inField)
     setLoading(false)
+    const { hiddenTexts } = data
+    const _pages = !!hiddenTexts?.length
+      ? PAGES.filter(
+          ({ textField }) => !(textField && hiddenTexts.includes(textField))
+        )
+      : PAGES
+    setPages(_pages)
   }, [data])
 
   useScrollPosition(({ currPos }) => {
@@ -96,18 +105,20 @@ const Home = ({ data }: Props) => {
 
   if (error || !data || !totalizers) return <Error />
 
+  const { hiddenTexts } = data
+
   return (
     <div>
       <div className={`logoDiv${fixed ? '--fixed' : ''}`}>
         <Logo />
       </div>
       <div className="flex-ns dn h-100 items-center justify-end fixed right-0 pr4-ns pr3">
-        <Menu position={position} pages={PAGES} />
+        <Menu position={position} pages={pages} />
       </div>
       <Title />
       <Brief />
-      {PAGES.map(
-        ({ Block, title, showMobile, menu }) =>
+      {pages.map(
+        ({ Block, title, showMobile, menu, textField }) =>
           Block && (
             <Container
               key={title || menu}
@@ -124,7 +135,6 @@ const Home = ({ data }: Props) => {
 Home.getInitialProps = async () => {
   const base = new Firebase()
   const data = await base.getData()
-  // const texts = await base.getTexts()
   return { data }
 }
 
@@ -134,6 +144,7 @@ interface Props {
     inField: FormEntry[]
     notInField: FormEntry[]
     formEntries: FormEntry[]
+    hiddenTexts: string[]
   }
 }
 

@@ -30,7 +30,7 @@ class Firebase {
     })
   }
 
-  getSelectedIdsByField() {
+  getSelectedTextsByField() {
     return this.db
       .collection('texts')
       .get()
@@ -104,8 +104,19 @@ class Firebase {
     return users
   }
 
-  getData() {
-    return this.db.collection('data').get().then(getAllTotalizers)
+  async getData() {
+    const data = await this.db.collection('data').get().then(getAllTotalizers)
+    const textsTotals = await this.getSelectedTextsByField()
+    const hiddenTexts: string[] = []
+    const texts = {}
+    Object.keys(textsTotals).forEach((key) => {
+      // @ts-ignore
+      texts[key] = textsTotals[key].texts as string[]
+      // @ts-ignore
+      if (!texts[key]?.length) hiddenTexts.push(key)
+    })
+    const totalizers = { ...data.totalizers, ...texts }
+    return { ...data, totalizers, hiddenTexts }
   }
 }
 
@@ -138,7 +149,6 @@ export function getAllTotalizers(
     degree: {},
     gradYear: {},
     degreeLevel: {},
-    degreeSuggestion: {},
     motive: {},
     stillInField: {},
     gradPerYear: {},

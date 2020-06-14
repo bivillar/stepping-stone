@@ -15,7 +15,7 @@ const Configs = ({}: Props) => {
     const base = new Firebase()
     base.getTexts().then((textsData) => {
       setTexts(textsData)
-      base.getSelectedIdsByField().then((selectedData) => {
+      base.getSelectedTextsByField().then((selectedData) => {
         setSelectedTexts(selectedData)
         setLoading(false)
       })

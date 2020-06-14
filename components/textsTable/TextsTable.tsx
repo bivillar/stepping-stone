@@ -42,7 +42,7 @@ const TextsTable: FC<Props> = ({
       texts.push(text)
     } else {
       ids = ids.filter((value) => text.id !== value)
-      texts = selectedTexts.filter(({ value }) => text.id !== value)
+      texts = texts.filter(({ id: value }) => text.id !== value)
     }
     setSelectedIds(ids)
     setSelectedTexts(texts)

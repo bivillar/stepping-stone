@@ -51,7 +51,6 @@ export const charts = [
   },
   { name: 'stillInField', chartType: ChartType.pie },
   { name: 'motive', chartType: ChartType.pie },
-  { name: 'degreeSuggestion', chartType: ChartType.pie },
   { name: 'gradYear', chartType: ChartType.pie },
   { name: 'role', chartType: ChartType.pie },
   { name: 'seniorityDegree', chartType: ChartType.pie },
