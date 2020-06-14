@@ -23,9 +23,10 @@ class Firebase {
     this.db = app.firestore()
   }
 
-  saveSelected(field: string, selectedIds: string[]) {
+  saveSelected(field: string, selectedIds: string[], texts: FieldText[]) {
     return this.db.collection('texts').doc(field).set({
       selectedIds,
+      texts,
     })
   }
 
@@ -34,12 +35,12 @@ class Firebase {
       .collection('texts')
       .get()
       .then((snapshot) => {
-        const texts: SelectedIds = {}
+        const texts: SelectedTexts = {}
         snapshot.forEach((field) => {
           // @ts-ignore
-          texts[field.id] = field.get('selectedIds')
+          texts[field.id] = field.data()
         })
-        return texts as SelectedIds
+        return texts as SelectedTexts
       })
   }
 

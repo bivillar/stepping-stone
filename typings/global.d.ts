@@ -7,14 +7,19 @@ interface Texts<T> {
   cons?: T
 }
 
-type SelectedIds = Texts<string[]>
+interface Selected {
+  selectedIds: string[]
+  texts: FieldText[]
+}
 
-type AllTexts = Texts<Text[]>
-
-interface Text {
+interface FieldText {
   id: string
   value: string
 }
+
+type SelectedTexts = Texts<Selected>
+type AllTexts = Texts<FieldText[]>
+
 interface User {
   email: string
   isAdmin: boolean

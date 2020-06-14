@@ -10,27 +10,42 @@ import { MAX_TEXTS } from '../../utils/constants'
 const TextsTable: FC<Props> = ({
   loading,
   texts,
-  selectedIds: selectedIdsInitial = [],
+  selectedTexts: selectedTextsInitial = {
+    selectedIds: [],
+    texts: [],
+  },
   title,
   fieldName,
 }) => {
   const [isEditing, setIsEditing] = useState<boolean>(false)
   const [selectedIds, setSelectedIds] = useState<string[]>([])
+  const [selectedTexts, setSelectedTexts] = useState<FieldText[]>([])
   const [saveLoading, setSaveLoading] = useState<boolean>(false)
 
   useEffect(() => {
-    if (!loading) setSelectedIds(selectedIdsInitial)
-  }, [selectedIdsInitial, loading])
+    if (!loading) {
+      const {
+        selectedIds: dataSelectedIds,
+        texts: dataTexts,
+      } = selectedTextsInitial
+      setSelectedIds(dataSelectedIds ?? [])
+      setSelectedTexts(dataTexts ?? [])
+    }
+  }, [selectedTextsInitial, loading])
 
-  const handleCheck = (id: string, selected: boolean) => {
+  const handleCheck = (text: FieldText, selected: boolean) => {
     if (!selected && selectedIds.length >= MAX_TEXTS) return selected
     let ids = selectedIds
+    let texts = selectedTexts
     if (!selected) {
-      ids.push(id)
+      ids.push(text.id)
+      texts.push(text)
     } else {
-      ids = ids.filter((value) => id !== value)
+      ids = ids.filter((value) => text.id !== value)
+      texts = selectedTexts.filter(({ value }) => text.id !== value)
     }
     setSelectedIds(ids)
+    setSelectedTexts(texts)
 
     return !selected
   }
@@ -39,7 +54,7 @@ const TextsTable: FC<Props> = ({
     setSaveLoading(true)
     const base = new Firebase()
 
-    base.saveSelected(fieldName, selectedIds).then(() => {
+    base.saveSelected(fieldName, selectedIds, selectedTexts).then(() => {
       setSaveLoading(false)
       setIsEditing(false)
     })
@@ -96,8 +111,8 @@ const TextsTable: FC<Props> = ({
 
 interface Props {
   loading: boolean
-  texts?: Text[]
-  selectedIds?: string[]
+  texts?: FieldText[]
+  selectedTexts?: Selected
   title: string
   fieldName: string
 }

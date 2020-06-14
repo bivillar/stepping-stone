@@ -18,14 +18,6 @@ import Role from '../components/blocks/Role'
 import Company from '../components/blocks/Company'
 import Satisfaction from '../components/blocks/Satisfaction'
 import Brief from '../components/blocks/Brief'
-import { useUser } from '../utils/firebase/useUser'
-
-const Header = () => (
-  <Head>
-    <title>Stepping Stone</title>
-    <link rel="shortcut icon" href="/favicon.png" />
-  </Head>
-)
 
 const PAGES: BlocksOptions[] = [
   { menu: 'Home', showMobile: true },
@@ -105,36 +97,34 @@ const Home = ({ data }: Props) => {
   if (error || !data || !totalizers) return <Error />
 
   return (
-    <>
-      <Header />
-      <div>
-        <div className={`logoDiv${fixed ? '--fixed' : ''}`}>
-          <Logo />
-        </div>
-        <div className="flex-ns dn h-100 items-center justify-end fixed right-0 pr4-ns pr3">
-          <Menu position={position} pages={PAGES} />
-        </div>
-        <Title />
-        <Brief />
-        {PAGES.map(
-          ({ Block, title, showMobile, menu }) =>
-            Block && (
-              <Container
-                key={title || menu}
-                showMobile={showMobile}
-                title={title ?? menu}>
-                <Block totalizers={totalizers} />
-              </Container>
-            )
-        )}
+    <div>
+      <div className={`logoDiv${fixed ? '--fixed' : ''}`}>
+        <Logo />
       </div>
-    </>
+      <div className="flex-ns dn h-100 items-center justify-end fixed right-0 pr4-ns pr3">
+        <Menu position={position} pages={PAGES} />
+      </div>
+      <Title />
+      <Brief />
+      {PAGES.map(
+        ({ Block, title, showMobile, menu }) =>
+          Block && (
+            <Container
+              key={title || menu}
+              showMobile={showMobile}
+              title={title ?? menu}>
+              <Block totalizers={totalizers} />
+            </Container>
+          )
+      )}
+    </div>
   )
 }
 
 Home.getInitialProps = async () => {
   const base = new Firebase()
   const data = await base.getData()
+  // const texts = await base.getTexts()
   return { data }
 }
 

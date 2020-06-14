@@ -5,7 +5,7 @@ import BooleanIcon from '../BooleanIcon'
 const TextTableItem: FC<Props> = ({
   isEditing,
   onCheck,
-  text: { id, value },
+  text,
   initialSelected,
   checkDisabled,
 }) => {
@@ -21,8 +21,10 @@ const TextTableItem: FC<Props> = ({
   }, [checkDisabled, selected])
 
   const handleCheck = () => {
-    setSelected(onCheck(id, selected))
+    setSelected(onCheck(text, selected))
   }
+
+  const { id, value } = text
 
   return (
     <tr>
@@ -44,8 +46,8 @@ const TextTableItem: FC<Props> = ({
 
 interface Props {
   isEditing: boolean
-  onCheck: (id: string, selected: boolean) => boolean
-  text: Text
+  onCheck: (text: FieldText, selected: boolean) => boolean
+  text: FieldText
   initialSelected: boolean
   checkDisabled: boolean
 }

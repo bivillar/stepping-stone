@@ -7,7 +7,7 @@ import Table from '../../components/textsTable/TextsTable'
 
 const Configs = ({}: Props) => {
   const [texts, setTexts] = useState<AllTexts>()
-  const [selectedIds, setSelectedIds] = useState<SelectedIds>()
+  const [selectedTexts, setSelectedTexts] = useState<SelectedTexts>()
   const [loading, setLoading] = useState<boolean>(true)
   const { currentUser } = useUser()
 
@@ -15,8 +15,8 @@ const Configs = ({}: Props) => {
     const base = new Firebase()
     base.getTexts().then((textsData) => {
       setTexts(textsData)
-      base.getSelectedIdsByField().then((idsData) => {
-        setSelectedIds(idsData)
+      base.getSelectedIdsByField().then((selectedData) => {
+        setSelectedTexts(selectedData)
         setLoading(false)
       })
     })
@@ -35,7 +35,7 @@ const Configs = ({}: Props) => {
             fieldName="degreeSuggestion"
             loading={loading}
             texts={texts?.degreeSuggestion}
-            selectedIds={selectedIds?.degreeSuggestion}
+            selectedTexts={selectedTexts?.degreeSuggestion}
             title={'Sugestão de Curso/ Graduação'}
           />
         </div>
