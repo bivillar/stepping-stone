@@ -1,7 +1,7 @@
 import * as firebase from 'firebase'
 import 'firebase/auth'
 import 'firebase/firebase-firestore'
-import { charts, ChartType } from '../constants'
+import { charts, ChartType, TEXT_BLOCKS } from '../constants'
 
 const config = {
   appId: process.env.FIREBASE_APPID,
@@ -21,6 +21,30 @@ class Firebase {
       ? firebase.initializeApp(config)
       : firebase.app()
     this.db = app.firestore()
+  }
+
+  saveSelected(field: string, selectedIds: string[]) {
+    return this.db.collection('texts').doc(field).set({
+      selectedIds,
+    })
+  }
+
+  getSelectedIdsByField() {
+    return this.db
+      .collection('texts')
+      .get()
+      .then((snapshot) => {
+        const texts: SelectedIds = {}
+        snapshot.forEach((field) => {
+          // @ts-ignore
+          texts[field.id] = field.get('selectedIds')
+        })
+        return texts as SelectedIds
+      })
+  }
+
+  getTexts() {
+    return this.db.collection('data').get().then(getTextTotalizer)
   }
 
   addUser(
@@ -82,6 +106,25 @@ class Firebase {
   getData() {
     return this.db.collection('data').get().then(getAllTotalizers)
   }
+}
+
+function getTextTotalizer(
+  snapshots: firebase.firestore.QuerySnapshot<firebase.firestore.DocumentData>
+) {
+  const texts: AllTexts = {}
+  snapshots.forEach((snapshot) => {
+    const data = snapshot.data() as FormEntry
+    TEXT_BLOCKS.forEach((field) => {
+      if (doesNotHave(data, field)) return
+      if (doesNotHave(texts, field)) {
+        // @ts-ignore
+        texts[field] = []
+      }
+      // @ts-ignore
+      texts[field].push({ id: snapshot.id, value: data[field] })
+    })
+  })
+  return texts as AllTexts
 }
 
 export function getAllTotalizers(

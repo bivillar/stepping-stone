@@ -8,7 +8,7 @@ import Button from '../../components/Button'
 import AdminContainer from '../../components/AdminContainer'
 import TableItemForm from '../../components/usersTable/TableItemForm'
 import TableItem from '../../components/usersTable/TableItem'
-import TableItemSkeleton from '../../components/usersTable/TableItemSkeleton'
+import TableItemSkeleton from '../../components/TableItemSkeleton'
 
 const Users: FC = () => {
   const { currentUser } = useUser()
@@ -69,7 +69,7 @@ const Users: FC = () => {
           </thead>
           <tbody>
             {loading ? (
-              <TableItemSkeleton />
+              <TableItemSkeleton nCol={5} />
             ) : (
               users?.map((user) => (
                 <TableItem

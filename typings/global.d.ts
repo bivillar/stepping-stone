@@ -1,3 +1,20 @@
+interface Texts<T> {
+  degreeSuggestion?: T
+  satisfactionReason?: T
+  challenge?: T
+  advice?: T
+  pros?: T
+  cons?: T
+}
+
+type SelectedIds = Texts<string[]>
+
+type AllTexts = Texts<Text[]>
+
+interface Text {
+  id: string
+  value: string
+}
 interface User {
   email: string
   isAdmin: boolean
