@@ -1,3 +1,11 @@
+interface User {
+  email: string
+  isAdmin: boolean
+  name: string
+  canUpload: boolean
+  canManageUsers: boolean
+}
+
 interface FormEntry {
   degree: string
   gradYear: number

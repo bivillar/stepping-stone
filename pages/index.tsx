@@ -133,7 +133,8 @@ const Home = ({ data }: Props) => {
 }
 
 Home.getInitialProps = async () => {
-  const data = await Firebase.getData()
+  const base = new Firebase()
+  const data = await base.getData()
   return { data }
 }
 
