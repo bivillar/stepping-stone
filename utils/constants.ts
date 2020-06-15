@@ -62,7 +62,6 @@ export const charts = [
 
 export const TEXT_BLOCKS = [
   'degreeSuggestion',
-  'satisfactionReason',
   'challenge',
   'advice',
   'pros',

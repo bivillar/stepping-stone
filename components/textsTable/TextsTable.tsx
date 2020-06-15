@@ -1,8 +1,7 @@
 import React, { FC, useState, useEffect } from 'react'
+
 import TableItemSkeleton from '../TableItemSkeleton'
 import Button from '../Button'
-import { Table, InputGroup } from 'react-bootstrap'
-import BooleanIcon from '../BooleanIcon'
 import TextTableItem from './TextsTableItem'
 import Firebase from '../../utils/firebase/base'
 import { MAX_TEXTS } from '../../utils/constants'
@@ -10,10 +9,7 @@ import { MAX_TEXTS } from '../../utils/constants'
 const TextsTable: FC<Props> = ({
   loading,
   texts,
-  selectedTexts: selectedTextsInitial = {
-    selectedIds: [],
-    texts: [],
-  },
+  selectedTexts: selectedTextsInitial,
   title,
   fieldName,
 }) => {
@@ -23,7 +19,7 @@ const TextsTable: FC<Props> = ({
   const [saveLoading, setSaveLoading] = useState<boolean>(false)
 
   useEffect(() => {
-    if (!loading) {
+    if (!loading && selectedTextsInitial) {
       const {
         selectedIds: dataSelectedIds,
         texts: dataTexts,
@@ -62,7 +58,7 @@ const TextsTable: FC<Props> = ({
 
   return (
     <>
-      <div className="flex justify-between items-center pv3">
+      <div className="flex justify-between items-end pt3 pb4 ph1">
         <h5>{title}</h5>
         {isEditing ? (
           <Button isLoading={saveLoading} onClick={handleSave}>
@@ -72,39 +68,41 @@ const TextsTable: FC<Props> = ({
           <Button onClick={() => setIsEditing(true)}>Editar</Button>
         )}
       </div>
-      <Table responsive hover>
-        <thead>
-          <tr>
-            <th className="w-90">Texto</th>
-            <th className="w-10 tc">
-              <div>Selecionado</div>
-              <div className="small">max: {MAX_TEXTS}</div>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {loading ? (
-            <TableItemSkeleton nCol={2} nRow={5} />
-          ) : !!texts?.length ? (
-            texts.map((text) => (
-              <TextTableItem
-                key={text.id}
-                onCheck={handleCheck}
-                isEditing={isEditing}
-                text={text}
-                initialSelected={selectedIds.includes(text.id)}
-                checkDisabled={selectedIds.length >= MAX_TEXTS}
-              />
-            ))
-          ) : (
+      <div className="table-responsive">
+        <table className="table table-striped table-bordered table-hover table-fixed">
+          <thead>
             <tr>
-              <td colSpan={2}>
-                <div className="tc pv3 b--light-gray">Nenhuma resposta</div>
-              </td>
+              <th>Texto</th>
+              <th className="tc">
+                <div className="w-100">Selecionado</div>
+                <div className="small w-100">max: {MAX_TEXTS}</div>
+              </th>
             </tr>
-          )}
-        </tbody>
-      </Table>
+          </thead>
+          <tbody>
+            {loading ? (
+              <TableItemSkeleton nCol={2} nRow={5} />
+            ) : !!texts?.length ? (
+              texts.map((text) => (
+                <TextTableItem
+                  key={text.id}
+                  onCheck={handleCheck}
+                  isEditing={isEditing}
+                  text={text}
+                  initialSelected={selectedIds.includes(text.id)}
+                  checkDisabled={selectedIds.length >= MAX_TEXTS}
+                />
+              ))
+            ) : (
+              <tr>
+                <td colSpan={2}>
+                  <div className="tc pv3 b--light-gray">Nenhuma resposta</div>
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
     </>
   )
 }

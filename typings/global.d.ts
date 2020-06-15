@@ -1,6 +1,5 @@
 interface Texts<T> {
   degreeSuggestion?: T
-  satisfactionReason?: T
   challenge?: T
   advice?: T
   pros?: T

@@ -915,8 +915,25 @@ ul {
   }
 }
 
-// html,
-// body {
-//   padding: 0;
-//   margin: 0;
-// }
+.table-fixed {
+  tbody {
+    height: 200px;
+    overflow-y: auto;
+    width: 100%;
+  }
+  thead,
+  tbody,
+  td,
+  th {
+    display: block;
+  }
+  tr {
+    display: flex;
+  }
+  tr :nth-child(1) {
+    width: 80%;
+  }
+  tr :nth-child(2) {
+    width: 20%;
+  }
+}
