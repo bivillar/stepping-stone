@@ -59,6 +59,13 @@ html {
   background-color: white;
 }
 
+.loginLogo {
+  position: absolute;
+  padding-top: 5%;
+  padding-left: 10%;
+  font-size: 80px;
+}
+
 .fixed {
   position: fixed;
 }
@@ -204,6 +211,7 @@ ul {
   padding: 3% 10%;
   &--open {
     margin-left: 20%;
+    width: 86%;
   }
 }
 
@@ -231,6 +239,7 @@ ul {
   justify-content: center;
   align-content: center;
   padding-top: 20%;
+  color: black;
 }
 
 .loginContainer {
@@ -245,7 +254,7 @@ ul {
 
 .adminTopBar {
   width: 100%;
-  height: 30%;
+  padding-bottom: 3%;
 }
 
 .adminSidebar {
@@ -450,6 +459,15 @@ ul {
   60% {
     opacity: 1;
   }
+}
+
+.adminLogo {
+  position: fixed;
+  font-size: 28px;
+  -webkit-transition: font-size 0.5s ease;
+  -moz-transition: font-size 0.5s ease;
+  -o-transition: font-size 0.5s ease;
+  transition: font-size 0.5s ease;
 }
 
 @media screen and (max-width: 30em) {

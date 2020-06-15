@@ -51,20 +51,20 @@ const Login = () => {
 
   return (
     <div>
-      <div className="logoDiv fixed">
+      <div className="loginLogo">
         <Logo />
       </div>
       {renderAuth && (
         <div className="loginContent">
           <div className="loginContainer">
-            <h1 className="ma0">Log in</h1>
+            <h1 className="ma0 mb4">Log in</h1>
             <Form onSubmit={handleLogin}>
               <Group controlId="email">
-                <Label>Email address</Label>
+                <Label>Email</Label>
                 <Control name="email" type="email" placeholder="Enter email" />
               </Group>
               <Group controlId="password">
-                <Label>Password</Label>
+                <Label>Senha</Label>
                 <Control
                   name="password"
                   type="password"
@@ -76,12 +76,12 @@ const Login = () => {
                 type="submit"
                 isLoading={isLoading}
                 showText>
-                Submit
+                Entrar
               </Button>
               <label
                 onClick={() => Router.push(SIGNUP_URL)}
                 className="ml4 link">
-                I don't have an account
+                Ainda não tenho conta
               </label>
             </Form>
           </div>

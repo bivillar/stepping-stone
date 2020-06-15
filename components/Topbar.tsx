@@ -18,7 +18,7 @@ const TopBar: FC = () => {
 
   return (
     <div className="adminTopBar">
-      <div className="logoDiv--admin fixed">
+      <div className="adminLogo fixed pointer" onClick={() => Router.push('/')}>
         <Logo />
       </div>
       <div className="flex justify-end">
