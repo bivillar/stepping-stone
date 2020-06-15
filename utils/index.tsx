@@ -15,10 +15,7 @@ export const getGradients = (n: number) => (
   </defs>
 )
 
-export const getTotalizer = (
-  totalizers: any,
-  field: string
-): any[] | Selected => {
+export const getTotalizer = (totalizers: any, field: string): any => {
   if (!totalizers[field]['Outros']) return Object.values(totalizers[field])
 
   const outros = totalizers[field]['Outros']
