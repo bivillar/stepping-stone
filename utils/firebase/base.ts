@@ -87,6 +87,11 @@ class Firebase {
     return { canManageUsers, canConfig }
   }
 
+  async doesUserExists(email: string) {
+    const user = await this.db.collection('users').doc(email).get()
+    return user.exists
+  }
+
   async getAllUsers() {
     const users: User[] = []
     await this.db

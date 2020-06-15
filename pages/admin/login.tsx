@@ -40,7 +40,10 @@ const Login = () => {
       ?.then(() => {
         Router.push(CONFIGS_URL)
       })
-      .catch(alert)
+      .catch((error) => {
+        setIsLoading(false)
+        alert(error)
+      })
   }, [])
 
   if (currentUser) {
@@ -57,19 +60,19 @@ const Login = () => {
       {renderAuth && (
         <div className="loginContent">
           <div className="loginContainer">
-            <h1 className="ma0 mb4">Log in</h1>
+            <h1 className="ma0 mb4">Entrar na conta</h1>
             <Form onSubmit={handleLogin}>
               <Group controlId="email">
                 <Label>Email</Label>
-                <Control name="email" type="email" placeholder="Enter email" />
+                <Control
+                  name="email"
+                  type="email"
+                  placeholder="Escreva seu email"
+                />
               </Group>
               <Group controlId="password">
                 <Label>Senha</Label>
-                <Control
-                  name="password"
-                  type="password"
-                  placeholder="Password"
-                />
+                <Control name="password" type="password" placeholder="Senha" />
               </Group>
               <Button
                 variant="primary"
@@ -80,7 +83,7 @@ const Login = () => {
               </Button>
               <label
                 onClick={() => Router.push(SIGNUP_URL)}
-                className="ml4 link">
+                className="ml4 link pointer">
                 Ainda não tenho conta
               </label>
             </Form>
