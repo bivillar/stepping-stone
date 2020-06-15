@@ -1,7 +1,7 @@
 import * as firebase from 'firebase'
 import 'firebase/auth'
 import 'firebase/firebase-firestore'
-import { charts, ChartType } from '../constants'
+import { charts, ChartType, TEXT_BLOCKS } from '../constants'
 
 const config = {
   appId: process.env.FIREBASE_APPID,
@@ -21,6 +21,31 @@ class Firebase {
       ? firebase.initializeApp(config)
       : firebase.app()
     this.db = app.firestore()
+  }
+
+  saveSelected(field: string, selectedIds: string[], texts: FieldText[]) {
+    return this.db.collection('texts').doc(field).set({
+      selectedIds,
+      texts,
+    })
+  }
+
+  getSelectedTextsByField() {
+    return this.db
+      .collection('texts')
+      .get()
+      .then((snapshot) => {
+        const texts: SelectedTexts = {}
+        snapshot.forEach((field) => {
+          // @ts-ignore
+          texts[field.id] = field.data()
+        })
+        return texts as SelectedTexts
+      })
+  }
+
+  getTexts() {
+    return this.db.collection('data').get().then(getTextTotalizer)
   }
 
   addUser(
@@ -62,6 +87,11 @@ class Firebase {
     return { canManageUsers, canConfig }
   }
 
+  async doesUserExists(email: string) {
+    const user = await this.db.collection('users').doc(email).get()
+    return user.exists
+  }
+
   async getAllUsers() {
     const users: User[] = []
     await this.db
@@ -79,9 +109,39 @@ class Firebase {
     return users
   }
 
-  getData() {
-    return this.db.collection('data').get().then(getAllTotalizers)
+  async getData() {
+    const data = await this.db.collection('data').get().then(getAllTotalizers)
+    const textsTotals = await this.getSelectedTextsByField()
+    const hiddenTexts: string[] = []
+    const texts = {}
+    Object.keys(textsTotals).forEach((key) => {
+      // @ts-ignore
+      texts[key] = textsTotals[key].texts as string[]
+      // @ts-ignore
+      if (!texts[key]?.length) hiddenTexts.push(key)
+    })
+    const totalizers = { ...data.totalizers, ...texts }
+    return { ...data, totalizers, hiddenTexts }
   }
+}
+
+function getTextTotalizer(
+  snapshots: firebase.firestore.QuerySnapshot<firebase.firestore.DocumentData>
+) {
+  const texts: AllTexts = {}
+  snapshots.forEach((snapshot) => {
+    const data = snapshot.data() as FormEntry
+    TEXT_BLOCKS.forEach((field) => {
+      if (doesNotHave(data, field)) return
+      if (doesNotHave(texts, field)) {
+        // @ts-ignore
+        texts[field] = []
+      }
+      // @ts-ignore
+      texts[field].push({ id: snapshot.id, value: data[field] })
+    })
+  })
+  return texts as AllTexts
 }
 
 export function getAllTotalizers(
@@ -94,7 +154,6 @@ export function getAllTotalizers(
     degree: {},
     gradYear: {},
     degreeLevel: {},
-    degreeSuggestion: {},
     motive: {},
     stillInField: {},
     gradPerYear: {},

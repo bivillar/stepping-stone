@@ -1,3 +1,5 @@
+export const MAX_TEXTS = 6
+
 export enum ResourcesEnum {
   AddUser = 'adduser',
   Upload = 'upload',
@@ -49,7 +51,6 @@ export const charts = [
   },
   { name: 'stillInField', chartType: ChartType.pie },
   { name: 'motive', chartType: ChartType.pie },
-  { name: 'degreeSuggestion', chartType: ChartType.pie },
   { name: 'gradYear', chartType: ChartType.pie },
   { name: 'role', chartType: ChartType.pie },
   { name: 'seniorityDegree', chartType: ChartType.pie },
@@ -57,4 +58,12 @@ export const charts = [
   { name: 'companyName', chartType: ChartType.cloud },
   { name: 'satisfaction', chartType: ChartType.pie },
   // { name: 'satisfaction', ChartType: ChartType.pie, givenOptions: [...Array(6).keys()].splice(1)}
+]
+
+export const TEXT_BLOCKS = [
+  'degreeSuggestion',
+  'challenge',
+  'advice',
+  'pros',
+  'cons',
 ]

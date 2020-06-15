@@ -1,4 +1,4 @@
-import React, { FC, ReactElement } from 'react'
+import React, { FC } from 'react'
 
 const Menu: FC<Props> = ({ position, pages }) => {
   const goToPosition = (pos: number) =>

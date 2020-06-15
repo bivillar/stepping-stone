@@ -8,17 +8,7 @@ import {
 } from 'react-icons/bs'
 
 import Firebase from '../../utils/firebase/base'
-
-const Icon = ({ checked }: { checked?: boolean }) =>
-  checked ? (
-    <span className="c-success" style={{ fontSize: 25 }}>
-      <CheckIcon />
-    </span>
-  ) : (
-    <span className="c-danger" style={{ fontSize: 25 }}>
-      <XIcon />
-    </span>
-  )
+import BooleanIcon from '../BooleanIcon'
 
 const TableItem: FC<Props> = ({
   user: {
@@ -53,7 +43,7 @@ const TableItem: FC<Props> = ({
   }
 
   return (
-    <tr key={email}>
+    <tr>
       <td>{name}</td>
       <td>{email}</td>
       <td className="tc">
@@ -63,7 +53,7 @@ const TableItem: FC<Props> = ({
             onChange={() => setcanConfig(!canConfig)}
           />
         ) : (
-          <Icon checked={canConfig} />
+          <BooleanIcon checked={canConfig} />
         )}
       </td>
       <td className="tc">
@@ -76,7 +66,7 @@ const TableItem: FC<Props> = ({
             }}
           />
         ) : (
-          <Icon checked={canManageUsers} />
+          <BooleanIcon checked={canManageUsers} />
         )}
       </td>
 

@@ -18,14 +18,6 @@ import Role from '../components/blocks/Role'
 import Company from '../components/blocks/Company'
 import Satisfaction from '../components/blocks/Satisfaction'
 import Brief from '../components/blocks/Brief'
-import { useUser } from '../utils/firebase/useUser'
-
-const Header = () => (
-  <Head>
-    <title>Stepping Stone</title>
-    <link rel="shortcut icon" href="/favicon.png" />
-  </Head>
-)
 
 const PAGES: BlocksOptions[] = [
   { menu: 'Home', showMobile: true },
@@ -36,6 +28,7 @@ const PAGES: BlocksOptions[] = [
     menu: 'Sugestões',
     title: 'Sugestões de Curso',
     showMobile: false,
+    textField: 'degreeSuggestion',
   },
   {
     Block: Motive,
@@ -43,12 +36,12 @@ const PAGES: BlocksOptions[] = [
     title: 'Motivos',
     showMobile: true,
   },
-  {
-    Block: InField,
-    menu: 'Área',
-    title: 'Continuam na área',
-    showMobile: true,
-  },
+  // {
+  //   Block: InField,
+  //   menu: 'Área',
+  //   title: 'Continuam na área',
+  //   showMobile: true,
+  // },
   {
     Block: Role,
     menu: 'Cargo',
@@ -79,6 +72,7 @@ const Home = ({ data }: Props) => {
   const [notInField, setNotInField] = useState<ChartData[]>()
   const [formEntries, setFormEntries] = useState<ChartData[]>()
   const [totalizers, setTotalizers] = useState<Totalizers>()
+  const [pages, setPages] = useState<BlocksOptions[]>(PAGES)
 
   useEffect(() => {
     setFormEntries(data.formEntries)
@@ -86,6 +80,13 @@ const Home = ({ data }: Props) => {
     setNotInField(data.notInField)
     setInField(data.inField)
     setLoading(false)
+    const { hiddenTexts } = data
+    const _pages = !!hiddenTexts?.length
+      ? PAGES.filter(
+          ({ textField }) => !(textField && hiddenTexts.includes(textField))
+        )
+      : PAGES
+    setPages(_pages)
   }, [data])
 
   useScrollPosition(({ currPos }) => {
@@ -104,31 +105,30 @@ const Home = ({ data }: Props) => {
 
   if (error || !data || !totalizers) return <Error />
 
+  const { hiddenTexts } = data
+
   return (
-    <>
-      <Header />
-      <div>
-        <div className={`logoDiv${fixed ? '--fixed' : ''}`}>
-          <Logo />
-        </div>
-        <div className="flex-ns dn h-100 items-center justify-end fixed right-0 pr4-ns pr3">
-          <Menu position={position} pages={PAGES} />
-        </div>
-        <Title />
-        <Brief />
-        {PAGES.map(
-          ({ Block, title, showMobile, menu }) =>
-            Block && (
-              <Container
-                key={title || menu}
-                showMobile={showMobile}
-                title={title ?? menu}>
-                <Block totalizers={totalizers} />
-              </Container>
-            )
-        )}
+    <div>
+      <div className={`logoDiv${fixed ? '--fixed' : ''}`}>
+        <Logo />
       </div>
-    </>
+      <div className="flex-ns dn h-100 items-center justify-end fixed right-0 pr4-ns pr3">
+        <Menu position={position} pages={pages} />
+      </div>
+      <Title />
+      <Brief />
+      {pages.map(
+        ({ Block, title, showMobile, menu, textField }) =>
+          Block && (
+            <Container
+              key={title || menu}
+              showMobile={showMobile}
+              title={title ?? menu}>
+              <Block totalizers={totalizers} />
+            </Container>
+          )
+      )}
+    </div>
   )
 }
 
@@ -144,6 +144,7 @@ interface Props {
     inField: FormEntry[]
     notInField: FormEntry[]
     formEntries: FormEntry[]
+    hiddenTexts: string[]
   }
 }
 

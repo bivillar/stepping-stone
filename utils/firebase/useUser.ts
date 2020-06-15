@@ -1,3 +1,4 @@
+import { LOGIN_URL, SIGNUP_URL } from './../constants'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import cookies from 'js-cookie'
@@ -12,6 +13,23 @@ initFirebase()
 const useUser = () => {
   const [currentUser, setCurrentUser] = useState<User>()
   const router = useRouter()
+
+  const setCookie = async ({ user }: firebase.auth.UserCredential) => {
+    if (!user) return
+    const base = new Firebase()
+    const { uid, email } = user
+    if (!email) return
+
+    const data = await base.getUser(email)
+    const userData = {
+      ...data,
+      id: uid,
+      email,
+    }
+    cookies.set('auth', userData, {
+      expires: 1,
+    })
+  }
 
   const logout = async () => {
     return firebase
@@ -31,45 +49,25 @@ const useUser = () => {
     return firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
-      .then(async ({ user }) => {
-        if (!user) return
-        const base = new Firebase()
-        const { uid, email } = user
-        if (!email) return
-
-        const data = await base.getUser(email)
-        const userData = {
-          ...data,
-          id: uid,
-          email,
-        }
-        cookies.set('auth', userData, {
-          expires: 1,
-        })
-      })
+      .then(setCookie)
   }
 
   const register = async (name: string, email: string, password: string) => {
-    const permissions = await getUserPermissions(email)
-    if (!permissions) throw new Error('Sem autorização')
-
-    await firebase.auth().createUserWithEmailAndPassword(email, password)
+    const credentials = await firebase
+      .auth()
+      .createUserWithEmailAndPassword(email, password)
+    setCookie(credentials)
     return firebase.auth().currentUser?.updateProfile({
       displayName: name,
     })
   }
 
-  const getUserPermissions = async (email: string) => {
-    const user = await firebase.firestore().collection('users').doc(email).get()
-    const canManageUsers = user.get('canManageUsers')
-    const canConfig = user.get('canConfig')
-    return { canManageUsers, canConfig }
-  }
-
   useEffect(() => {
     const cookie = cookies.get('auth')
+
     if (!cookie) {
-      router.push('/admin/login')
+      if (![LOGIN_URL, SIGNUP_URL].includes(window?.location?.pathname))
+        router.push('/admin/login')
       return
     }
     setCurrentUser(JSON.parse(cookie))

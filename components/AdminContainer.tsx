@@ -5,7 +5,6 @@ import TopBar from './Topbar'
 import SideBar from './SideBar'
 import { useUser } from '../utils/firebase/useUser'
 import Loading from './Loading'
-import { LOGIN_URL } from '../utils/constants'
 
 const AdminContainer: FC<Props> = ({ children, hasPermission }) => {
   const { currentUser } = useUser()
