@@ -467,6 +467,21 @@ ul {
 }
 
 @media screen and (max-width: 30em) {
+  .w-50-s {
+    width: 50%;
+  }
+  .w-100-s {
+    width: 100%;
+  }
+  .h-50-s {
+    width: 50%;
+  }
+  .h-100-s {
+    width: 100%;
+  }
+  .flex-column-s {
+    flex-direction: column;
+  }
   $padding-top: 30%;
   $padding-bottom: 30%;
   $padding-left: 10%;

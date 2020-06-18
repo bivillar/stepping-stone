@@ -1,5 +1,4 @@
-import Head from 'next/head'
-import { Component, FC, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useScrollPosition } from '@n8tb1t/use-scroll-position'
 
 import Firebase from '../utils/firebase/base'
@@ -7,9 +6,7 @@ import Logo from '../components/Logo'
 import Title from '../components/blocks/Title'
 
 import Degree from '../components/blocks/Degree'
-import Suggestions from '../components/blocks/Suggestions'
 import Motive from '../components/blocks/Motive'
-import InField from '../components/blocks/InField'
 import Loading from '../components/Loading'
 import Error from '../components/Error'
 import Menu from '../components/Menu'
@@ -18,13 +15,14 @@ import Role from '../components/blocks/Role'
 import Company from '../components/blocks/Company'
 import Satisfaction from '../components/blocks/Satisfaction'
 import Brief from '../components/blocks/Brief'
+import Texts from '../components/blocks/Texts'
 
 const PAGES: BlocksOptions[] = [
   { menu: 'Home', showMobile: true },
   { menu: 'Início', showMobile: true },
   { Block: Degree, menu: 'Formação', title: 'Formação', showMobile: true },
   {
-    Block: Suggestions,
+    Block: Texts,
     menu: 'Sugestões',
     title: 'Sugestões de Curso',
     showMobile: false,
@@ -36,12 +34,6 @@ const PAGES: BlocksOptions[] = [
     title: 'Motivos',
     showMobile: true,
   },
-  // {
-  //   Block: InField,
-  //   menu: 'Área',
-  //   title: 'Continuam na área',
-  //   showMobile: true,
-  // },
   {
     Block: Role,
     menu: 'Cargo',
@@ -59,6 +51,34 @@ const PAGES: BlocksOptions[] = [
     menu: 'Satisfação',
     title: 'Grau de Satisfação',
     showMobile: true,
+  },
+  {
+    Block: Texts,
+    menu: 'Desafios',
+    title: 'Desafios enfrentados',
+    showMobile: false,
+    textField: 'challenge',
+  },
+  {
+    Block: Texts,
+    menu: 'Conselhos',
+    title: 'Conselhos',
+    showMobile: false,
+    textField: 'advice',
+  },
+  {
+    Block: Texts,
+    menu: 'Pros',
+    title: 'Pontos positivos',
+    showMobile: false,
+    textField: 'pros',
+  },
+  {
+    Block: Texts,
+    menu: 'Cons',
+    title: 'Pontos negativos',
+    showMobile: false,
+    textField: 'cons',
   },
 ]
 
@@ -124,7 +144,10 @@ const Home = ({ data }: Props) => {
               key={title || menu}
               showMobile={showMobile}
               title={title ?? menu}>
-              <Block totalizers={totalizers} />
+              <Block
+                totalizers={totalizers}
+                {...(textField && { field: textField })}
+              />
             </Container>
           )
       )}

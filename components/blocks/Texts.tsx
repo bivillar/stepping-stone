@@ -1,19 +1,19 @@
 import React, { FC, useState, useEffect } from 'react'
 
 import FadeUpCard from '../FadeUpCard'
-import { getTotalizer } from '../../utils'
 
-const Suggestions: FC<Props> = ({ totalizers }) => {
-  const [suggestions, setSuggestions] = useState<FieldText[]>([])
+const Texts: FC<Props> = ({ totalizers, field }) => {
+  const [texts, setTexts] = useState<FieldText[]>([])
   const [hasTwoLevels, setHasTwoLevels] = useState<boolean>(false)
   useEffect(() => {
-    const texts = totalizers.degreeSuggestion!
-    setHasTwoLevels(!!(texts.length > 3))
-    setSuggestions(texts)
+    // @ts-ignore
+    const txt = totalizers[field] as FieldText[]
+    setHasTwoLevels(!!(txt.length > 3))
+    setTexts(txt)
   }, [])
 
-  const firstLevel = suggestions.slice(0, 3)
-  const secondLevel = hasTwoLevels && suggestions.slice(3, suggestions.length)
+  const firstLevel = texts.slice(0, 3)
+  const secondLevel = hasTwoLevels && texts.slice(3, texts.length)
 
   return (
     <div>
@@ -46,6 +46,7 @@ const Suggestions: FC<Props> = ({ totalizers }) => {
 }
 interface Props {
   totalizers: Totalizers
+  field: string
 }
 
-export default Suggestions
+export default Texts

@@ -49,7 +49,6 @@ export const charts = [
     y: 'degree',
     givenOptions: DEGREES,
   },
-  { name: 'stillInField', chartType: ChartType.pie },
   { name: 'motive', chartType: ChartType.pie },
   { name: 'gradYear', chartType: ChartType.pie },
   { name: 'role', chartType: ChartType.pie },
@@ -57,7 +56,6 @@ export const charts = [
   { name: 'companyType', chartType: ChartType.pie },
   { name: 'companyName', chartType: ChartType.cloud },
   { name: 'satisfaction', chartType: ChartType.pie },
-  // { name: 'satisfaction', ChartType: ChartType.pie, givenOptions: [...Array(6).keys()].splice(1)}
 ]
 
 export const TEXT_BLOCKS = [
