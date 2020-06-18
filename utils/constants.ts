@@ -49,7 +49,6 @@ export const charts = [
     y: 'degree',
     givenOptions: DEGREES,
   },
-  { name: 'stillInField', chartType: ChartType.pie },
   { name: 'motive', chartType: ChartType.pie },
   { name: 'gradYear', chartType: ChartType.pie },
   { name: 'role', chartType: ChartType.pie },

@@ -1,5 +1,4 @@
-import Head from 'next/head'
-import { Component, FC, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useScrollPosition } from '@n8tb1t/use-scroll-position'
 
 import Firebase from '../utils/firebase/base'
@@ -7,9 +6,7 @@ import Logo from '../components/Logo'
 import Title from '../components/blocks/Title'
 
 import Degree from '../components/blocks/Degree'
-import Suggestions from '../components/blocks/Suggestions'
 import Motive from '../components/blocks/Motive'
-import InField from '../components/blocks/InField'
 import Loading from '../components/Loading'
 import Error from '../components/Error'
 import Menu from '../components/Menu'
@@ -37,12 +34,6 @@ const PAGES: BlocksOptions[] = [
     title: 'Motivos',
     showMobile: true,
   },
-  // {
-  //   Block: InField,
-  //   menu: 'Área',
-  //   title: 'Continuam na área',
-  //   showMobile: true,
-  // },
   {
     Block: Role,
     menu: 'Cargo',
