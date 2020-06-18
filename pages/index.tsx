@@ -18,13 +18,14 @@ import Role from '../components/blocks/Role'
 import Company from '../components/blocks/Company'
 import Satisfaction from '../components/blocks/Satisfaction'
 import Brief from '../components/blocks/Brief'
+import Texts from '../components/blocks/Texts'
 
 const PAGES: BlocksOptions[] = [
   { menu: 'Home', showMobile: true },
   { menu: 'Início', showMobile: true },
   { Block: Degree, menu: 'Formação', title: 'Formação', showMobile: true },
   {
-    Block: Suggestions,
+    Block: Texts,
     menu: 'Sugestões',
     title: 'Sugestões de Curso',
     showMobile: false,
@@ -59,6 +60,34 @@ const PAGES: BlocksOptions[] = [
     menu: 'Satisfação',
     title: 'Grau de Satisfação',
     showMobile: true,
+  },
+  {
+    Block: Texts,
+    menu: 'Desafios',
+    title: 'Desafios enfrentados',
+    showMobile: false,
+    textField: 'challenge',
+  },
+  {
+    Block: Texts,
+    menu: 'Conselhos',
+    title: 'Conselhos',
+    showMobile: false,
+    textField: 'advice',
+  },
+  {
+    Block: Texts,
+    menu: 'Pros',
+    title: 'Pontos positivos',
+    showMobile: false,
+    textField: 'pros',
+  },
+  {
+    Block: Texts,
+    menu: 'Cons',
+    title: 'Pontos negativos',
+    showMobile: false,
+    textField: 'cons',
   },
 ]
 
@@ -124,7 +153,10 @@ const Home = ({ data }: Props) => {
               key={title || menu}
               showMobile={showMobile}
               title={title ?? menu}>
-              <Block totalizers={totalizers} />
+              <Block
+                totalizers={totalizers}
+                {...(textField && { field: textField })}
+              />
             </Container>
           )
       )}

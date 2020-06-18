@@ -114,11 +114,17 @@ class Firebase {
     const textsTotals = await this.getSelectedTextsByField()
     const hiddenTexts: string[] = []
     const texts = {}
-    Object.keys(textsTotals).forEach((key) => {
-      // @ts-ignore
-      texts[key] = textsTotals[key].texts as string[]
-      // @ts-ignore
-      if (!texts[key]?.length) hiddenTexts.push(key)
+    TEXT_BLOCKS.forEach((field) => {
+      if (
+        doesNotHave(textsTotals, field) ||
+        // @ts-ignore
+        textsTotals[field].texts.length == 0
+      )
+        hiddenTexts.push(field)
+      else {
+        // @ts-ignore
+        texts[field] = textsTotals[field].texts as string[]
+      }
     })
     const totalizers = { ...data.totalizers, ...texts }
     return { ...data, totalizers, hiddenTexts }
