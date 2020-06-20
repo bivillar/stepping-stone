@@ -56,6 +56,7 @@ export const charts = [
   { name: 'companyType', chartType: ChartType.pie },
   { name: 'companyName', chartType: ChartType.cloud },
   { name: 'satisfaction', chartType: ChartType.pie },
+  { name: 'salary', chartType: ChartType.pie },
 ]
 
 export const TEXT_BLOCKS = [

@@ -16,6 +16,7 @@ import Company from '../components/blocks/Company'
 import Satisfaction from '../components/blocks/Satisfaction'
 import Brief from '../components/blocks/Brief'
 import Texts from '../components/blocks/Texts'
+import Salary from '../components/blocks/Salary'
 
 const PAGES: BlocksOptions[] = [
   { menu: 'Home', showMobile: true },
@@ -50,6 +51,12 @@ const PAGES: BlocksOptions[] = [
     Block: Satisfaction,
     menu: 'Satisfação',
     title: 'Grau de Satisfação',
+    showMobile: true,
+  },
+  {
+    Block: Salary,
+    menu: 'Faixa salarial',
+    title: 'Faixa salarial',
     showMobile: true,
   },
   {
