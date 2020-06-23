@@ -68,9 +68,9 @@ type TextFieldKey =
   | 'advice'
   | 'pros'
   | 'cons'
-type FormEntryKey = TextFieldsKey & FieldKey
+type FormEntryKey = TextFieldKey | FieldKey
 type ChartFieldKey = FieldKey | 'gradPerYear'
-type TotalizerKey = ChartFieldKey & TextFieldKey
+type TotalizerKey = ChartFieldKey | TextFieldKey
 type ChartKey = 'pie' | 'bar' | 'cloud'
 
 type TextTotals = PartialRecord<TextFieldKey, FieldText[]>

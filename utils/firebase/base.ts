@@ -39,8 +39,7 @@ class Firebase {
       .then((snapshot) => {
         const texts: SelectedTexts = {}
         snapshot.forEach((field) => {
-          // @ts-ignore
-          texts[field.id] = field.data()
+          texts[field.id as TextFieldKey] = field.data() as Selected
         })
         return texts as SelectedTexts
       })
@@ -102,9 +101,8 @@ class Firebase {
       .then((snapshot) => {
         snapshot.forEach((user) => {
           users.push({
-            // @ts-ignore
-            email: user.id,
             ...(user.data() as User),
+            email: user.id,
           })
         })
       })
@@ -131,7 +129,6 @@ class Firebase {
       }
     })
     const totalizers = { ...fieldsTotalizers, ...textsTotalizers }
-    totalizers.salary = undefined
 
     CHART_BLOCKS.forEach(({ name, components }) => {
       if (typeof totalizers[name] == UNDEFINED) {
@@ -154,8 +151,8 @@ function getTextTotalizer(
   snapshots.forEach((snapshot) => {
     const data = snapshot.data() as FormEntry
     TEXT_BLOCKS.forEach((field: TextFieldKey) => {
-      if (typeof data[field] == undefined) return
-      if (typeof texts[field] == undefined) {
+      if (typeof data[field] == UNDEFINED) return
+      if (typeof texts[field] == UNDEFINED) {
         texts[field] = []
       }
       texts[field]?.push({ id: snapshot.id, value: data[field] as string })
@@ -179,7 +176,7 @@ export function getAllTotalizers(
 
       switch (chartType) {
         case ChartType.pie:
-          if (typeof data[name] == UNDEFINED) return
+          if (typeof data[name as FormEntryKey] == UNDEFINED) return
           updateTotalizersTwo(totalizers, data, name, givenOptions)
           break
         case ChartType.bar:
@@ -193,7 +190,7 @@ export function getAllTotalizers(
           )
           break
         case ChartType.cloud:
-          if (typeof data[name] == UNDEFINED) return
+          if (typeof data[name as FormEntryKey] == UNDEFINED) return
           updateTotalizersTwo(totalizers, data, name, givenOptions, {
             name: 'text',
           })
@@ -211,7 +208,7 @@ function updateTotalizersTwo(
   givenOptions?: (string | number)[],
   customFieldNames?: { name?: string; value?: string }
 ) {
-  let option = data[name]
+  let option = data[name as FormEntryKey]
   if (!option) return
   if (doesNotHave(totalizers, name)) {
     totalizers[name] = {}
@@ -232,8 +229,8 @@ function updateTotalizersMany(
   totalizers: Totalizers,
   data: FormEntry,
   name: ChartFieldKey,
-  x?: ChartFieldKey,
-  y?: ChartFieldKey,
+  x?: FormEntryKey,
+  y?: FormEntryKey,
   givenOptions?: (string | number)[]
 ) {
   if (!x || !y) return

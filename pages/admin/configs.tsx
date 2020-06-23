@@ -6,7 +6,13 @@ import AdminContainer from '../../components/AdminContainer'
 import Table from '../../components/textsTable/TextsTable'
 import { Tabs, Tab } from 'react-bootstrap'
 
-export const TEXTS = [
+interface TextTableConfig {
+  field: TextFieldKey
+  title: string
+  menu: string
+}
+
+export const TEXTS: TextTableConfig[] = [
   {
     field: 'degreeSuggestion',
     title: 'Sugestão de Curso/ Graduação',
@@ -63,10 +69,8 @@ const Configs = ({}: Props) => {
                 <Table
                   fieldName={field}
                   loading={loading}
-                  // @ts-ignore
                   texts={texts?.[field]}
-                  // @ts-ignore
-                  selectedTexts={!loading && selectedTexts?.[field]}
+                  selectedTexts={!loading ? selectedTexts?.[field] : undefined}
                   title={title}
                 />
               </div>

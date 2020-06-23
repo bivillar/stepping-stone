@@ -12,11 +12,9 @@ const Salary: FC<Props> = ({ totalizers, showMobile, title }) => {
   }, [totalizers])
 
   return (
-    <Container showMobile={showMobile} title={title}>
-      <div className="w-70-ns w-100" style={{ height: '40%' }}>
-        <BarChart data={salary} name="Motivo" />
-      </div>
-    </Container>
+    <div className="w-70-ns w-100" style={{ height: '40%' }}>
+      <BarChart data={salary} name="Faixa Salarial" />
+    </div>
   )
 }
 

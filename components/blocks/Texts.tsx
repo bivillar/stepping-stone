@@ -6,9 +6,8 @@ const Texts: FC<Props> = ({ totalizers, field }) => {
   const [texts, setTexts] = useState<FieldText[]>([])
   const [hasTwoLevels, setHasTwoLevels] = useState<boolean>(false)
   useEffect(() => {
-    // @ts-ignore
     const txt = totalizers[field] as FieldText[]
-    setHasTwoLevels(!!(txt.length > 3))
+    setHasTwoLevels(txt.length > 3)
     setTexts(txt)
   }, [])
 
@@ -46,7 +45,7 @@ const Texts: FC<Props> = ({ totalizers, field }) => {
 }
 interface Props {
   totalizers: Totalizers
-  field: string
+  field: TotalizerKey
 }
 
 export default Texts
