@@ -102,24 +102,16 @@ const Home = ({ data }: Props) => {
     setTotalizers(data.totalizers)
 
     const { hiddenTexts, hiddenComponents } = data
-    let _pages = !!hiddenTexts?.length
-      ? PAGES.filter(
-          ({ textField }) => !(textField && hiddenTexts.includes(textField))
-        )
-      : PAGES
+    const filteredPages =
+      !!hiddenTexts?.length || !!hiddenComponents?.length
+        ? PAGES.filter(
+            ({ textField, Block }) =>
+              !(textField && hiddenTexts.includes(textField)) &&
+              !(Block && hiddenComponents.includes(Block.name))
+          )
+        : PAGES
 
-    _pages = !!hiddenComponents?.length
-      ? _pages.filter(
-          ({ Block }) =>
-            !(Block && hiddenComponents.includes(Block.constructor.name))
-        )
-      : _pages
-
-    PAGES.forEach(({ Block }) => {
-      if (Block) console.log(Block.constructor.name)
-    })
-
-    setPages(_pages)
+    setPages(filteredPages)
     setLoading(false)
   }, [data])
 

@@ -37,7 +37,7 @@ export const DEGREES = [
   'Informática',
   'Tecnólogo',
 ]
-
+// TODO: ADICIONAR PAGINA PRA MUDAR FORMANDAS POR ANO NO ADMIN
 export const CHART_BLOCKS: ChartOptions[] = [
   { name: 'degreeLevel', chartType: ChartType.pie, components: ['Degree'] },
   {

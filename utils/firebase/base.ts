@@ -131,6 +131,7 @@ class Firebase {
       }
     })
     const totalizers = { ...fieldsTotalizers, ...textsTotalizers }
+    totalizers.salary = undefined
 
     CHART_BLOCKS.forEach(({ name, components }) => {
       if (typeof totalizers[name] == UNDEFINED) {
@@ -253,7 +254,6 @@ function updateTotalizersMany(
     totalizers[name]![chartX][chartY] = 0
   }
   totalizers[name]![chartX][chartY] += 1
-  console.log(totalizers)
 }
 
 const doesNotHave = (obj: any, field: string | number) => {
