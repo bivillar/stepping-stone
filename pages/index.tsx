@@ -102,6 +102,8 @@ const Home = ({ data }: Props) => {
   const [pages, setPages] = useState<BlocksOptions[]>(PAGES)
 
   useEffect(() => {
+    console.log(data)
+
     setFormEntries(data.formEntries)
     setTotalizers(data.totalizers)
     setNotInField(data.notInField)

@@ -45,7 +45,7 @@ class Firebase {
   }
 
   getTexts() {
-    return this.db.collection('data').get().then(getTextTotalizer)
+    return this.db.collection('answers').get().then(getTextTotalizer)
   }
 
   addUser(
@@ -110,7 +110,10 @@ class Firebase {
   }
 
   async getData() {
-    const data = await this.db.collection('data').get().then(getAllTotalizers)
+    const data = await this.db
+      .collection('answers')
+      .get()
+      .then(getAllTotalizers)
     const textsTotals = await this.getSelectedTextsByField()
     const hiddenTexts: string[] = []
     const texts = {}
@@ -179,9 +182,11 @@ export function getAllTotalizers(
 
     charts.forEach((chartOptions) => {
       const { chartType, name, givenOptions } = chartOptions
+      if (typeof data[name as Field] == typeof undefined) return
       switch (chartType) {
         case ChartType.pie:
           updateTotalizersTwo(totalizers, data, name as Field, givenOptions)
+          break
         case ChartType.bar:
           updateTotalizersMany(
             totalizers,
@@ -191,10 +196,12 @@ export function getAllTotalizers(
             chartOptions.y as Field,
             givenOptions
           )
+          break
         case ChartType.cloud:
           updateTotalizersTwo(totalizers, data, name as Field, givenOptions, {
             name: 'text',
           })
+          break
       }
     })
   })
