@@ -1,7 +1,9 @@
 import * as firebase from 'firebase'
 import 'firebase/auth'
 import 'firebase/firebase-firestore'
-import { charts, ChartType, TEXT_BLOCKS } from '../constants'
+import { CHART_BLOCKS, ChartType, TEXT_BLOCKS } from '../constants'
+
+const UNDEFINED = 'undefined'
 
 const config = {
   appId: process.env.FIREBASE_APPID,
@@ -110,27 +112,37 @@ class Firebase {
   }
 
   async getData() {
-    const data = await this.db
+    const fieldsTotalizers = await this.db
       .collection('answers')
       .get()
       .then(getAllTotalizers)
     const textsTotals = await this.getSelectedTextsByField()
     const hiddenTexts: string[] = []
-    const texts = {}
+    const hiddenComponents: string[] = []
+    const textsTotalizers: TextTotals = {}
     TEXT_BLOCKS.forEach((field) => {
       if (
-        doesNotHave(textsTotals, field) ||
-        // @ts-ignore
-        textsTotals[field].texts.length == 0
+        typeof textsTotals[field] == UNDEFINED ||
+        textsTotals[field]?.texts.length == 0
       )
         hiddenTexts.push(field)
       else {
-        // @ts-ignore
-        texts[field] = textsTotals[field].texts as string[]
+        textsTotalizers[field] = textsTotals[field]?.texts
       }
     })
-    const totalizers = { ...data.totalizers, ...texts }
-    return { ...data, totalizers, hiddenTexts }
+    const totalizers = { ...fieldsTotalizers, ...textsTotalizers }
+
+    CHART_BLOCKS.forEach(({ name, components }) => {
+      if (typeof totalizers[name] == UNDEFINED) {
+        components.forEach((component) => {
+          if (!hiddenComponents.includes(component)) {
+            hiddenComponents.push(component)
+          }
+        })
+      }
+    })
+
+    return { totalizers, hiddenTexts, hiddenComponents }
   }
 }
 
@@ -140,14 +152,12 @@ function getTextTotalizer(
   const texts: AllTexts = {}
   snapshots.forEach((snapshot) => {
     const data = snapshot.data() as FormEntry
-    TEXT_BLOCKS.forEach((field) => {
-      if (doesNotHave(data, field)) return
-      if (doesNotHave(texts, field)) {
-        // @ts-ignore
+    TEXT_BLOCKS.forEach((field: TextFieldKey) => {
+      if (typeof data[field] == undefined) return
+      if (typeof texts[field] == undefined) {
         texts[field] = []
       }
-      // @ts-ignore
-      texts[field].push({ id: snapshot.id, value: data[field] })
+      texts[field]?.push({ id: snapshot.id, value: data[field] as string })
     })
   })
   return texts as AllTexts
@@ -156,62 +166,47 @@ function getTextTotalizer(
 export function getAllTotalizers(
   snapshots: firebase.firestore.QuerySnapshot<firebase.firestore.DocumentData>
 ) {
-  const inField: FormEntry[] = []
-  const notInField: FormEntry[] = []
-  const formEntries: FormEntry[] = []
-  const totalizers: Totalizers = {
-    degree: {},
-    gradYear: {},
-    degreeLevel: {},
-    motive: {},
-    stillInField: {},
-    gradPerYear: {},
-  }
+  const totalizers: Totalizers = {}
 
   snapshots.forEach((snapshot) => {
     const data = snapshot.data() as FormEntry
 
-    if (snapshot.get('filter').toLowerCase() == 'sim') {
-      if (snapshot.get('stillInField').toLowerCase() == 'sim') {
-        inField.push(data)
-      } else {
-        notInField.push(data)
-      }
-      formEntries.push(data)
-    }
+    if (snapshot.get('filter').toLowerCase() == 'não') return
 
-    charts.forEach((chartOptions) => {
+    CHART_BLOCKS.forEach((chartOptions) => {
       const { chartType, name, givenOptions } = chartOptions
-      if (typeof data[name as Field] == typeof undefined) return
+
       switch (chartType) {
         case ChartType.pie:
-          updateTotalizersTwo(totalizers, data, name as Field, givenOptions)
+          if (typeof data[name] == UNDEFINED) return
+          updateTotalizersTwo(totalizers, data, name, givenOptions)
           break
         case ChartType.bar:
           updateTotalizersMany(
             totalizers,
             data,
-            name as Totals,
-            chartOptions.x as Field,
-            chartOptions.y as Field,
+            name,
+            chartOptions.x,
+            chartOptions.y,
             givenOptions
           )
           break
         case ChartType.cloud:
-          updateTotalizersTwo(totalizers, data, name as Field, givenOptions, {
+          if (typeof data[name] == UNDEFINED) return
+          updateTotalizersTwo(totalizers, data, name, givenOptions, {
             name: 'text',
           })
           break
       }
     })
   })
-  return { totalizers, inField, notInField, formEntries }
+  return totalizers
 }
 
 function updateTotalizersTwo(
   totalizers: Totalizers,
   data: FormEntry,
-  name: Field,
+  name: ChartFieldKey,
   givenOptions?: (string | number)[],
   customFieldNames?: { name?: string; value?: string }
 ) {
@@ -235,9 +230,9 @@ function updateTotalizersTwo(
 function updateTotalizersMany(
   totalizers: Totalizers,
   data: FormEntry,
-  name: Totals,
-  x?: Field,
-  y?: Field,
+  name: ChartFieldKey,
+  x?: ChartFieldKey,
+  y?: ChartFieldKey,
   givenOptions?: (string | number)[]
 ) {
   if (!x || !y) return
@@ -258,10 +253,11 @@ function updateTotalizersMany(
     totalizers[name]![chartX][chartY] = 0
   }
   totalizers[name]![chartX][chartY] += 1
+  console.log(totalizers)
 }
 
 const doesNotHave = (obj: any, field: string | number) => {
-  return typeof obj[field] === typeof undefined
+  return typeof obj[field] === UNDEFINED
 }
 
 export default Firebase

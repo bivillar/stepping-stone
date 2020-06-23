@@ -95,27 +95,32 @@ const Home = ({ data }: Props) => {
   const [loading, setLoading] = useState<boolean>(true)
   const [position, setPosition] = useState<number>(0)
 
-  const [inField, setInField] = useState<ChartData[]>()
-  const [notInField, setNotInField] = useState<ChartData[]>()
-  const [formEntries, setFormEntries] = useState<ChartData[]>()
   const [totalizers, setTotalizers] = useState<Totalizers>()
   const [pages, setPages] = useState<BlocksOptions[]>(PAGES)
 
   useEffect(() => {
-    console.log(data)
-
-    setFormEntries(data.formEntries)
     setTotalizers(data.totalizers)
-    setNotInField(data.notInField)
-    setInField(data.inField)
-    setLoading(false)
-    const { hiddenTexts } = data
-    const _pages = !!hiddenTexts?.length
+
+    const { hiddenTexts, hiddenComponents } = data
+    let _pages = !!hiddenTexts?.length
       ? PAGES.filter(
           ({ textField }) => !(textField && hiddenTexts.includes(textField))
         )
       : PAGES
+
+    _pages = !!hiddenComponents?.length
+      ? _pages.filter(
+          ({ Block }) =>
+            !(Block && hiddenComponents.includes(Block.constructor.name))
+        )
+      : _pages
+
+    PAGES.forEach(({ Block }) => {
+      if (Block) console.log(Block.constructor.name)
+    })
+
     setPages(_pages)
+    setLoading(false)
   }, [data])
 
   useScrollPosition(({ currPos }) => {
@@ -133,8 +138,6 @@ const Home = ({ data }: Props) => {
   if (loading) return <Loading />
 
   if (error || !data || !totalizers) return <Error />
-
-  const { hiddenTexts } = data
 
   return (
     <div>
@@ -173,10 +176,8 @@ Home.getInitialProps = async () => {
 interface Props {
   data: {
     totalizers: Totalizers
-    inField: FormEntry[]
-    notInField: FormEntry[]
-    formEntries: FormEntry[]
     hiddenTexts: string[]
+    hiddenComponents: string[]
   }
 }
 

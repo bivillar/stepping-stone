@@ -1,55 +1,5 @@
-interface Texts<T> {
-  degreeSuggestion?: T
-  challenge?: T
-  advice?: T
-  pros?: T
-  cons?: T
-}
-interface FieldText {
-  id: string
-  value: string
-}
-
-interface Selected {
-  selectedIds: string[]
-  texts: FieldText[]
-}
-
-type SelectedTexts = Texts<Selected>
-type AllTexts = Texts<FieldText[]>
-
-interface User {
-  email: string
-  isAdmin: boolean
-  name: string
-  canConfig: boolean
-  canManageUsers: boolean
-}
-
-interface FormEntry {
-  degree: string
-  gradYear: number
-  degreeLevel: string
-  degreeSuggestion: string
-  motive: string
-  stillInField: string
-  gradPerYear: any
-  field?: string
-  fieldChangeReason?: string
-  otherFieldSalary?: string
-  otherFieldSatisfaction?: number
-  otherFieldSatisfactionReason?: string
-  role?: string
-  seniorityDegree?: string
-  companyType?: string
-  companyName?: string
-  salary?: string
-  satisfaction?: number
-  satisfactionReason?: string
-  challenge?: string
-  advice?: string
-  pros?: string
-  cons?: string
+type PartialRecord<K extends keyof any, T> = {
+  [P in K]?: T
 }
 
 interface KeyValue<type> {
@@ -60,34 +10,42 @@ interface ChartData {
   [key: string]: any
 }
 
-type Totalizers = {
-  degree: KeyValue<ChartData>
-  gradYear: KeyValue<ChartData>
-  degreeLevel: KeyValue<ChartData>
-  degreeSuggestion?: FieldText[]
-  motive: KeyValue<ChartData>
-  stillInField: KeyValue<ChartData>
-  gradPerYear: KeyValue<ChartData>
-  role?: KeyValue<ChartData>
-  seniorityDegree?: KeyValue<ChartData>
-  companyType?: KeyValue<ChartData>
-  companyName?: KeyValue<ChartData>
-  salary?: KeyValue<ChartData>
-  satisfaction?: KeyValue<ChartData>
-  satisfactionReason?: FieldText[]
-  challenge?: FieldText[]
-  advice?: FieldText[]
-  pros?: FieldText[]
-  cons?: FieldText[]
-  field?: KeyValue<ChartData>
-  fieldChangeReason?: KeyValue<ChartData>
-  otherFieldSalary?: KeyValue<ChartData>
-  otherFieldSatisfaction?: KeyValue<ChartData>
-  otherFieldSatisfactionReason?: KeyValue<ChartData>
-  gradPerYear?: KeyValue<ChartData>
+interface FieldText {
+  id: string
+  value: string
 }
 
-type Field =
+interface Selected {
+  selectedIds: string[]
+  texts: FieldText[]
+}
+
+interface User {
+  email: string
+  isAdmin: boolean
+  name: string
+  canConfig: boolean
+  canManageUsers: boolean
+}
+
+interface BlocksOptions {
+  Block?: FC<{ totalizers: Totalizers }>
+  title?: string
+  menu: string
+  showMobile: boolean
+  textField?: string
+}
+
+interface ChartOptions {
+  name: ChartFieldKey
+  components: string[]
+  chartType: ChartKeys
+  givenOptions?: string[]
+  x?: ChartFieldKey
+  y?: ChartFieldKey
+}
+
+type FieldKey =
   | 'degree'
   | 'gradYear'
   | 'degreeLevel'
@@ -104,13 +62,20 @@ type Field =
   | 'otherFieldSalary'
   | 'otherFieldSatisfaction'
   | 'otherFieldSatisfactionReason'
+type TextFieldKey =
+  | 'degreeSuggestion'
+  | 'challenge'
+  | 'advice'
+  | 'pros'
+  | 'cons'
+type FormEntryKey = TextFieldsKey & FieldKey
+type ChartFieldKey = FieldKey | 'gradPerYear'
+type TotalizerKey = ChartFieldKey & TextFieldKey
+type ChartKey = 'pie' | 'bar' | 'cloud'
 
-type Totals = Field | 'gradPerYear'
-
-interface BlocksOptions {
-  Block?: FC<{ totalizers: Totalizers }>
-  title?: string
-  menu: string
-  showMobile: boolean
-  textField?: string
-}
+type TextTotals = PartialRecord<TextFieldKey, FieldText[]>
+type ChartTotals = PartialRecord<ChartFieldKey, KeyValue<ChartData>>
+type Totalizers = TextTotals & ChartTotals
+type FormEntry = PartialRecord<FormEntryKey, string | number>
+type SelectedTexts = PartialRecord<TextFieldKey, Selected>
+type AllTexts = PartialRecord<TextFieldKey, FieldText[]>
