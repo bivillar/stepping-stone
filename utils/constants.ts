@@ -4,6 +4,11 @@ export enum ResourcesEnum {
   AddUser = 'adduser',
   Upload = 'upload',
 }
+export enum ChartType {
+  pie = 'pie',
+  bar = 'bar',
+  cloud = 'cloud',
+}
 
 export const USERS_URL = '/admin/users'
 export const CONFIGS_URL = '/admin/configs'
@@ -33,32 +38,37 @@ export const DEGREES = [
   'Tecnólogo',
 ]
 
-export enum ChartType {
-  pie = 'pie',
-  bar = 'bar',
-  cloud = 'cloud',
-}
-
-export const charts = [
-  { name: 'degreeLevel', chartType: ChartType.pie },
-  { name: 'degree', chartType: ChartType.pie, givenOptions: DEGREES },
+export const CHART_BLOCKS: ChartOptions[] = [
+  { name: 'degreeLevel', chartType: ChartType.pie, components: ['Degree'] },
+  {
+    name: 'degree',
+    chartType: ChartType.pie,
+    givenOptions: DEGREES,
+    components: ['Degree'],
+  },
   {
     name: 'gradPerYear',
     chartType: ChartType.bar,
     x: 'gradYear',
     y: 'degree',
     givenOptions: DEGREES,
+    components: ['Degree'],
   },
-  { name: 'motive', chartType: ChartType.pie },
-  { name: 'gradYear', chartType: ChartType.pie },
-  { name: 'role', chartType: ChartType.pie },
-  { name: 'seniorityDegree', chartType: ChartType.pie },
-  { name: 'companyType', chartType: ChartType.pie },
-  { name: 'companyName', chartType: ChartType.cloud },
-  { name: 'satisfaction', chartType: ChartType.pie },
+  { name: 'motive', chartType: ChartType.pie, components: ['Motive'] },
+  // { name: 'gradYear', chartType: ChartType.pie, components: [''] },
+  { name: 'role', chartType: ChartType.pie, components: ['Role'] },
+  { name: 'seniorityDegree', chartType: ChartType.pie, components: ['Role'] },
+  { name: 'companyType', chartType: ChartType.pie, components: ['Company'] },
+  // { name: 'companyName', chartType: ChartType.cloud, components: [] },
+  {
+    name: 'satisfaction',
+    chartType: ChartType.pie,
+    components: ['Satisfaction'],
+  },
+  { name: 'salary', chartType: ChartType.pie, components: ['Salary'] },
 ]
 
-export const TEXT_BLOCKS = [
+export const TEXT_BLOCKS: TextFieldKey[] = [
   'degreeSuggestion',
   'challenge',
   'advice',

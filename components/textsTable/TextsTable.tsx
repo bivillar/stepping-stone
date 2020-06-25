@@ -112,7 +112,7 @@ interface Props {
   texts?: FieldText[]
   selectedTexts?: Selected
   title: string
-  fieldName: string
+  fieldName: TextFieldKey
 }
 
 export default TextsTable

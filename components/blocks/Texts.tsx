@@ -6,9 +6,8 @@ const Texts: FC<Props> = ({ totalizers, field }) => {
   const [texts, setTexts] = useState<FieldText[]>([])
   const [hasTwoLevels, setHasTwoLevels] = useState<boolean>(false)
   useEffect(() => {
-    // @ts-ignore
     const txt = totalizers[field] as FieldText[]
-    setHasTwoLevels(!!(txt.length > 3))
+    setHasTwoLevels(txt.length > 3)
     setTexts(txt)
   }, [])
 
@@ -16,13 +15,13 @@ const Texts: FC<Props> = ({ totalizers, field }) => {
   const secondLevel = hasTwoLevels && texts.slice(3, texts.length)
 
   return (
-    <div>
+    <div className="w-100">
       <div className={`flex ${hasTwoLevels ? 'h-50' : 'h-100'}`}>
         {firstLevel.map(({ value }, i) => (
           <div
             className={`w-${Math.floor(
               100 / firstLevel.length
-            ).toString()} ma5`}
+            ).toString()} ma4`}
             key={i}>
             <FadeUpCard text={value} />
           </div>
@@ -46,7 +45,7 @@ const Texts: FC<Props> = ({ totalizers, field }) => {
 }
 interface Props {
   totalizers: Totalizers
-  field: string
+  field: TotalizerKey
 }
 
 export default Texts

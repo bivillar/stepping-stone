@@ -6,11 +6,9 @@ import BarChart from '../charts/BarChart'
 
 const Company: FC<Props> = ({ totalizers }) => {
   const [type, setType] = useState<any[]>([])
-  const [name, setName] = useState<any[]>([])
 
   useEffect(() => {
     setType(getTotalizer(totalizers, 'companyType'))
-    setName(getTotalizer(totalizers, 'companyName'))
   }, [])
 
   return (

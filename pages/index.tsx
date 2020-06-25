@@ -16,6 +16,7 @@ import Company from '../components/blocks/Company'
 import Satisfaction from '../components/blocks/Satisfaction'
 import Brief from '../components/blocks/Brief'
 import Texts from '../components/blocks/Texts'
+import Salary from '../components/blocks/Salary'
 
 const PAGES: BlocksOptions[] = [
   { menu: 'Home', showMobile: true },
@@ -50,6 +51,12 @@ const PAGES: BlocksOptions[] = [
     Block: Satisfaction,
     menu: 'Satisfação',
     title: 'Grau de Satisfação',
+    showMobile: true,
+  },
+  {
+    Block: Salary,
+    menu: 'Faixa salarial',
+    title: 'Faixa salarial',
     showMobile: true,
   },
   {
@@ -88,25 +95,24 @@ const Home = ({ data }: Props) => {
   const [loading, setLoading] = useState<boolean>(true)
   const [position, setPosition] = useState<number>(0)
 
-  const [inField, setInField] = useState<ChartData[]>()
-  const [notInField, setNotInField] = useState<ChartData[]>()
-  const [formEntries, setFormEntries] = useState<ChartData[]>()
   const [totalizers, setTotalizers] = useState<Totalizers>()
   const [pages, setPages] = useState<BlocksOptions[]>(PAGES)
 
   useEffect(() => {
-    setFormEntries(data.formEntries)
     setTotalizers(data.totalizers)
-    setNotInField(data.notInField)
-    setInField(data.inField)
+
+    const { hiddenTexts, hiddenComponents } = data
+    const filteredPages =
+      !!hiddenTexts?.length || !!hiddenComponents?.length
+        ? PAGES.filter(
+            ({ textField, Block }) =>
+              !(textField && hiddenTexts.includes(textField)) &&
+              !(Block && hiddenComponents.includes(Block.name))
+          )
+        : PAGES
+
+    setPages(filteredPages)
     setLoading(false)
-    const { hiddenTexts } = data
-    const _pages = !!hiddenTexts?.length
-      ? PAGES.filter(
-          ({ textField }) => !(textField && hiddenTexts.includes(textField))
-        )
-      : PAGES
-    setPages(_pages)
   }, [data])
 
   useScrollPosition(({ currPos }) => {
@@ -124,8 +130,6 @@ const Home = ({ data }: Props) => {
   if (loading) return <Loading />
 
   if (error || !data || !totalizers) return <Error />
-
-  const { hiddenTexts } = data
 
   return (
     <div>
@@ -164,10 +168,8 @@ Home.getInitialProps = async () => {
 interface Props {
   data: {
     totalizers: Totalizers
-    inField: FormEntry[]
-    notInField: FormEntry[]
-    formEntries: FormEntry[]
     hiddenTexts: string[]
+    hiddenComponents: string[]
   }
 }
 

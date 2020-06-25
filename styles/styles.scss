@@ -465,6 +465,9 @@ ul {
   -o-transition: font-size 0.5s ease;
   transition: font-size 0.5s ease;
 }
+.adminLogo:hover {
+  text-decoration: none !important;
+}
 
 @media screen and (max-width: 30em) {
   .w-50-s {
