@@ -15,13 +15,13 @@ const Texts: FC<Props> = ({ totalizers, field }) => {
   const secondLevel = hasTwoLevels && texts.slice(3, texts.length)
 
   return (
-    <div>
+    <div className="w-100">
       <div className={`flex ${hasTwoLevels ? 'h-50' : 'h-100'}`}>
         {firstLevel.map(({ value }, i) => (
           <div
             className={`w-${Math.floor(
               100 / firstLevel.length
-            ).toString()} ma5`}
+            ).toString()} ma4`}
             key={i}>
             <FadeUpCard text={value} />
           </div>

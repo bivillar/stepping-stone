@@ -41,8 +41,8 @@ interface ChartOptions {
   components: string[]
   chartType: ChartKeys
   givenOptions?: string[]
-  x?: ChartFieldKey
-  y?: ChartFieldKey
+  x?: FormEntryKey
+  y?: FormEntryKey
 }
 
 type FieldKey =

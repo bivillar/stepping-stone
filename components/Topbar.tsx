@@ -1,5 +1,6 @@
 import React, { FC, useContext, useState } from 'react'
 import Router from 'next/router'
+import Link from 'next/link'
 
 import Button from '../components/Button'
 import { useUser } from '../utils/firebase/useUser'
@@ -18,9 +19,11 @@ const TopBar: FC = () => {
 
   return (
     <div className="adminTopBar">
-      <div className="adminLogo fixed pointer" onClick={() => Router.push('/')}>
-        <Logo />
-      </div>
+      <Link href="/">
+        <a className="adminLogo fixed" target="_blank">
+          <Logo />
+        </a>
+      </Link>
       <div className="flex justify-end">
         <Button isLoading={loading} onClick={logOut}>
           Sair
