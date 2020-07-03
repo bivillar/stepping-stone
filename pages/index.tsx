@@ -17,6 +17,7 @@ import Satisfaction from '../components/blocks/Satisfaction'
 import Brief from '../components/blocks/Brief'
 import Texts from '../components/blocks/Texts'
 import Salary from '../components/blocks/Salary'
+import LogoDI from '../components/LogoDI'
 
 const PAGES: BlocksOptions[] = [
   { menu: 'Home', showMobile: true },
@@ -133,6 +134,7 @@ const Home = ({ data }: Props) => {
 
   return (
     <div>
+      <LogoDI />
       <div className={`logoDiv${fixed ? '--fixed' : ''}`}>
         <Logo />
       </div>
