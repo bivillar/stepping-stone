@@ -14,6 +14,7 @@ export const USERS_URL = '/admin/users'
 export const CONFIGS_URL = '/admin/configs'
 export const LOGIN_URL = '/admin/login'
 export const SIGNUP_URL = '/admin/signup'
+export const CHART_URL = '/admin/chart'
 
 export const COLORS = [
   '#5204BF',

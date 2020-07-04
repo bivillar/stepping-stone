@@ -36,7 +36,7 @@ export const TEXTS: TextTableConfig[] = [
   },
 ]
 
-const Configs = ({}: Props) => {
+const Configs = () => {
   const [texts, setTexts] = useState<AllTexts>()
   const [selectedTexts, setSelectedTexts] = useState<SelectedTexts>()
   const [loading, setLoading] = useState<boolean>(true)
@@ -81,7 +81,5 @@ const Configs = ({}: Props) => {
     </AdminContainer>
   )
 }
-
-interface Props {}
 
 export default Configs

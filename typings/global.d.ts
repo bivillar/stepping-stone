@@ -45,6 +45,11 @@ interface ChartOptions {
   y?: FormEntryKey
 }
 
+interface GradChartConfig {
+  showMale: boolean
+  showPercentage: boolean
+}
+
 type FieldKey =
   | 'degree'
   | 'gradYear'
