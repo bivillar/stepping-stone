@@ -58,7 +58,6 @@ const TableItemForm: FC<Props> = ({ handleAddYear }) => {
       </td>
       <td>
         <Button
-          isLoading={isLoading}
           variant="success"
           size="sm"
           disabled={typeof female === 'undefined'}

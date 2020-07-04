@@ -100,11 +100,14 @@ class Firebase {
     male?: number,
     percentage?: number
   ) {
-    return this.db.collection('gradChart').doc(year).update({
-      female,
-      male,
-      percentage,
-    })
+    return this.db
+      .collection('gradChart')
+      .doc(year)
+      .update({
+        female,
+        ...(male && { male }),
+        ...(percentage && { percentage }),
+      })
   }
 
   saveSelected(field: string, selectedIds: string[], texts: FieldText[]) {

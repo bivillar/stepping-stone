@@ -16,6 +16,7 @@ const TableItem: FC<Props> = ({
   setEditing,
   disabled,
   deleteYear,
+  updateYears,
 }) => {
   const [loading, setLoading] = useState<boolean>(false)
   const [edit, setEdit] = useState<boolean>(false)
@@ -31,10 +32,11 @@ const TableItem: FC<Props> = ({
   const handleSave = () => {
     setLoading(true)
     const base = new Firebase()
-    const percentage = male ? female / (male + female) : 0
+    const percentage = male ? (female * 100) / (male + female) : 0
     base
       .updateGradChartYear(yearData.year, female, male, percentage)
       .then(() => {
+        updateYears({ year: yearData.year, female, male, percentage })
         setLoading(false)
         setEdit(false)
         setEditing(false)
@@ -127,6 +129,7 @@ interface Props {
   setEditing: (isEditin: boolean) => void
   disabled: boolean
   deleteYear: () => void
+  updateYears: (yearData: any) => void
 }
 
 export default TableItem
