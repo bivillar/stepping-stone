@@ -84,11 +84,14 @@ class Firebase {
     male?: number,
     percentage?: number
   ) {
-    return this.db.collection('gradChart').doc(year).set({
-      female,
-      male,
-      percentage,
-    })
+    return this.db
+      .collection('gradChart')
+      .doc(year)
+      .set({
+        female,
+        ...(male && { male }),
+        ...(percentage && { percentage }),
+      })
   }
 
   updateGradChartYear(
@@ -97,7 +100,6 @@ class Firebase {
     male?: number,
     percentage?: number
   ) {
-    console.log(year, female, male, percentage)
     return this.db.collection('gradChart').doc(year).update({
       female,
       male,

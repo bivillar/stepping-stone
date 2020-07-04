@@ -11,11 +11,17 @@ import Firebase from '../../utils/firebase/base'
 import BooleanIcon from '../BooleanIcon'
 import { Form } from 'react-bootstrap'
 
-const TableItem: FC<Props> = ({ yearData, setEditing, disabled }) => {
+const TableItem: FC<Props> = ({
+  yearData,
+  setEditing,
+  disabled,
+  deleteYear,
+}) => {
   const [loading, setLoading] = useState<boolean>(false)
   const [edit, setEdit] = useState<boolean>(false)
-  const [female, setFemale] = useState<number>(yearData.female ?? 0)
-  const [male, setMale] = useState<number>(yearData.male ?? 0)
+  const [female, setFemale] = useState<number>(yearData.female)
+  const [male, setMale] = useState<number | undefined>(yearData.male)
+  const [deleteLoading, setDeleteLoading] = useState<boolean>(false)
 
   const handleEdit = () => {
     setEdit(true)
@@ -35,6 +41,24 @@ const TableItem: FC<Props> = ({ yearData, setEditing, disabled }) => {
       })
   }
 
+  const handleDelete = () => {
+    setDeleteLoading(true)
+    const base = new Firebase()
+    base.removeYear(yearData.year).then(() => deleteYear())
+  }
+
+  const handleChange = (
+    e: any,
+    set: (value: number) => void,
+    min?: number,
+    max?: number
+  ) => {
+    const value = +e.target.value
+    if (min && value < min) set(min)
+    if (max && value > max) set(max)
+    set(value)
+  }
+
   return (
     <tr>
       <td>{yearData.year}</td>
@@ -45,9 +69,7 @@ const TableItem: FC<Props> = ({ yearData, setEditing, disabled }) => {
             placeholder="female"
             value={female}
             type="number"
-            onChange={(e: any) =>
-              setFemale(e.target.value < 0 ? 0 : e.target.value)
-            }
+            onChange={(e: any) => handleChange(e, setFemale, 0)}
           />
         ) : (
           <span>{female}</span>
@@ -58,18 +80,16 @@ const TableItem: FC<Props> = ({ yearData, setEditing, disabled }) => {
           <Form.Control
             required
             placeholder="male"
-            value={male ?? 0}
+            value={male}
             type="number"
-            onChange={(e: any) =>
-              setMale(e.target.value < 0 ? 0 : e.target.value)
-            }
+            onChange={(e: any) => handleChange(e, setMale, 0)}
           />
         ) : (
           <span>{male}</span>
         )}
       </td>
 
-      <td>
+      <td className="flex">
         {edit ? (
           <Button
             variant="success"
@@ -87,6 +107,16 @@ const TableItem: FC<Props> = ({ yearData, setEditing, disabled }) => {
             <EditIcon />
           </Button>
         )}
+        <div className="pl3">
+          <Button
+            isLoading={deleteLoading}
+            disabled={edit || disabled}
+            variant="danger"
+            size="sm"
+            onClick={handleDelete}>
+            <XIcon />
+          </Button>
+        </div>
       </td>
     </tr>
   )
@@ -96,6 +126,7 @@ interface Props {
   yearData: ChartData
   setEditing: (isEditin: boolean) => void
   disabled: boolean
+  deleteYear: () => void
 }
 
 export default TableItem
