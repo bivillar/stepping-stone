@@ -470,6 +470,12 @@ ul {
 }
 
 @media screen and (max-width: 30em) {
+  .db-s {
+    display: block;
+  }
+  .dn-s {
+    display: none;
+  }
   .w-50-s {
     width: 50%;
   }
@@ -477,10 +483,10 @@ ul {
     width: 100%;
   }
   .h-50-s {
-    width: 50%;
+    height: 50%;
   }
   .h-100-s {
-    width: 100%;
+    height: 100%;
   }
   .flex-column-s {
     flex-direction: column;
@@ -640,6 +646,12 @@ ul {
 }
 
 @media screen and (min-width: 30em) and (max-width: 60em) {
+  .db-m {
+    display: block;
+  }
+  .dn-m {
+    display: none;
+  }
   $dot: 11px;
   $weight: 1px;
   $spacing: 12px;
@@ -793,6 +805,12 @@ ul {
   }
 }
 @media screen and (min-width: 60em) {
+  .db-m {
+    display: block;
+  }
+  .dn-m {
+    display: none;
+  }
   .title {
     padding: 20% 13% 20% 10%;
     height: 100vh;
@@ -968,4 +986,9 @@ ul {
   tr :nth-child(2) {
     width: 20%;
   }
+}
+
+.logoDI {
+  padding-right: '5%';
+  padding-top: '2%';
 }
