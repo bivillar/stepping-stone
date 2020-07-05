@@ -1,6 +1,10 @@
 import React, { FC, useState, useEffect } from 'react'
 import { Table, Alert, Form } from 'react-bootstrap'
 import { BsX as XIcon, BsPlus as PlusIcon } from 'react-icons/bs'
+import UiRadio from '@material-ui/core/Radio'
+import RadioGroup from '@material-ui/core/RadioGroup'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import { withStyles } from '@material-ui/core/styles'
 
 import { useUser } from '../../utils/firebase/useUser'
 import Firebase from '../../utils/firebase/base'
@@ -10,6 +14,17 @@ import TableItemForm from '../../components/gradsTable/TableItemForm'
 import TableItem from '../../components/gradsTable/TableItem'
 import TableItemSkeleton from '../../components/TableItemSkeleton'
 import GradChart from '../../components/charts/GradChart'
+import { COLORS } from '../../utils/constants'
+
+const Radio = withStyles({
+  root: {
+    color: COLORS[5],
+    '&$checked': {
+      color: COLORS[5],
+    },
+  },
+  checked: {},
+})((props) => <UiRadio color="default" {...props} />)
 
 const Chart: FC = () => {
   const { currentUser } = useUser()
@@ -98,8 +113,11 @@ const Chart: FC = () => {
     <AdminContainer hasPermission={currentUser?.canManageUsers}>
       <div className="adminContainer">
         <h1>Gerenciar Gráfico de Mulheres Formadas por Ano</h1>
-
-        <div className="flex w-100">
+        <p>
+          Aqui você pode adicionar e remover a quantidade de mulheres e homens
+          que se formaram em cada ano nos cursos de computação da PUC-Rio.
+        </p>
+        <div className="pt3 flex w-100">
           <div className="w-50">
             {error && (
               <Alert
@@ -109,14 +127,14 @@ const Chart: FC = () => {
                 {error}
               </Alert>
             )}
-            <Table responsive hover>
-              <thead>
-                <tr>
-                  <th className="w-30">Ano</th>
-                  <th className="w-30">Mulheres</th>
-                  <th className="w-30">Homens</th>
-                  <th>
-                    <div className="pr2">
+            <div className="table-responsive">
+              <table className="table table-striped table-bordered table-hover table-fixed-chart">
+                <thead>
+                  <tr className="w-100">
+                    <th>Ano</th>
+                    <th>Mulheres</th>
+                    <th>Homens</th>
+                    <th>
                       {isAddingUser ? (
                         <Button
                           size="sm"
@@ -137,65 +155,64 @@ const Chart: FC = () => {
                           <PlusIcon />
                         </Button>
                       )}
-                    </div>
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {loading ? (
-                  <TableItemSkeleton nCol={3} />
-                ) : (
-                  years?.map((yearData, i) => (
-                    <TableItem
-                      key={yearData.year}
-                      yearData={yearData}
-                      setEditing={setEditing}
-                      disabled={isEditing}
-                      deleteYear={() => deleteYear(i)}
-                      updateYears={updateYears}
-                    />
-                  ))
-                )}
-                {isAddingUser && (
-                  <TableItemForm handleAddYear={handleAddYear} />
-                )}
-              </tbody>
-            </Table>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {isAddingUser && (
+                    <TableItemForm handleAddYear={handleAddYear} />
+                  )}
+                  {loading ? (
+                    <TableItemSkeleton nCol={3} />
+                  ) : (
+                    years?.map((yearData, i) => (
+                      <TableItem
+                        key={yearData.year}
+                        yearData={yearData}
+                        setEditing={setEditing}
+                        disabled={isEditing}
+                        deleteYear={() => deleteYear(i)}
+                        updateYears={updateYears}
+                      />
+                    ))
+                  )}
+                </tbody>
+              </table>
+            </div>
           </div>
           <div className="w-50 pl3" style={{ height: '500px' }}>
-            <div className="h-50">
-              {!loading && years && <GradChart data={years} config={config} />}
-            </div>
-            <div className="pl1 pt4 w-100">
-              Opções
-              <Form.Group>
-                <Form.Check
-                  type="radio"
+            <div className="chart-card card flex flex-column justify-content-around items-center">
+              <div className="h-50 w-100">
+                {!loading && years && (
+                  <GradChart data={years} config={config} />
+                )}
+              </div>
+              <RadioGroup aria-label="gender" name="gender1">
+                <FormControlLabel
+                  value="female"
+                  style={{ marginBottom: '0px' }}
+                  control={<Radio />}
                   label="Valor Absoluto"
                   checked={!config.showMale && !config.showPercentage}
-                  name="formHorizontalRadios"
-                  id="formHorizontalRadios1"
                   onChange={() => updateConfigs(false, false)}
                 />
-                <Form.Check
-                  type="radio"
-                  checked={config.showMale}
+                <FormControlLabel
                   label="Mostrar Homens"
-                  name="formHorizontalRadios"
-                  id="formHorizontalRadios2"
+                  checked={config.showMale}
+                  style={{ marginBottom: '0px' }}
                   disabled={!canShowMale}
                   onChange={() => updateConfigs(!config.showMale, false)}
+                  control={<Radio />}
                 />
-                <Form.Check
-                  type="radio"
+                <FormControlLabel
+                  control={<Radio />}
+                  style={{ marginBottom: '0px' }}
                   label="Porcentagem"
                   checked={config.showPercentage}
-                  name="formHorizontalRadios"
-                  id="formHorizontalRadios3"
                   disabled={!canShowMale}
                   onChange={() => updateConfigs(false, !config.showPercentage)}
                 />
-              </Form.Group>
+              </RadioGroup>
             </div>
           </div>
         </div>

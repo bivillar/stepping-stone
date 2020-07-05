@@ -200,6 +200,7 @@ class Firebase {
       .get()
       .then(getAllTotalizers)
     const textsTotals = await this.getSelectedTextsByField()
+    const gradProps = await this.getGradChartData()
     const hiddenTexts: string[] = []
     const hiddenComponents: string[] = []
     const textsTotalizers: TextTotals = {}
@@ -225,7 +226,7 @@ class Firebase {
       }
     })
 
-    return { totalizers, hiddenTexts, hiddenComponents }
+    return { gradProps, totalizers, hiddenTexts, hiddenComponents }
   }
 }
 

@@ -141,7 +141,7 @@ const Home = ({ data }: Props) => {
       <div className="flex-ns dn h-100 items-center justify-end fixed right-0 pr4-ns pr3">
         <Menu position={position} pages={pages} />
       </div>
-      <Title />
+      <Title {...data.gradProps} />
       <Brief />
       {pages.map(
         ({ Block, title, showMobile, menu, textField }) =>
@@ -172,6 +172,7 @@ interface Props {
     totalizers: Totalizers
     hiddenTexts: string[]
     hiddenComponents: string[]
+    gradProps: { grads: ChartData[]; config: GradChartConfig }
   }
 }
 
