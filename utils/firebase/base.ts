@@ -25,6 +25,91 @@ class Firebase {
     this.db = app.firestore()
   }
 
+  removeYear(year: string) {
+    return this.db.collection('gradChart').doc(year).delete()
+  }
+
+  async getChartDataTotalizer() {
+    let config: GradChartConfig = { showMale: false, showPercentage: false }
+    const collection = await this.db.collection('gradChart').get()
+
+    const grads: ChartData[] = []
+
+    collection.forEach((year) => {
+      const data = year.data()
+      if (year.id === 'config') {
+        config = data as GradChartConfig
+      } else {
+        if (config.showPercentage) {
+          grads.push({ year: year.id, percentage: data.percentage })
+        } else if (config.showMale) {
+          grads.push({ year: year.id, male: data.male, female: data.female })
+        } else {
+          grads.push({ year: year.id, female: data.female })
+        }
+      }
+    })
+
+    return { grads, config }
+  }
+
+  async getGradChartData() {
+    let config: GradChartConfig = { showMale: false, showPercentage: false }
+    const collection = await this.db.collection('gradChart').get()
+
+    const grads: ChartData[] = []
+
+    collection.forEach((year) => {
+      const data = year.data()
+      if (year.id === 'config') {
+        config = data as GradChartConfig
+      } else {
+        grads.push({ year: year.id, ...data })
+      }
+    })
+
+    return { grads, config }
+  }
+
+  updateGradCharConfig(showMale: boolean, showPercentage: boolean) {
+    return this.db.collection('gradChart').doc('config').set({
+      showMale,
+      showPercentage,
+    })
+  }
+
+  addNewGradChartYear(
+    year: string,
+    female: number,
+    male?: number,
+    percentage?: number
+  ) {
+    return this.db
+      .collection('gradChart')
+      .doc(year)
+      .set({
+        female,
+        ...(male && { male }),
+        ...(percentage && { percentage }),
+      })
+  }
+
+  updateGradChartYear(
+    year: string,
+    female: number,
+    male?: number,
+    percentage?: number
+  ) {
+    return this.db
+      .collection('gradChart')
+      .doc(year)
+      .update({
+        female,
+        ...(male && { male }),
+        ...(percentage && { percentage }),
+      })
+  }
+
   saveSelected(field: string, selectedIds: string[], texts: FieldText[]) {
     return this.db.collection('texts').doc(field).set({
       selectedIds,
@@ -115,6 +200,7 @@ class Firebase {
       .get()
       .then(getAllTotalizers)
     const textsTotals = await this.getSelectedTextsByField()
+    const gradProps = await this.getGradChartData()
     const hiddenTexts: string[] = []
     const hiddenComponents: string[] = []
     const textsTotalizers: TextTotals = {}
@@ -140,7 +226,7 @@ class Firebase {
       }
     })
 
-    return { totalizers, hiddenTexts, hiddenComponents }
+    return { gradProps, totalizers, hiddenTexts, hiddenComponents }
   }
 }
 

@@ -988,7 +988,38 @@ ul {
   }
 }
 
+.table-fixed-chart {
+  tbody {
+    max-height: 400px;
+    overflow-y: auto;
+    width: 100%;
+  }
+  thead,
+  tbody,
+  th {
+    display: block;
+  }
+  tr {
+    display: flex;
+  }
+  th {
+    width: 25%;
+  }
+  td {
+    width: 25%;
+    display: flex;
+  }
+}
+
 .logoDI {
   padding-right: '5%';
   padding-top: '2%';
+}
+
+.chart-card {
+  background-color: rgba(0, 0, 0, 0.05);
+  margin-left: 30px;
+  padding: 15px 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  height: 100%;
 }

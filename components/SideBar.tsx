@@ -4,7 +4,8 @@ import {
   BsLayoutTextWindowReverse as TextIcon,
   BsPeople as PeopleIcon,
 } from 'react-icons/bs'
-import { USERS_URL, CONFIGS_URL } from '../utils/constants'
+import { AiOutlineLineChart as LineChartIcon } from 'react-icons/ai'
+import { USERS_URL, CONFIGS_URL, CHART_URL } from '../utils/constants'
 
 const MenuItem: FC<{ icon: any; label: string; isOpen: boolean }> = ({
   icon,
@@ -61,6 +62,16 @@ const SideBar: FC<Props> = ({ isOpen, open }) => {
           <MenuItem
             icon={<TextIcon />}
             label="Gerenciar Posts"
+            isOpen={isOpen}
+          />
+        </li>
+        <li
+          id="item"
+          className={url === CHART_URL ? 'selected' : ''}
+          onClick={() => goto(CHART_URL)}>
+          <MenuItem
+            icon={<LineChartIcon size={20} />}
+            label="Gerenciar Gráfico"
             isOpen={isOpen}
           />
         </li>
