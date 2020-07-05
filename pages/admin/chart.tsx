@@ -110,7 +110,7 @@ const Chart: FC = () => {
   }
 
   return (
-    <AdminContainer hasPermission={currentUser?.canManageUsers}>
+    <AdminContainer hasPermission={currentUser?.canConfig}>
       <div className="adminContainer">
         <h1>Gerenciar Gráfico de Mulheres Formadas por Ano</h1>
         <p>

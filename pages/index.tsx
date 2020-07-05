@@ -18,6 +18,7 @@ import Brief from '../components/blocks/Brief'
 import Texts from '../components/blocks/Texts'
 import Salary from '../components/blocks/Salary'
 import LogoDI from '../components/LogoDI'
+import About from '../components/blocks/About'
 
 const PAGES: BlocksOptions[] = [
   { menu: 'Home', showMobile: true },
@@ -76,17 +77,23 @@ const PAGES: BlocksOptions[] = [
   },
   {
     Block: Texts,
-    menu: 'Pros',
+    menu: 'Pontos positivos',
     title: 'Pontos positivos',
     showMobile: false,
     textField: 'pros',
   },
   {
     Block: Texts,
-    menu: 'Cons',
+    menu: 'Pontos negativos',
     title: 'Pontos negativos',
     showMobile: false,
     textField: 'cons',
+  },
+  {
+    Block: About,
+    menu: 'Sobre',
+    title: 'Sobre o projeto',
+    showMobile: true,
   },
 ]
 
@@ -151,7 +158,7 @@ const Home = ({ data }: Props) => {
               showMobile={showMobile}
               title={title ?? menu}>
               <Block
-                totalizers={totalizers}
+                {...(totalizers && { totalizers })}
                 {...(textField && { field: textField })}
               />
             </Container>
