@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import logoDI from '../public/logo_di.png'
+import logoDI from '../public/logoDi.png'
 
 const LogoDI: FC = () => (
   <>
