@@ -646,11 +646,20 @@ ul {
 }
 
 @media screen and (min-width: 30em) and (max-width: 60em) {
+  .flex-m {
+    display: flex;
+  }
+  .f6-m {
+    font-size: 0.875rem;
+  }
   .db-m {
     display: block;
   }
   .dn-m {
     display: none;
+  }
+  .w-60-m {
+    width: 60%;
   }
   $dot: 11px;
   $weight: 1px;
@@ -805,6 +814,15 @@ ul {
   }
 }
 @media screen and (min-width: 60em) {
+  .flex-m {
+    display: flex;
+  }
+  .f6-m {
+    font-size: 0.875rem;
+  }
+  .w-60-m {
+    width: 60%;
+  }
   .db-m {
     display: block;
   }
