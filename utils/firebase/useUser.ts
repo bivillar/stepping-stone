@@ -46,7 +46,6 @@ const useUser = () => {
   }
 
   const login = async (email: string, password: string) => {
-    firebase.firestore().enablePersistence()
     return firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
