@@ -11,5 +11,6 @@ const config = {
 export default function initFirebase() {
   if (!firebase.apps.length) {
     firebase.initializeApp(config)
+    firebase.firestore().enablePersistence()
   }
 }
