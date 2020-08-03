@@ -20,6 +20,17 @@ import Salary from '../components/blocks/Salary'
 import LogoDI from '../components/LogoDI'
 import About from '../components/blocks/About'
 
+const EMPTY_PAGES: BlocksOptions[] = [
+  { menu: 'Home', showMobile: true },
+  { menu: 'Início', showMobile: true },
+  {
+    Block: About,
+    menu: 'Sobre',
+    title: 'Sobre o projeto',
+    showMobile: true,
+  },
+]
+
 const PAGES: BlocksOptions[] = [
   { menu: 'Home', showMobile: true },
   { menu: 'Início', showMobile: true },
@@ -120,7 +131,9 @@ const Home = ({ data, dataError }: Props) => {
           )
         : PAGES
 
-    setPages(filteredPages)
+    setPages(
+      Object.keys(data.totalizers).length === 0 ? EMPTY_PAGES : filteredPages
+    )
     setLoading(false)
   }, [data, dataError])
 
@@ -138,7 +151,7 @@ const Home = ({ data, dataError }: Props) => {
 
   if (loading) return <Loading />
 
-  if (error || !data || !totalizers) return <Error />
+  if (error || !data || !totalizers || totalizers === {}) return <Error />
 
   return (
     <div>
