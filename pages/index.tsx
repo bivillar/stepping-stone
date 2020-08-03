@@ -20,6 +20,17 @@ import Salary from '../components/blocks/Salary'
 import LogoDI from '../components/LogoDI'
 import About from '../components/blocks/About'
 
+const EMPTY_PAGES: BlocksOptions[] = [
+  { menu: 'Home', showMobile: true },
+  { menu: 'Início', showMobile: true },
+  {
+    Block: About,
+    menu: 'Sobre',
+    title: 'Sobre o projeto',
+    showMobile: true,
+  },
+]
+
 const PAGES: BlocksOptions[] = [
   { menu: 'Home', showMobile: true },
   { menu: 'Início', showMobile: true },
@@ -97,7 +108,7 @@ const PAGES: BlocksOptions[] = [
   },
 ]
 
-const Home = ({ data }: Props) => {
+const Home = ({ data, dataError }: Props) => {
   const [fixed, setFixed] = useState<boolean>(false)
   const [error, setError] = useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>(true)
@@ -108,6 +119,7 @@ const Home = ({ data }: Props) => {
 
   useEffect(() => {
     setTotalizers(data.totalizers)
+    setError(dataError)
 
     const { hiddenTexts, hiddenComponents } = data
     const filteredPages =
@@ -119,9 +131,11 @@ const Home = ({ data }: Props) => {
           )
         : PAGES
 
-    setPages(filteredPages)
+    setPages(
+      Object.keys(data.totalizers).length === 0 ? EMPTY_PAGES : filteredPages
+    )
     setLoading(false)
-  }, [data])
+  }, [data, dataError])
 
   useScrollPosition(({ currPos }) => {
     if (currPos.y < -200 && !fixed) setFixed(true)
@@ -137,7 +151,7 @@ const Home = ({ data }: Props) => {
 
   if (loading) return <Loading />
 
-  if (error || !data || !totalizers) return <Error />
+  if (error || !data || !totalizers || totalizers === {}) return <Error />
 
   return (
     <div>
@@ -175,6 +189,7 @@ Home.getInitialProps = async () => {
 }
 
 interface Props {
+  dataError: any
   data: {
     totalizers: Totalizers
     hiddenTexts: string[]

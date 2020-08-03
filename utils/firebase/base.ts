@@ -226,6 +226,8 @@ class Firebase {
       }
     })
 
+    console.log({ gradProps, totalizers, hiddenTexts, hiddenComponents })
+
     return { gradProps, totalizers, hiddenTexts, hiddenComponents }
   }
 }
