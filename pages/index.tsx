@@ -97,7 +97,7 @@ const PAGES: BlocksOptions[] = [
   },
 ]
 
-const Home = ({ data }: Props) => {
+const Home = ({ data, dataError }: Props) => {
   const [fixed, setFixed] = useState<boolean>(false)
   const [error, setError] = useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>(true)
@@ -108,6 +108,7 @@ const Home = ({ data }: Props) => {
 
   useEffect(() => {
     setTotalizers(data.totalizers)
+    setError(dataError)
 
     const { hiddenTexts, hiddenComponents } = data
     const filteredPages =
@@ -121,7 +122,7 @@ const Home = ({ data }: Props) => {
 
     setPages(filteredPages)
     setLoading(false)
-  }, [data])
+  }, [data, dataError])
 
   useScrollPosition(({ currPos }) => {
     if (currPos.y < -200 && !fixed) setFixed(true)
@@ -175,6 +176,7 @@ Home.getInitialProps = async () => {
 }
 
 interface Props {
+  dataError: any
   data: {
     totalizers: Totalizers
     hiddenTexts: string[]
