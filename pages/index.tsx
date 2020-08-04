@@ -19,6 +19,22 @@ import Texts from '../components/blocks/Texts'
 import Salary from '../components/blocks/Salary'
 import LogoDI from '../components/LogoDI'
 import About from '../components/blocks/About'
+import { CHART_BLOCKS } from '../utils/constants'
+
+const getHiddenComponents = (totalizers: Totalizers) => {
+  const hiddenComponents: string[] = []
+
+  CHART_BLOCKS.forEach(({ name, components }) => {
+    if (typeof totalizers[name] == 'undefined') {
+      components.forEach((component) => {
+        if (!hiddenComponents.includes(component)) {
+          hiddenComponents.push(component)
+        }
+      })
+    }
+  })
+  return hiddenComponents
+}
 
 const EMPTY_PAGES: BlocksOptions[] = [
   { menu: 'Home', showMobile: true },
@@ -121,13 +137,14 @@ const Home = ({ data, dataError }: Props) => {
     setTotalizers(data.totalizers)
     setError(dataError)
 
-    const { hiddenTexts, hiddenComponents } = data
+    const { hiddenTexts } = data
+    const hiddenComponents = getHiddenComponents(data.totalizers)
     const filteredPages =
       !!hiddenTexts?.length || !!hiddenComponents?.length
         ? PAGES.filter(
-            ({ textField, Block }) =>
+            ({ textField, menu }) =>
               !(textField && hiddenTexts.includes(textField)) &&
-              !(Block && hiddenComponents.includes(Block.name))
+              !(menu && hiddenComponents.includes(menu))
           )
         : PAGES
 

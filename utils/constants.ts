@@ -40,12 +40,12 @@ export const DEGREES = [
 ]
 
 export const CHART_BLOCKS: ChartOptions[] = [
-  { name: 'degreeLevel', chartType: ChartType.pie, components: ['Degree'] },
+  { name: 'degreeLevel', chartType: ChartType.pie, components: ['Formação'] },
   {
     name: 'degree',
     chartType: ChartType.pie,
     givenOptions: DEGREES,
-    components: ['Degree'],
+    components: ['Formação'],
   },
   {
     name: 'gradPerYear',
@@ -53,20 +53,20 @@ export const CHART_BLOCKS: ChartOptions[] = [
     x: 'gradYear',
     y: 'degree',
     givenOptions: DEGREES,
-    components: ['Degree'],
+    components: ['Formação'],
   },
-  { name: 'motive', chartType: ChartType.pie, components: ['Motive'] },
+  { name: 'motive', chartType: ChartType.pie, components: ['Motivos'] },
   // { name: 'gradYear', chartType: ChartType.pie, components: [''] },
-  { name: 'role', chartType: ChartType.pie, components: ['Role'] },
-  { name: 'seniorityDegree', chartType: ChartType.pie, components: ['Role'] },
-  { name: 'companyType', chartType: ChartType.pie, components: ['Company'] },
+  { name: 'role', chartType: ChartType.pie, components: ['Cargo'] },
+  { name: 'seniorityDegree', chartType: ChartType.pie, components: ['Cargo'] },
+  { name: 'companyType', chartType: ChartType.pie, components: ['Empresas'] },
   // { name: 'companyName', chartType: ChartType.cloud, components: [] },
   {
     name: 'satisfaction',
     chartType: ChartType.pie,
-    components: ['Satisfaction'],
+    components: ['Satisfação'],
   },
-  { name: 'salary', chartType: ChartType.pie, components: ['Salary'] },
+  { name: 'salary', chartType: ChartType.pie, components: ['Faixa salarial'] },
 ]
 
 export const TEXT_BLOCKS: TextFieldKey[] = [
