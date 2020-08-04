@@ -202,7 +202,6 @@ class Firebase {
     const textsTotals = await this.getSelectedTextsByField()
     const gradProps = await this.getGradChartData()
     const hiddenTexts: string[] = []
-    const hiddenComponents: string[] = []
     const textsTotalizers: TextTotals = {}
     TEXT_BLOCKS.forEach((field) => {
       if (
@@ -216,19 +215,7 @@ class Firebase {
     })
     const totalizers = { ...fieldsTotalizers, ...textsTotalizers }
 
-    CHART_BLOCKS.forEach(({ name, components }) => {
-      if (typeof totalizers[name] == UNDEFINED) {
-        components.forEach((component) => {
-          if (!hiddenComponents.includes(component)) {
-            hiddenComponents.push(component)
-          }
-        })
-      }
-    })
-
-    console.log({ gradProps, totalizers, hiddenTexts, hiddenComponents })
-
-    return { gradProps, totalizers, hiddenTexts, hiddenComponents }
+    return { gradProps, totalizers, hiddenTexts }
   }
 }
 
