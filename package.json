@@ -29,7 +29,7 @@
     "react-icons": "^3.10.0",
     "react-loading-skeleton": "^2.0.1",
     "react-reveal": "^1.2.2",
-    "recharts": "^1.8.5",
+    "recharts": "^2.1.14",
     "styled-components": "^5.1.1",
     "swr": "^0.2.3",
     "tachyons": "^4.12.0",
